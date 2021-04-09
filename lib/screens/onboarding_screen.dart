@@ -1,42 +1,39 @@
 import 'package:dots_indicator/dots_indicator.dart';
-import '../screens/PasswordPage.dart';
-import '../widgets/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/enter_phone_screen.dart';
+import '../widgets/onboarding.dart';
 import '../constants/constant.dart';
 
 /*
   Author Amr Rudy
 */
 
-class onboarding extends StatefulWidget {
+class OnBoardingScreen extends StatefulWidget {
+  static const String routeName = 'onboarding-screen';
   @override
-  _onboardingState createState() => _onboardingState();
+  _OnBoardingScreenState createState() => _OnBoardingScreenState();
 }
 
-class _onboardingState extends State<onboarding> {
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   PageController controller = PageController();
   List<Widget> _list = <Widget>[
     new Center(
         child: new SlideCell(
             "assets/images/onboarding1.png",
             'You can add your mobile \nnumber and close people ',
-            'EBUZZ app join now \n to help you & society')
-    ),
+            'EBUZZ app join now \n to help you & society')),
     new Center(
         child: new SlideCell(
             "assets/images/onboarding2.png",
             'Save your current location \n on map',
-            'EBUZZ app will \nlocate your locatio '
-        )
-    ),
+            'EBUZZ app will \nlocate your locatio ')),
     new Center(
         child: new SlideCell(
             "assets/images/onboarding3.png",
             'Update your message to \n get help with near people',
-            'EBUZZ app will \nsave this message'
-        )
-    ),
+            'EBUZZ app will \nsave this message')),
   ];
 
   double _curr = 0;
@@ -80,33 +77,33 @@ class _onboardingState extends State<onboarding> {
               children: [
                 Expanded(
                     child: Container(
-                      child: Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          new DotsIndicator(
-                            dotsCount: 3,
-                            position: _curr,
-                            decorator: DotsDecorator(
-                              color: third,
-                              // Inactive color
-                              activeColor: primary,
-                              spacing: const EdgeInsets.all(4.0),
-                              size: Size.square(15.0),
-                              activeSize: Size.square(15.0),
-                            ),
-                          ),
-                        ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      new DotsIndicator(
+                        dotsCount: 3,
+                        position: _curr,
+                        decorator: DotsDecorator(
+                          color: third,
+                          // Inactive color
+                          activeColor: primary,
+                          spacing: const EdgeInsets.all(4.0),
+                          size: Size.square(15.0),
+                          activeSize: Size.square(15.0),
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                )),
               ],
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(15.0),
-          child: GestureDetector(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordPage()));
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EnterPhoneScreen()));
               },
               child: Card(
                 color: primary,
@@ -123,12 +120,15 @@ class _onboardingState extends State<onboarding> {
                           alignment: Alignment.center,
                           child: Text(
                             'NEXT',
-                            style: TextStyle(fontSize: 15, color: Colors.white, fontFamily: 'Roboto-medium', ),
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontFamily: 'Roboto-medium',
+                            ),
                           ),
                         ),
                       ],
-                    )
-                ),
+                    )),
               ),
             ),
           ),
@@ -137,7 +137,3 @@ class _onboardingState extends State<onboarding> {
     );
   }
 }
-
-
-
-

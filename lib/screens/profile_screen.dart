@@ -1,13 +1,15 @@
-import 'package:ebuzz/screens/massege.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Profile extends StatefulWidget {
+import './massage_screen.dart';
+
+class ProfileScreen extends StatefulWidget {
+  static const String routeName = 'profile-screen';
   @override
-  _State createState() => _State();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _State extends State<Profile> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +32,7 @@ class _State extends State<Profile> {
                   context,
                   MaterialPageRoute(
                       //hena htro7 3la more date (old user)
-                      builder: (context) => Massege()),
+                      builder: (context) => MassageScreen()),
                 );
               },
               child: Text(

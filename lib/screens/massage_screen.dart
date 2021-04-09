@@ -1,14 +1,15 @@
 import 'package:ebuzz/constants/constant.dart';
-import 'package:ebuzz/screens/history.dart';
+import 'package:ebuzz/screens/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Massege extends StatefulWidget {
+class MassageScreen extends StatefulWidget {
+  static const String routeName = 'masssage-screen';
   @override
-  _State createState() => _State();
+  _MassageScreenState createState() => _MassageScreenState();
 }
 
-class _State extends State<Massege> {
+class _MassageScreenState extends State<MassageScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +30,7 @@ class _State extends State<Massege> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Historypage()),
+                  MaterialPageRoute(builder: (context) => HistoryScreen()),
                 );
               },
               child: Text(

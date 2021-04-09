@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Historypage extends StatefulWidget {
-  Historypage({Key key}) : super(key: key);
+class HistoryScreen extends StatefulWidget {
+  static const String routeName = 'history-screen';
+  HistoryScreen({Key key}) : super(key: key);
   final List<String> sampleList = <String>['', '', '', '', ''];
 
   @override
-  _State createState() => _State();
+  _HistoryScreenState createState() => _HistoryScreenState();
 }
 
-class _State extends State<Historypage> {
+class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return (MaterialApp(
@@ -30,7 +31,7 @@ class _State extends State<Historypage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Historypage()),
+                  MaterialPageRoute(builder: (context) => HistoryScreen()),
                 );
               },
               child: Text(

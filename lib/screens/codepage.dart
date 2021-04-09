@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
-import 'package:ebuzz/screens/congrats.dart';
+import 'package:ebuzz/screens/congrats_screen.dart';
 
 class Codepage extends StatefulWidget {
+  static const String routeName = 'codepage-screen';
   @override
   _State createState() => _State();
 }
@@ -66,7 +67,7 @@ class _State extends State<Codepage> {
                               context,
                               MaterialPageRoute(
                                   //hena hro7 3la page congrats
-                                  builder: (context) => Congarts()),
+                                  builder: (context) => CongratsScreen()),
                             );
                           },
                         ),

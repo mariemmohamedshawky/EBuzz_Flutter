@@ -31,6 +31,12 @@ dependencies:
   hexcolor: ^1.0.6
   auto_size_text: ^2.1.0
   dots_indicator: ^1.2.0
+  http: ^0.12.2
+  http_parser: ^3.1.4
+  shared_preferences: ^0.5.12+4
+  provider: ^4.3.2+3 
+  image_picker: ^0.6.7+17
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

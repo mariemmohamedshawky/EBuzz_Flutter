@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-
-
+//apis url
+const String url = 'https://ebuzzgpp.000webhostapp.com/api';
 
 //colors used in app
 const String appName = 'EBUZZ';
@@ -14,7 +14,6 @@ const Color third = Color(0xFF00192B);
 const Color white = Colors.white;
 const Color black = Colors.black;
 const Color grey = Colors.grey;
-
 
 ThemeData appTheme = ThemeData(
   fontFamily: 'Roboto',

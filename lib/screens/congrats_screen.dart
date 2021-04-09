@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ebuzz/screens/home_screen.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
-import 'package:ebuzz/screens/codepage.dart';
 
-class Signuppage extends StatefulWidget {
+// ignore: camel_case_types
+class CongratsScreen extends StatefulWidget {
+  static const String routeName = 'congrats-screen';
   @override
-  _State createState() => _State();
+  _CongratsScreenState createState() => _CongratsScreenState();
 }
 
-class _State extends State<Signuppage> {
+class _CongratsScreenState extends State<CongratsScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,53 +28,34 @@ class _State extends State<Signuppage> {
                       SizedBox(height: 40),
                       Commontitle(
                           child: Text(
-                        'Create better together',
+                        'congrats!',
                         style: TextStyle(
                           color: HexColor("#0B090A"),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       )),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       Text(
-                        "join our community",
+                        "Your account already to build",
                         style:
                             TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
                       ),
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
-                            ),
-                            hintText: "Enter Number",
-                            hintStyle: TextStyle(fontSize: 10),
-                          ),
-                          keyboardType: TextInputType.phone,
-                        ),
+                      Icon(
+                        Icons.check_circle,
+                        size: 230,
+                        color: HexColor("#970C0F"),
                       ),
-                      SizedBox(height: 20),
-                      Text(
-                        "We will send confirmation code",
-                        style:
-                            TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
-                      ),
-                      SizedBox(height: 225),
+                      SizedBox(height: 110),
                       Container(
                         child: CommonButton(
-                          child: Text('Continue '),
+                          child: Text('Home page '),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  //hena hero7 3la page el code(new user)
-                                  builder: (context) => Codepage()),
+                                  //هنا هيودي علي صفحة congrats
+                                  builder: (context) => HomeScreen()),
                             );
                           },
                         ),
