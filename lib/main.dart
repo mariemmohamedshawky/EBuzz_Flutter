@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import './providers/user.dart';
 import './screens/splash_screen.dart';
@@ -13,8 +14,13 @@ import './screens/massage_screen.dart';
 import './screens/moredata_screen.dart';
 import './screens/history_screen.dart';
 import './screens/congrats_screen.dart';
+import './screens/verification_code_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -46,6 +52,8 @@ class MyApp extends StatelessWidget {
               MoreDataScreen.routeName: (ctx) => MoreDataScreen(),
               HistoryScreen.routeName: (ctx) => HistoryScreen(),
               CongratsScreen.routeName: (ctx) => CongratsScreen(),
+              VerificationCodeScreen.routeName: (ctx) =>
+                  VerificationCodeScreen(),
               //'/MoreDataPage': (BuildContext context) => new MoreDataPage(),
             }),
       ),

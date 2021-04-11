@@ -4,7 +4,7 @@ import 'package:ebuzz/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
-import './new_password_screen.dart';
+import './verification_code_screen.dart';
 import './password_screen.dart';
 import '../components/warning_popup.dart';
 
@@ -33,7 +33,7 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
       if (success) {
         var exisit = Provider.of<User>(context, listen: false).isExisit;
         Navigator.of(context).pushNamed(
-          exisit ? PasswordScreen.routeName : NewPasswordScreen.routeName,
+          exisit ? PasswordScreen.routeName : VerificationCodeScreen.routeName,
           arguments: _phoneController.text,
         );
       } else {

@@ -72,14 +72,14 @@ class User with ChangeNotifier {
           return false;
         }
       } else {
-        errorMessage = "SomeThing Went Wrong!\n";
+        errorMessage = "SomeThing Went Wrong!!\n";
         return false;
       }
       //-------------end error handling -------------
 
     } catch (error) {
       print(error); // during development cycle
-      errorMessage = "SomeThing Went Wrong!\n";
+      errorMessage = "SomeThing Went Wrong!!!\n";
       return false;
     }
   }
@@ -162,14 +162,14 @@ class User with ChangeNotifier {
           return false;
         }
       } else {
-        errorMessage = "SomeThing Went Wrong!\n";
+        errorMessage = "SomeThing Went Wrong!!\n";
         return false;
       }
       //------------- end error handling -------------
 
     } catch (error) {
       print(error); // during development cycle
-      errorMessage = "SomeThing Went Wrong!\n";
+      errorMessage = "SomeThing Went Wrong!!!\n";
       return false;
     }
   }
@@ -244,14 +244,14 @@ class User with ChangeNotifier {
           return false;
         }
       } else {
-        errorMessage = "SomeThing Went Wrong!\n";
+        errorMessage = "SomeThing Went Wrong!!\n";
         return false;
       }
       //------------- end error handling -------------
 
     } catch (error) {
       print(error); // during development cycle
-      errorMessage = "SomeThing Went Wrong!\n";
+      errorMessage = "SomeThing Went Wrong!!!\n";
       return false;
     }
   }
