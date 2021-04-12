@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -83,7 +84,7 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
         FlatButton.icon(
           icon: Icon(Icons.image),
           label: Text('Add Image'),
-          textColor: Theme.of(context).primaryColor,
+          textColor: primary,
           onPressed: () {
             _openImagePicker(
                 context, Theme.of(context), MediaQuery.of(context));

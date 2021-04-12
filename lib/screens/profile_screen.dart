@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -68,12 +69,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.name,
@@ -94,12 +93,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.phone,
@@ -120,12 +117,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.url,
@@ -146,12 +141,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.name,
@@ -172,12 +165,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.name,
@@ -198,12 +189,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: TextField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                           ),
                           keyboardType: TextInputType.name,

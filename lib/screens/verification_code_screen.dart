@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -96,12 +97,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                           controller: _verificationCodeController,
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: HexColor("#970C0F")),
+                              borderSide: BorderSide(color: primary),
                             ),
                             hintText: "Code",
                             hintStyle: TextStyle(fontSize: 10),

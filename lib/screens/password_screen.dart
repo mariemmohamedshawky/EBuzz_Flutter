@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -83,12 +84,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "Password",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -96,7 +95,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                       icon: Icon(passwordVisible
                                           ? Icons.visibility_off
                                           : Icons.visibility),
-                                      color: HexColor("#970C0F"),
+                                      color: primary,
                                       onPressed: () {
                                         setState(() {
                                           passwordVisible = !passwordVisible;

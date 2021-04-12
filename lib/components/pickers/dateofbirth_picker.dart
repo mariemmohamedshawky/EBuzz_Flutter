@@ -1,4 +1,7 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:intl/intl.dart';
 
@@ -14,11 +17,16 @@ class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
   DateTime _selectedDate;
 
   void _presentDatePicker() {
-    showDatePicker(
+    showRoundedDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1910),
       lastDate: DateTime.now(),
+      theme: ThemeData(
+        primaryColor: HexColor("#970C0F"),
+        accentColor: HexColor("#970C0F"),
+        primarySwatch: grey,
+      ),
     ).then((pickedDate) {
       setState(() {
         _selectedDate = pickedDate;
@@ -31,21 +39,37 @@ class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
   Widget build(BuildContext context) {
     final dateformat = new DateFormat('yyyy-MM-dd');
     return Container(
-      height: 30,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
+      child: Column(
         children: [
-          Text(_selectedDate == null
-              ? 'Not Date Chosen!'
-              : 'Picked Date: ${dateformat.format(_selectedDate)}'),
-          FlatButton(
-            child: Text(
-              'Choose Date',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onPressed: _presentDatePicker,
-            textColor: Theme.of(context).primaryColor,
-          )
+          TextField(
+            readOnly: true,
+            decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: HexColor("#970C0F")),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: HexColor("#970C0F")),
+                ),
+                labelText: 'Date of birth',
+                labelStyle: TextStyle(
+                  fontSize: 12,
+                  color: grey,
+                ),
+                hintText: _selectedDate == null
+                    ? 'Not Date Chosen!'
+                    : 'Date: ${dateformat.format(_selectedDate)}',
+                hintStyle: TextStyle(
+                  fontSize: 10,
+                  color: primary,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.calendar_today),
+                  color: primary,
+                  onPressed: _presentDatePicker,
+                )),
+            // keyboardType: TextInputType.datetime,
+          ),
         ],
       ),
     );

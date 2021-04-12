@@ -8,7 +8,7 @@ const String url = 'https://ebuzzgpp.000webhostapp.com/api';
 const String appName = 'EBUZZ';
 
 //colors used in app
-const Color primary = Color(0xFFba181b);
+const Color primary = Color(0xFF970c0f);
 const Color secondary = Color(0xFFf3f2f3);
 const Color third = Color(0xFF00192B);
 const Color white = Colors.white;

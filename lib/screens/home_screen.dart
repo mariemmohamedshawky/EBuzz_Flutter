@@ -1,3 +1,6 @@
+import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/moredata_screen.dart';
+import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).pushNamed(ProfileScreen.routeName);
                 },
                 child: Text('Profile'),
-                color: HexColor("#970C0F"),
+                color: primary,
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(100),
@@ -41,12 +44,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).pushNamed(SplashScreen.routeName);
                 },
                 child: Text('Logout'),
-                color: HexColor("#970C0F"),
+                color: primary,
                 textColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(100),
                 ),
                 padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
+              ),
+              CommonButton(
+                child: Text('More data'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MoreDataScreen()),
+                  );
+                },
               )
             ],
           ),

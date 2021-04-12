@@ -89,7 +89,7 @@ class _MassageScreenState extends State<MassageScreen> {
                   text: 'Conacts',
                   style: TextStyle(
                     fontSize: 15,
-                    color: HexColor("#970C0F"),
+                    color: primary,
                   ),
                   children: [
                     TextSpan(
@@ -103,7 +103,7 @@ class _MassageScreenState extends State<MassageScreen> {
                       text: 'help',
                       style: TextStyle(
                         fontSize: 15,
-                        color: HexColor("#970C0F"),
+                        color: primary,
                       ),
                     ),
                   ]),

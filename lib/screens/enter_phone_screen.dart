@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -90,12 +91,10 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                                 controller: _phoneController,
                                 decoration: InputDecoration(
                                   enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: HexColor("#970C0F")),
+                                    borderSide: BorderSide(color: primary),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: HexColor("#970C0F")),
+                                    borderSide: BorderSide(color: primary),
                                   ),
                                   hintText: "Enter Number",
                                   hintStyle: TextStyle(fontSize: 10),

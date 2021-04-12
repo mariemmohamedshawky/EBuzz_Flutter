@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -37,7 +38,7 @@ class CommonButton extends StatelessWidget {
         RaisedButton(
           onPressed: onPressed,
           child: child,
-          color: HexColor("#970C0F"),
+          color: primary,
           textColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(100),
@@ -67,7 +68,7 @@ class Footer extends StatelessWidget {
               text: 'Terms &Condations',
               style: TextStyle(
                 fontSize: 12,
-                color: HexColor("#970C0F"),
+                color: primary,
               ),
               children: [
                 TextSpan(
@@ -81,7 +82,7 @@ class Footer extends StatelessWidget {
                   text: 'Privecy policy',
                   style: TextStyle(
                     fontSize: 12,
-                    color: HexColor("#970C0F"),
+                    color: primary,
                   ),
                 ),
               ]),

@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -96,12 +97,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "Password",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -109,7 +108,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                       icon: Icon(passwordVisible
                                           ? Icons.visibility_off
                                           : Icons.visibility),
-                                      color: HexColor("#970C0F"),
+                                      color: primary,
                                       onPressed: () {
                                         setState(() {
                                           passwordVisible = !passwordVisible;
@@ -128,12 +127,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                 onSubmitted: (_) => _submitData(phone),
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "Confirm Password",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -141,7 +138,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                       icon: Icon(passwordVisible2
                                           ? Icons.visibility_off
                                           : Icons.visibility),
-                                      color: HexColor("#970C0F"),
+                                      color: primary,
                                       onPressed: () {
                                         setState(() {
                                           passwordVisible2 = !passwordVisible2;

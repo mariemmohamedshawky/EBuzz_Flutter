@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -135,12 +137,10 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "First Name",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -162,12 +162,10 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "Last Name",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -185,12 +183,10 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor("#970C0F")),
+                                      borderSide: BorderSide(color: primary),
                                     ),
                                     hintText: "Address",
                                     hintStyle: TextStyle(fontSize: 10),
@@ -198,6 +194,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
+                              //  SizedBox(height: 20),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 15),
@@ -216,7 +213,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     Flexible(
                                       fit: FlexFit.loose,
                                       child: RadioListTile(
-                                        activeColor: HexColor("#970C0F"),
+                                        activeColor: primary,
                                         title: Text(
                                           "Male",
                                           style: const TextStyle(
@@ -233,7 +230,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     Flexible(
                                       fit: FlexFit.loose,
                                       child: RadioListTile(
-                                        activeColor: HexColor("#970C0F"),
+                                        activeColor: primary,
                                         title: Text(
                                           "Female",
                                           style: const TextStyle(
@@ -250,6 +247,29 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   ],
                                 ),
                               ),
+                              Container(
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(100),
+                                  ),
+                                  color: secondary,
+                                  child: Text(
+                                    'Skip',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 10),
                               Container(
                                 child: CommonButton(
                                   child: Text('Continue'),

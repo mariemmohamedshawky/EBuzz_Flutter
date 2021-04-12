@@ -1,3 +1,4 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/screens/home_screen.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -44,7 +45,7 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       Icon(
                         Icons.check_circle,
                         size: 230,
-                        color: HexColor("#970C0F"),
+                        color: primary,
                       ),
                       SizedBox(height: 110),
                       Container(
