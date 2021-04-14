@@ -1,8 +1,8 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/contacts_screen.dart';
 import 'package:ebuzz/screens/moredata_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -59,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(builder: (context) => MoreDataScreen()),
                   );
                 },
-              )
+              ),
+              SeeContactsButton(),
             ],
           ),
         ),

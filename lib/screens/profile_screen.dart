@@ -31,9 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      //hena htro7 3la more date (old user)
-                      builder: (context) => MassageScreen()),
+                  MaterialPageRoute(builder: (context) => MassageScreen()),
                 );
               },
               child: Text(
