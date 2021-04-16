@@ -8,6 +8,7 @@ import '../providers/user.dart';
 import './verification_code_screen.dart';
 import './password_screen.dart';
 import '../components/warning_popup.dart';
+import '../components/change_language.dart';
 
 class EnterPhoneScreen extends StatefulWidget {
   static const String routeName = 'enter-phone-screen';
@@ -53,6 +54,7 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -69,19 +71,23 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
           elevation: 0.0,
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: Icon(Icons.language_rounded),
-              color: grey,
-              onPressed: () {
-                translator.setNewLanguage(
-                  context,
-                  newLanguage: translator.currentLanguage == 'ar' ? 'en' : 'ar',
-                  remember: true,
-                  restart: true,
-                );
-              },
-
-              // child: Text(translator.translate('buttonTitle')),
+            Row(
+              children: [
+                Text(
+                  user.locale == 'ar' ? 'عربي' : 'English',
+                  style: TextStyle(
+                    color: black,
+                    fontSize: 17,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.language_rounded),
+                  color: grey,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(ChangeLanguage.routeName);
+                  },
+                ),
+              ],
             ),
           ],
         ),

@@ -16,6 +16,7 @@ import './screens/moredata_screen.dart';
 import './screens/history_screen.dart';
 import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
+import './components/change_language.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,7 +72,7 @@ class _MyAppState extends State<MyApp> {
               CongratsScreen.routeName: (ctx) => CongratsScreen(),
               VerificationCodeScreen.routeName: (ctx) =>
                   VerificationCodeScreen(),
-              //'/MoreDataPage': (BuildContext context) => new MoreDataPage(),
+              ChangeLanguage.routeName: (ctx) => ChangeLanguage(),
             }),
       ),
     );

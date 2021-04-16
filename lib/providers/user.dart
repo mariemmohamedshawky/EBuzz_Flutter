@@ -17,6 +17,7 @@ class User with ChangeNotifier {
   int _userId;
   Timer _authTimer;
   bool _isExisit;
+  String locale = 'en';
 
   bool get isAuth {
     return token != null;
@@ -37,6 +38,11 @@ class User with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  Future setLocal(String locale) async {
+    this.locale = locale;
+    notifyListeners();
   }
 
   // --------------------------------- Check phone exist ---------------------------------

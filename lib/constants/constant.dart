@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 //apis url
-const String url = 'https://ebuzzgpp.000webhostapp.com/api';
+const String url = 'http://192.168.1.9:8000/api';
 
 //colors used in app
 const String appName = 'EBUZZ';
