@@ -1,12 +1,12 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import './new_password_screen.dart';
 import '../components/warning_popup.dart';
 
+// ignore: must_be_immutable
 class VerificationCodeScreen extends StatefulWidget {
   static const String routeName = 'verification-code-screen';
   String phone;
@@ -77,19 +77,12 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                       CommonText(),
                       SizedBox(height: 40),
                       Commontitle(
-                          child: Text(
                         'Enter Code',
-                        style: TextStyle(
-                          color: HexColor("#0B090A"),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
+                      ),
                       SizedBox(height: 20),
                       Text(
                         "We Send it to the number",
-                        style:
-                            TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
+                        style: TextStyle(color: grey, fontSize: 10),
                       ),
                       Container(
                         margin: EdgeInsets.all(70),

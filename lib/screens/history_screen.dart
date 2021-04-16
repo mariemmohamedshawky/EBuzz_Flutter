@@ -1,5 +1,5 @@
+import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class HistoryScreen extends StatefulWidget {
   static const String routeName = 'history-screen';
@@ -24,7 +24,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           title: Text(
             'History',
             style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                color: black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           actions: [
             TextButton(
@@ -37,7 +37,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               child: Text(
                 'Cancel',
                 style: TextStyle(
-                  color: HexColor("#B1A7A6"),
+                  color: grey,
                   fontSize: 10,
                 ),
               ),

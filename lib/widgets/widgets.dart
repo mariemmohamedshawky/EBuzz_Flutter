@@ -13,16 +13,16 @@ class CommonText extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
-class Commontitle extends StatelessWidget {
-  Commontitle({this.child});
-  Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: child,
-    );
-  }
+// ignore: non_constant_identifier_names
+Widget Commontitle(child) {
+  return Text(
+    "$child",
+    style: TextStyle(
+      color: black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+  );
 }
 
 // ignore: must_be_immutable

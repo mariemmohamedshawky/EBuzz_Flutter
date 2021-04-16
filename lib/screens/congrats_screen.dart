@@ -1,7 +1,7 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/screens/home_screen.dart';
-import 'package:hexcolor/hexcolor.dart';
+
 import 'package:ebuzz/widgets/widgets.dart';
 
 // ignore: camel_case_types
@@ -28,19 +28,12 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       CommonText(),
                       SizedBox(height: 40),
                       Commontitle(
-                          child: Text(
                         'congrats!',
-                        style: TextStyle(
-                          color: HexColor("#0B090A"),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
+                      ),
                       SizedBox(height: 30),
                       Text(
                         "Your account already to build",
-                        style:
-                            TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
+                        style: TextStyle(color: grey, fontSize: 10),
                       ),
                       Icon(
                         Icons.check_circle,
@@ -55,7 +48,6 @@ class _CongratsScreenState extends State<CongratsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  //هنا هيودي علي صفحة congrats
                                   builder: (context) => HomeScreen()),
                             );
                           },

@@ -1,7 +1,6 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -35,7 +34,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: HexColor("#B1A7A6"),
+            color: grey,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -46,7 +45,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         title: Text(
           'Contacts',
           style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+              color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
           TextButton(
@@ -56,7 +55,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             child: Text(
               'Cancel',
               style: TextStyle(
-                color: HexColor("#B1A7A6"),
+                color: grey,
                 fontSize: 10,
               ),
             ),

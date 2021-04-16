@@ -1,7 +1,7 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import './home_screen.dart';
@@ -68,14 +68,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                             CommonText(),
                             SizedBox(height: 60),
                             Commontitle(
-                                child: Text(
-                              'Enter Passward',
-                              style: TextStyle(
-                                color: HexColor("#0B090A"),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                              translator.translate(
+                                'Title',
                               ),
-                            )),
+                            ),
                             Text(phone),
                             SizedBox(height: 40),
                             Container(

@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -112,14 +111,8 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                               CommonText(),
                               SizedBox(height: 40),
                               Commontitle(
-                                  child: Text(
                                 'More Data',
-                                style: TextStyle(
-                                  color: HexColor("#0B090A"),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
+                              ),
                               SizedBox(height: 20),
                               Center(
                                 child: ProfileImagePicker(_pickedImage),

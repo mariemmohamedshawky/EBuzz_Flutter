@@ -1,6 +1,5 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import './massage_screen.dart';
 
@@ -24,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text(
             'Ptofile',
             style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                color: black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           actions: [
             TextButton(
@@ -37,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Text(
                 'Done',
                 style: TextStyle(
-                  color: HexColor("#B1A7A6"),
+                  color: grey,
                   fontSize: 10,
                 ),
               ),
@@ -57,8 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'Name',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(
@@ -81,8 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'Phone Number',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(
@@ -105,8 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'Location',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(
@@ -129,8 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'Date of birth',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(
@@ -153,8 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'Gender',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(
@@ -177,8 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 1, 20, 1),
                         child: Text(
                           'About',
-                          style: TextStyle(
-                              color: HexColor("#B1A7A6"), fontSize: 10),
+                          style: TextStyle(color: grey, fontSize: 10),
                         ),
                       ),
                       Container(

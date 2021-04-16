@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 import './providers/user.dart';
 import './screens/splash_screen.dart';
@@ -16,13 +17,26 @@ import './screens/history_screen.dart';
 import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
-  runApp(MyApp());
+  await translator.init(
+    localeDefault: LocalizationDefaultType.device,
+    languagesList: <String>['ar', 'en'],
+    assetsDirectory: 'assets/langs/',
+    apiKeyGoogle: '<Key>', // NOT YET TESTED
+  );
+  // intialize
+
+  runApp(LocalizedApp(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -40,6 +54,9 @@ class MyApp extends StatelessWidget {
                     future: auth.tryAutoLogin(),
                     builder: (ctx, authResultSnapshot) => SplashScreen(),
                   ),
+            localizationsDelegates: translator.delegates,
+            locale: translator.locale,
+            supportedLocales: translator.locals(),
             routes: <String, WidgetBuilder>{
               NewPasswordScreen.routeName: (ctx) => NewPasswordScreen(),
               PasswordScreen.routeName: (ctx) => PasswordScreen(),

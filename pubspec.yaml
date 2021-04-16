@@ -42,6 +42,7 @@ dependencies:
   permission_handler: ^5.0.0
   contacts_service: ^0.3.10
   url_launcher: ^5.4.2
+  localize_and_translate: any
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/langs/en.json
+    - assets/langs/ar.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

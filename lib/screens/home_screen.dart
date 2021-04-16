@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Text('Profile'),
                 color: primary,
-                textColor: Colors.white,
+                textColor: white,
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(100),
                 ),

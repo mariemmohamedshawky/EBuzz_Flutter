@@ -1,7 +1,6 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/screens/history_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class MassageScreen extends StatefulWidget {
   static const String routeName = 'masssage-screen';
@@ -23,7 +22,7 @@ class _MassageScreenState extends State<MassageScreen> {
           title: Text(
             'Massege',
             style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                color: black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           actions: [
             TextButton(
@@ -36,7 +35,7 @@ class _MassageScreenState extends State<MassageScreen> {
               child: Text(
                 'Done',
                 style: TextStyle(
-                  color: HexColor("#B1A7A6"),
+                  color: grey,
                   fontSize: 10,
                 ),
               ),
@@ -80,7 +79,7 @@ class _MassageScreenState extends State<MassageScreen> {
               child: Text("This is your message that send to",
                   style: TextStyle(
                     fontSize: 12,
-                    color: HexColor("#B1A7A6"),
+                    color: grey,
                   )),
             ),
             RichText(
@@ -96,7 +95,7 @@ class _MassageScreenState extends State<MassageScreen> {
                       text: ' To get  ',
                       style: TextStyle(
                         fontSize: 15,
-                        color: HexColor("#B1A7A6"),
+                        color: grey,
                       ),
                     ),
                     TextSpan(
