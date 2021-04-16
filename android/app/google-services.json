@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "543621394947",
+    "project_id": "ebuzz-fd63c",
+    "storage_bucket": "ebuzz-fd63c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543621394947:android:ec05180bca373c47109436",
+        "android_client_info": {
+          "package_name": "com.example.ebuzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543621394947-4vbo63jttrdj5okg0brb6s1ec8iqg6dn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ebuzz",
+            "certificate_hash": "37a9041d2bd82c530b2591e83ac3d5dc6e1220d1"
+          }
+        },
+        {
+          "client_id": "543621394947-6onp314k99vab3qc39tso358c4gu7tm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ8yFQMFEgNylq86UpvZ-HApCoRKvkGXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543621394947-6onp314k99vab3qc39tso358c4gu7tm9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

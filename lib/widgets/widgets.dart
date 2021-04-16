@@ -1,0 +1,93 @@
+import 'package:ebuzz/constants/constant.dart';
+import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+
+// ignore: must_be_immutable
+class CommonText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "EBUZZ",
+      style: TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class Commontitle extends StatelessWidget {
+  Commontitle({this.child});
+  Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: child,
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class CommonButton extends StatelessWidget {
+  CommonButton({this.child, this.onPressed});
+  Widget child;
+  Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        RaisedButton(
+          onPressed: onPressed,
+          child: child,
+          color: primary,
+          textColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(100),
+          ),
+          padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
+        ),
+      ],
+    );
+  }
+}
+
+class Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Text("By Continuing you agree to accept our",
+              style: TextStyle(
+                fontSize: 10,
+                color: HexColor("#B1A7A6"),
+              )),
+        ),
+        RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'Terms &Condations',
+              style: TextStyle(
+                fontSize: 12,
+                color: primary,
+              ),
+              children: [
+                TextSpan(
+                  text: ' and ',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: HexColor("#B1A7A6"),
+                  ),
+                ),
+                TextSpan(
+                  text: 'Privecy policy',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: primary,
+                  ),
+                ),
+              ]),
+        ),
+      ],
+    );
+  }
+}
