@@ -11,6 +11,8 @@ class ContactsScreen extends StatefulWidget {
 
 class _ContactsScreenState extends State<ContactsScreen> {
   Iterable<Contact> _contacts;
+  List<int> selectedContacts = [];
+  List<String> selectedContactsPhone = [];
 
   @override
   void initState() {
@@ -88,11 +90,33 @@ class _ContactsScreenState extends State<ContactsScreen> {
                           //  backgroundColor: Theme.of(context).accentColor,
                           backgroundColor: primary,
                         ),
-                  title: Text(contact.displayName ?? '',
-                      style: TextStyle(
-                        color: black,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  title: Container(
+                    color: selectedContacts.contains(index)
+                        ? Colors.green
+                        : Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedContacts.add(index);
+                          selectedContactsPhone
+                              .add(contact.phones.first.value.toString());
+                        });
+                        print(selectedContactsPhone);
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(contact.displayName ?? '',
+                              style: TextStyle(
+                                color: black,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Text(contact.phones.first.value.toString() ?? '',
+                              style: TextStyle(color: black, fontSize: 14)),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               },
             )
