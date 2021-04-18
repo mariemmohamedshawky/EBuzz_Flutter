@@ -1,4 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:ebuzz/screens/activity_screen.dart';
+import 'package:ebuzz/screens/home_screen.dart';
+import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -131,6 +134,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     )),
               ),
             ),
+          ),
+          CommonButton(
+            child: Text('Home'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            },
+          ),
+          CommonButton(
+            child: Text('activity'),
+            onPressed: () {
+              Navigator.of(context).pushNamed(ActivityScreen.routeName);
+            },
           ),
         ],
       ),

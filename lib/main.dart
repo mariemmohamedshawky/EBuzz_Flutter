@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 import './providers/user.dart';
+import './screens/activity_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
 import './screens/new_password_screen.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
               MoreDataScreen.routeName: (ctx) => MoreDataScreen(),
               HistoryScreen.routeName: (ctx) => HistoryScreen(),
               CongratsScreen.routeName: (ctx) => CongratsScreen(),
+              ActivityScreen.routeName: (ctx) => ActivityScreen(),
               VerificationCodeScreen.routeName: (ctx) =>
                   VerificationCodeScreen(),
               ChangeLanguage.routeName: (ctx) => ChangeLanguage(),
