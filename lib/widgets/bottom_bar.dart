@@ -25,7 +25,7 @@ class ButtomBarCommon extends StatelessWidget {
         ),
         TabItem(
           icon: Icon(
-            Icons.beenhere_sharp,
+            Icons.verified_user,
             color: primary,
           ),
         ),

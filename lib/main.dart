@@ -1,3 +1,4 @@
+import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ import './screens/moredata_screen.dart';
 import './screens/history_screen.dart';
 import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
+import './screens/notification_screen.dart';
 import './components/change_language.dart';
 
 Future<void> main() async {
@@ -75,6 +77,7 @@ class _MyAppState extends State<MyApp> {
               VerificationCodeScreen.routeName: (ctx) =>
                   VerificationCodeScreen(),
               ChangeLanguage.routeName: (ctx) => ChangeLanguage(),
+              NotificationScreen.routeName: (ctx) => NotificationScreen(),
             }),
       ),
     );

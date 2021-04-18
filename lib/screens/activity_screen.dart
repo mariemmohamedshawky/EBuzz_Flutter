@@ -6,9 +6,9 @@ import 'package:ebuzz/constants/constant.dart';
 
 class ActivityScreen extends StatefulWidget {
   static const String routeName = 'activity-screen';
-  ActivityScreen({Key key, this.title}) : super(key: key);
+  //ActivityScreen({Key key}) : super(key: key);
 
-  final String title;
+  //final String title;
 
   @override
   _ActivityScreenState createState() => _ActivityScreenState();
@@ -31,11 +31,22 @@ class _ActivityScreenState extends State<ActivityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: grey,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
-        title: Commontitle('Activity'),
-        centerTitle: true,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 0.1),
+          child: Commontitle('Activity'),
+        ),
+
+        // centerTitle: false,
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {

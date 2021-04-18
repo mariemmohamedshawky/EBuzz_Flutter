@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:ebuzz/screens/activity_screen.dart';
 import 'package:ebuzz/screens/home_screen.dart';
+import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -148,6 +149,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             child: Text('activity'),
             onPressed: () {
               Navigator.of(context).pushNamed(ActivityScreen.routeName);
+            },
+          ),
+          CommonButton(
+            child: Text('Notification'),
+            onPressed: () {
+              Navigator.of(context).pushNamed(NotificationScreen.routeName);
             },
           ),
         ],
