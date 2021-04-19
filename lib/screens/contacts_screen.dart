@@ -128,7 +128,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
 class SeeContactsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return TextButton(
       onPressed: () async {
         final PermissionStatus permissionStatus = await _getPermission();
         if (permissionStatus == PermissionStatus.granted) {
@@ -151,7 +151,12 @@ class SeeContactsButton extends StatelessWidget {
                   ));
         }
       },
-      child: Container(child: Text('Get Contacts')),
+      child: Text(
+        'Contacts',
+        style: TextStyle(
+          color: black,
+        ),
+      ),
     );
   }
 

@@ -1,4 +1,8 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/contacts_screen.dart';
+import 'package:ebuzz/screens/history_screen.dart';
+import 'package:ebuzz/screens/massage_screen.dart';
+import 'package:ebuzz/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -52,12 +56,14 @@ class MyDrawer extends StatelessWidget {
         height: 8.0,
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(ProfileScreen.routeName);
+        },
         leading: Icon(
           Icons.person,
           color: grey,
         ),
-        title: Text("Profile"),
+        title: Text("  Profile"),
       ),
       ListTile(
         onTap: () {},
@@ -65,23 +71,31 @@ class MyDrawer extends StatelessWidget {
           Icons.contact_phone,
           color: grey,
         ),
-        title: Text("Contacts"),
+        title: Row(
+          children: [
+            SeeContactsButton(),
+          ],
+        ),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(MassageScreen.routeName);
+        },
         leading: Icon(
           Icons.message,
           color: grey,
         ),
-        title: Text("Message"),
+        title: Text("  Message"),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(HistoryScreen.routeName);
+        },
         leading: Icon(
           Icons.history,
           color: grey,
         ),
-        title: Text("History"),
+        title: Text("  History"),
       ),
     ]);
   }
