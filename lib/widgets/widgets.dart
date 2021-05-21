@@ -35,15 +35,17 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: primary,
+            textStyle: new TextStyle(color: Colors.white),
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(100),
+            ),
+            padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
+          ),
           onPressed: onPressed,
           child: child,
-          color: primary,
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(100),
-          ),
-          padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
         ),
       ],
     );

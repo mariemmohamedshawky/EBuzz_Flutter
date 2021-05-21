@@ -65,11 +65,13 @@ class WarningPopup {
                   margin: EdgeInsets.only(
                     top: mediaQuery.size.height * 0.01,
                   ),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                    color: Colors.white,
                     onPressed: () {
                       if (sussess) {
                         Navigator.of(context).pop();

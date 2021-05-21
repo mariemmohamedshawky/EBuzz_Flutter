@@ -1,4 +1,3 @@
-import 'package:ebuzz/screens/contacts_screen.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -46,7 +46,6 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _lastNameFocusNode.dispose();
     _imageUrlController.dispose();
     _imageUrlFocusNode.dispose();
@@ -241,12 +240,14 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                 ),
                               ),
                               Container(
-                                child: FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(100),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: secondary,
+                                    shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(100),
+                                    ),
                                   ),
-                                  color: secondary,
                                   child: Text(
                                     'Skip',
                                     style: TextStyle(

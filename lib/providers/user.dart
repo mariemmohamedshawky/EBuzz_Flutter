@@ -47,7 +47,7 @@ class User with ChangeNotifier {
 
   // --------------------------------- Check phone exist ---------------------------------
   Future checkPhoneExist(String phone) async {
-    final apiLink = '$url/v1/user/check-phone-exist';
+    Uri apiLink = Uri.http(url, '/v1/user/check-phone-exist');
     print(apiLink); // during development cycle
     errorMessage = '';
     try {
@@ -104,7 +104,7 @@ class User with ChangeNotifier {
 
   Future _authenticate(String phone, String password,
       String passwordConfirmation, String type) async {
-    final apiLink = '$url/v1/user/$type';
+    Uri apiLink = Uri.http(url, '/v1/user/$type');
     errorMessage = '';
     Map<String, dynamic> authData;
     if (type == 'register') {

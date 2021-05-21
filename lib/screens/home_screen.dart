@@ -1,13 +1,11 @@
 import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/constants/constant.dart';
-import 'package:ebuzz/screens/contacts_screen.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
-import './profile_screen.dart';
 import './splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               child: Row(children: [
                 Expanded(
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       setState(() {
                         print('left button ');
@@ -56,19 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ]),
             ),
-            // RaisedButton(
-            //   onPressed: () async {
-            //     await Provider.of<User>(context, listen: false).logout();
-            //     Navigator.of(context).pushNamed(SplashScreen.routeName);
-            //   },
-            //   child: Text('Logout'),
-            //   color: primary,
-            //   textColor: Colors.white,
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: new BorderRadius.circular(100),
-            //   ),
-            //   padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
-            // ),
+            ElevatedButton(
+              onPressed: () async {
+                await Provider.of<User>(context, listen: false).logout();
+                Navigator.of(context).pushNamed(SplashScreen.routeName);
+              },
+              child: Text('Logout'),
+              style: ElevatedButton.styleFrom(
+                primary: primary,
+                textStyle: new TextStyle(color: Colors.white),
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(100),
+                ),
+                padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
+              ),
+            ),
             // SeeContactsButton(),
           ],
         ),

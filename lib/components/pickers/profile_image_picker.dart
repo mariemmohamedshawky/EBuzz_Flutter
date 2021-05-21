@@ -50,16 +50,16 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
                 SizedBox(
                   height: mediaQuery.size.height * 0.05,
                 ),
-                FlatButton(
-                  textColor: theme.primaryColor,
+                TextButton(
+                  style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     'use Camera',
                     style: theme.textTheme.bodyText1,
                   ),
                   onPressed: () => getImages(context, ImageSource.camera),
                 ),
-                FlatButton(
-                  textColor: theme.primaryColor,
+                TextButton(
+                  style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     "use Gallary",
                     style: theme.textTheme.bodyText1,
@@ -81,10 +81,10 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
           backgroundColor: Colors.grey,
           backgroundImage: _image != null ? FileImage(_image) : null,
         ),
-        FlatButton.icon(
+        TextButton.icon(
           icon: Icon(Icons.image),
           label: Text('Add Image'),
-          textColor: primary,
+          style: TextButton.styleFrom(primary: primary),
           onPressed: () {
             _openImagePicker(
                 context, Theme.of(context), MediaQuery.of(context));
