@@ -38,6 +38,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
     } catch (error) {
+      print(error);
       WarningPopup.showWarningDialog(
           context, false, 'SomeThing Went Wrong', () {});
       return;

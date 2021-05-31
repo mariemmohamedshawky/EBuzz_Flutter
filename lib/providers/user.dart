@@ -47,7 +47,7 @@ class User with ChangeNotifier {
 
   // --------------------------------- Check phone exist ---------------------------------
   Future checkPhoneExist(String phone) async {
-    Uri apiLink = Uri.http(url, '/v1/user/check-phone-exist');
+    Uri apiLink = Uri.https(url, '/api/v1/user/check-phone-exist');
     print(apiLink); // during development cycle
     errorMessage = '';
     try {
@@ -104,7 +104,7 @@ class User with ChangeNotifier {
 
   Future _authenticate(String phone, String password,
       String passwordConfirmation, String type) async {
-    Uri apiLink = Uri.http(url, '/v1/user/$type');
+    Uri apiLink = Uri.https(url, '/api/v1/user/$type');
     errorMessage = '';
     Map<String, dynamic> authData;
     if (type == 'register') {
@@ -193,7 +193,7 @@ class User with ChangeNotifier {
   ) async {
     try {
       final imageUploadRequest = http.MultipartRequest(
-          'POST', Uri.parse("$url/v1/user/profile/update"));
+          'POST', Uri.https(url, "/api/v1/user/profile/update"));
       errorMessage = '';
       if (image != null) {
         imageUploadRequest.files.add(await http.MultipartFile.fromPath(
