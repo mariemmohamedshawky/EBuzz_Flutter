@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 import './providers/user.dart';
+import './providers/contact.dart';
 import './screens/activity_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
@@ -49,6 +50,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => User(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Contact(),
         ),
       ],
       child: Consumer<User>(

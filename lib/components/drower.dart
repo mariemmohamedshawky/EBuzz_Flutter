@@ -1,15 +1,22 @@
-import 'package:ebuzz/constants/constant.dart';
-import 'package:ebuzz/screens/contacts_screen.dart';
-import 'package:ebuzz/screens/history_screen.dart';
-import 'package:ebuzz/screens/massage_screen.dart';
-import 'package:ebuzz/screens/profile_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../constants/constant.dart';
+import '../providers/user.dart';
+import '../screens/contacts_screen.dart';
+import '../screens/history_screen.dart';
+import '../screens/massage_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Column(children: [
       Container(
         // margin: EdgeInsets.all(10),
@@ -25,16 +32,14 @@ class MyDrawer extends StatelessWidget {
                   backgroundColor: grey,
                   child: CircleAvatar(
                     radius: 48,
-                    backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1594616838951-c155f8d978a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-                    ),
+                    backgroundImage: NetworkImage(user.userData.photo),
                   ),
                 ),
                 SizedBox(
                   height: 5.0,
                 ),
                 Text(
-                  "Amr Rudy",
+                  '${user.userData.firstName} ${user.userData.lastName}',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
@@ -66,16 +71,23 @@ class MyDrawer extends StatelessWidget {
         title: Text("  Profile"),
       ),
       ListTile(
-        onTap: () {},
+        onTap: () async {
+          final PermissionStatus permissionStatus = await _getPermission();
+          if (permissionStatus == PermissionStatus.granted) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ContactsScreen()));
+          } else {
+            if (await Permission.contacts.request().isGranted) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ContactsScreen()));
+            }
+          }
+        },
         leading: Icon(
           Icons.contact_phone,
           color: grey,
         ),
-        title: Row(
-          children: [
-            SeeContactsButton(),
-          ],
-        ),
+        title: Text("  Contact"),
       ),
       ListTile(
         onTap: () {
@@ -97,6 +109,30 @@ class MyDrawer extends StatelessWidget {
         ),
         title: Text("  History"),
       ),
+      ListTile(
+        onTap: () async {
+          await Provider.of<User>(context, listen: false).logout();
+          Navigator.of(context).pushNamed(SplashScreen.routeName);
+        },
+        leading: Icon(
+          Icons.logout,
+          color: grey,
+        ),
+        title: Text("  Logout"),
+      ),
     ]);
+  }
+
+  //Check contacts permission
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ?? PermissionStatus.granted;
+    } else {
+      return permission;
+    }
   }
 }

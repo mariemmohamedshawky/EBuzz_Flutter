@@ -3,10 +3,6 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/user.dart';
-import './splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home-screen';
@@ -54,22 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ]),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await Provider.of<User>(context, listen: false).logout();
-                Navigator.of(context).pushNamed(SplashScreen.routeName);
-              },
-              child: Text('Logout'),
-              style: ElevatedButton.styleFrom(
-                primary: primary,
-                textStyle: new TextStyle(color: Colors.white),
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(100),
-                ),
-                padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
-              ),
-            ),
-            // SeeContactsButton(),
           ],
         ),
       ),

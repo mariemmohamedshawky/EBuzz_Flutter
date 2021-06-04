@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constant.dart';
+import '../models/user_model.dart';
 
 class User with ChangeNotifier {
   String _token, errorMessage = '';
@@ -17,6 +18,7 @@ class User with ChangeNotifier {
   int _userId;
   Timer _authTimer;
   bool _isExisit;
+  UserModel userData = UserModel();
   String locale = 'en';
 
   bool get isAuth {
@@ -150,6 +152,7 @@ class User with ChangeNotifier {
             },
           );
           prefs.setString('userData', userData);
+          getUserDate(); // get the user data and asign it into the model
           return true;
         } else if (responseData['errNum'] == "401") {
           if (responseData['msg'].containsKey('phone')) {
@@ -172,6 +175,55 @@ class User with ChangeNotifier {
         return false;
       }
       //------------- end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
+  // ------------------------------------------------------------------
+
+  // --------------------------------- Get User Data ---------------------------------
+  Future getUserDate() async {
+    Uri apiLink = Uri.https(url, '/api/v1/user/profile');
+    print(apiLink); // during development cycle
+    errorMessage = '';
+    try {
+      final response = await http.get(
+        apiLink,
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+      );
+      print(response.body); // during development cycle
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      //-------------start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
+          userData = UserModel(
+              phone: responseData['data']['phone'],
+              address: responseData['data']['address'],
+              gender: responseData['data']['gender'],
+              dateOfBirth: responseData['data']['date_of_birth'],
+              smsAlert: responseData['data']['sms_alert'],
+              firstName: responseData['data']['first_name'],
+              lastName: responseData['data']['last_name'],
+              photo: responseData['data']['photo']);
+          return true;
+        } else if (responseData['errNum'] == "401") {
+          return false;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return false;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return false;
+      }
+      //-------------end error handling -------------
 
     } catch (error) {
       print(error); // during development cycle
@@ -223,6 +275,7 @@ class User with ChangeNotifier {
       //------------- start error handling -------------
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseData['errNum'] == "200") {
+          getUserDate();
           notifyListeners();
           return true;
         } else if (responseData['errNum'] == "401") {
@@ -261,7 +314,53 @@ class User with ChangeNotifier {
       return false;
     }
   }
+  // ------------------------------------------------------------------
 
+  // ---------------- update smsAlert ------------------------------------
+  Future changeMassage(String smsAlert) async {
+    Uri apiLink = Uri.https(url, '/api/v1/user/profile/update_sms_alert');
+    print(apiLink); // during development cycle
+    errorMessage = '';
+    try {
+      final response = await http.post(
+        apiLink,
+        body: json.encode(
+          {
+            'sms_alert': smsAlert,
+          },
+        ),
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+      );
+      print(response.body); // during development cycle
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      //-------------start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
+          userData.smsAlert = smsAlert;
+          notifyListeners();
+          return true;
+        } else if (responseData['errNum'] == "401") {
+          return false;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return false;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return false;
+      }
+      //-------------end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
   // ------------------------------------------------------------------
 
 // ----------------------------- Logout -----------------------------
@@ -295,6 +394,7 @@ class User with ChangeNotifier {
     _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
     _expiryDate = expiryDate;
+    getUserDate(); // get the user data and asign it into the model
     notifyListeners();
     _autoLogout();
     return true;
