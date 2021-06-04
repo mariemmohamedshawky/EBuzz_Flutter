@@ -1,9 +1,11 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DateOfBirthPicker extends StatefulWidget {
   final void Function(DateTime date) dateTimePickFn;
@@ -15,6 +17,14 @@ class DateOfBirthPicker extends StatefulWidget {
 
 class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
   DateTime _selectedDate;
+  final _selectedDateFocus = FocusNode();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _selectedDateFocus.dispose();
+    super.dispose();
+  }
 
   void _presentDatePicker() {
     showRoundedDatePicker(
@@ -37,6 +47,7 @@ class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User>(context);
     final dateformat = new DateFormat('yyyy-MM-dd');
     return Container(
       margin: EdgeInsets.fromLTRB(2, 0, 2, 0),
@@ -44,6 +55,7 @@ class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
         children: [
           TextField(
             readOnly: true,
+            focusNode: _selectedDateFocus,
             decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: HexColor("#970C0F")),
@@ -57,7 +69,7 @@ class _DateOfBirthPickerState extends State<DateOfBirthPicker> {
                   color: grey,
                 ),
                 hintText: _selectedDate == null
-                    ? 'Not Date Chosen!'
+                    ? user.userData.dateOfBirth
                     : 'Date: ${dateformat.format(_selectedDate)}',
                 hintStyle: TextStyle(
                   fontSize: 10,

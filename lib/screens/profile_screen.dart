@@ -10,11 +10,15 @@ import 'package:provider/provider.dart';
 import '../providers/user.dart';
 import '../components/warning_popup.dart';
 
+enum Gender { male, female }
+
 class ProfileScreen extends StatefulWidget {
   static const String routeName = 'profile-screen';
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
+
+enum genderEnum { male, female }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _form = GlobalKey<FormState>();
@@ -26,6 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   DateTime _selectedDate;
   File _image;
   var _isLoading = false;
+  var user;
+  var _isInit = true;
 
   changeGender(value) {
     setState(() {
@@ -42,8 +48,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      user = Provider.of<User>(context);
+      _gender = user.userData.gender;
+      _userFirstname = user.userData.firstName;
+      _userLastname = user.userData.lastName;
+      _userAddress = user.userData.address;
+      _selectedDate = DateTime.parse(user.userData.dateOfBirth);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
-   
     _lastNameFocusNode.dispose();
     _imageUrlController.dispose();
     _imageUrlFocusNode.dispose();
@@ -105,12 +124,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           actions: [
             TextButton(
               onPressed: () => _saveForm(),
-              child: Text(
-                'Done',
-                style: TextStyle(
-                  color: grey,
-                  fontSize: 10,
-                ),
+              child: Icon(
+                Icons.check_circle_outline,
+                color: Colors.green[300],
+                size: 30,
               ),
             ),
           ],
@@ -146,12 +163,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 40,
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
+                                  initialValue: _userFirstname,
                                   onFieldSubmitted: (_) {
                                     FocusScope.of(context)
                                         .requestFocus(_lastNameFocusNode);
                                   },
                                   onSaved: (value) {
-                                    _userFirstname = value;
+                                    setState(() {
+                                      _userFirstname = value;
+                                    });
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -177,13 +197,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 40,
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
+                                  initialValue: _userLastname,
                                   focusNode: _lastNameFocusNode,
                                   onFieldSubmitted: (_) {
                                     FocusScope.of(context)
                                         .requestFocus(_addressFocusNode);
                                   },
                                   onSaved: (value) {
-                                    _userLastname = value;
+                                    setState(() {
+                                      _userLastname = value;
+                                    });
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
@@ -209,9 +232,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 40,
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
+                                  initialValue: _userAddress,
                                   focusNode: _addressFocusNode,
                                   onSaved: (value) {
-                                    _userAddress = value;
+                                    setState(() {
+                                      _userAddress = value;
+                                    });
                                   },
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(

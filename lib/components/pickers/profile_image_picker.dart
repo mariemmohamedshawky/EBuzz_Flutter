@@ -1,7 +1,9 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ProfileImagePicker extends StatefulWidget {
   final void Function(File pickedImage) imagePickFn;
@@ -74,12 +76,15 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Column(
       children: [
         CircleAvatar(
           radius: 40,
           backgroundColor: Colors.grey,
-          backgroundImage: _image != null ? FileImage(_image) : null,
+          backgroundImage: _image != null
+              ? FileImage(_image)
+              : NetworkImage(user.userData.photo),
         ),
         TextButton.icon(
           icon: Icon(Icons.image),
