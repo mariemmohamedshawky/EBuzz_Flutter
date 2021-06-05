@@ -18,8 +18,9 @@ class Notification with ChangeNotifier {
   }
 
 // --------------------------------- View Contacts ---------------------------------
-  Future viewNotifications() async {
-    Uri apiLink = Uri.https(url, '/api/v1/user/notifications');
+  Future viewNotifications(int page) async {
+    Uri apiLink =
+        Uri.https(url, '/api/v1/user/notifications', {'page': '$page'});
     print(apiLink); // during development cycle
     errorMessage = '';
     try {

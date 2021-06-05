@@ -18,11 +18,20 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   var _isLoading = false;
+  var _isInit = true;
+  var myNotifications;
+  int page = 2;
 
   @override
-  void initState() {
-    getNotifications();
-    super.initState();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_isInit) {
+      getNotifications();
+    }
+    setState(() {
+      _isInit = false;
+    });
+    super.didChangeDependencies();
   }
 
   Future<void> getNotifications() async {
@@ -33,7 +42,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
     try {
       await Provider.of<notificationProvider.Notification>(context,
               listen: false)
-          .viewNotifications();
+          .viewNotifications(page);
+      myNotifications =
+          Provider.of<notificationProvider.Notification>(context, listen: false)
+              .items;
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
@@ -48,8 +60,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myNotifications =
-        Provider.of<notificationProvider.Notification>(context).items;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -89,7 +99,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         children: [
                           TextSpan(
                               text:
-                                  '${emergency.road}, ${emergency.city}, ${emergency.country}, ${emergency.state}, ${emergency.countryCode} (${emergency.latitude}, ${emergency.longitude})',
+                                  '${emergency.road}, ${emergency.city}, ${emergency.country}, ${emergency.state}, ${emergency.countryCode} (${emergency.latitude}, ${emergency.longitude}), ${emergency.date}',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                               )),

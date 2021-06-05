@@ -94,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             margin: EdgeInsets.all(5),
                             child: Padding(
                               child: Text(
-                                '${myEmergencies[index].road}, ${myEmergencies[index].city}, ${myEmergencies[index].country}, ${myEmergencies[index].state}, ${myEmergencies[index].countryCode} (${myEmergencies[index].latitude}, ${myEmergencies[index].longitude})',
+                                '${myEmergencies[index].road}, ${myEmergencies[index].city}, ${myEmergencies[index].country}, ${myEmergencies[index].state}, ${myEmergencies[index].countryCode} (${myEmergencies[index].latitude}, ${myEmergencies[index].longitude}), ${myEmergencies[index].date}',
                                 style: TextStyle(fontSize: 10.0),
                               ),
                               padding: EdgeInsets.all(20.0),
