@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
 import '../components/pickers/profile_image_picker.dart';
-import '../components/pickers/dateofbirth_picker.dart';
 import '../components/warning_popup.dart';
 import './congrats_screen.dart';
 
@@ -23,10 +22,11 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
   final _form = GlobalKey<FormState>();
   final _lastNameFocusNode = FocusNode();
   final _addressFocusNode = FocusNode();
+  final _ageFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   String _userFirstname, _userLastname, _userAddress, _gender;
-  DateTime _selectedDate;
+  int _userAge;
   File _image;
   var _isLoading = false;
 
@@ -38,10 +38,6 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
 
   void _pickedImage(File image) {
     _image = image;
-  }
-
-  void _pickedDate(DateTime date) {
-    _selectedDate = date;
   }
 
   @override
@@ -64,7 +60,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
         _userFirstname,
         _userLastname,
         _userAddress,
-        _selectedDate,
+        _userAge,
         _gender,
       );
       if (success) {
@@ -170,6 +166,10 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
                                   focusNode: _addressFocusNode,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_ageFocusNode);
+                                  },
                                   onSaved: (value) {
                                     _userAddress = value;
                                   },
@@ -186,11 +186,25 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
-                              //  SizedBox(height: 20),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                child: DateOfBirthPicker(_pickedDate),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: TextFormField(
+                                  focusNode: _ageFocusNode,
+                                  onSaved: (value) {
+                                    _userAge = int.parse(value);
+                                  },
+                                  decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: primary),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: primary),
+                                    ),
+                                    hintText: "Age",
+                                    hintStyle: TextStyle(fontSize: 10),
+                                  ),
+                                  keyboardType: TextInputType.streetAddress,
+                                ),
                               ),
                               SizedBox(height: 20),
                               Container(

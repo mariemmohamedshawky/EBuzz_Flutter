@@ -20,6 +20,7 @@ import './screens/history_screen.dart';
 import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
 import './screens/notification_screen.dart';
+import './screens/call_screen.dart';
 //import './screens/contacts_screen.dart';
 
 import './components/change_language.dart';
@@ -86,6 +87,7 @@ class _MyAppState extends State<MyApp> {
                   VerificationCodeScreen(),
               ChangeLanguage.routeName: (ctx) => ChangeLanguage(),
               NotificationScreen.routeName: (ctx) => NotificationScreen(),
+              CallScreen.routeName: (ctx) => CallScreen(),
             }),
       ),
     );

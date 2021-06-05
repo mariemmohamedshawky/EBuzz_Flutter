@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xml2json/xml2json.dart';
 
 import '../constants/constant.dart';
 import '../models/user_model.dart';
@@ -74,6 +74,90 @@ class User with ChangeNotifier {
           if (responseData['msg'].containsKey('phone')) {
             errorMessage += "${responseData['msg']['phone'][0]}\n";
           }
+          return false;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return false;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return false;
+      }
+      //-------------end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
+  // ------------------------------------------------------------------
+
+  // --------------------------------- Update current location ---------------------------------
+  Future updateLocation(double latitude, double longitude) async {
+    //get location from lat and long
+    var accessToken = 'pk.dde569fb191eb2551d4f78ff122ffc0d';
+    String country, countryCode, state, city, road;
+    Uri getLocationByLatLongLink = Uri.https(
+      'us1.locationiq.com',
+      '/v1/reverse.php',
+      {
+        'lat': '$latitude',
+        'lon': '$longitude',
+        'key': '$accessToken',
+        'format': 'json',
+      },
+    );
+    print(getLocationByLatLongLink);
+    try {
+      var locationResponse = await http.get(getLocationByLatLongLink);
+      final Map<String, dynamic> locationData =
+          json.decode(locationResponse.body);
+      road = locationData['address']['road'] ?? '';
+      country = locationData['address']['country'] ?? '';
+      countryCode = locationData['address']['country_code'] ?? '';
+      state = locationData['address']['state'] ?? '';
+      city = locationData['address']['city'] ?? '';
+      print(latitude);
+      print(longitude);
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+    //---------------------------------------------------------------
+
+    // update user location
+    Uri apiLink = Uri.https(url, '/api/v1/user/location/update');
+    print(apiLink); // during development cycle
+    errorMessage = '';
+    try {
+      final response = await http.post(
+        apiLink,
+        body: json.encode(
+          {
+            'latitude': latitude,
+            'longitude': longitude,
+            'country': country,
+            'country_code': countryCode,
+            'state': state,
+            'city': city,
+            'road': road,
+          },
+        ),
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+      );
+      print(response.body); // during development cycle
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      //-------------start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
+          return true;
+        } else if (responseData['errNum'] == "401") {
           return false;
         } else {
           errorMessage = "SomeThing Went Wrong!\n";
@@ -207,7 +291,9 @@ class User with ChangeNotifier {
               phone: responseData['data']['phone'],
               address: responseData['data']['address'],
               gender: responseData['data']['gender'],
-              dateOfBirth: responseData['data']['date_of_birth'],
+              age: responseData['data']['age'] != null
+                  ? int.parse(responseData['data']['age'])
+                  : 0,
               smsAlert: responseData['data']['sms_alert'],
               firstName: responseData['data']['first_name'],
               lastName: responseData['data']['last_name'],
@@ -240,7 +326,7 @@ class User with ChangeNotifier {
     String firstName,
     String lastName,
     String address,
-    DateTime dateOfBirth,
+    int age,
     String gender,
   ) async {
     try {
@@ -256,15 +342,12 @@ class User with ChangeNotifier {
       }
       imageUploadRequest.headers['Authorization'] = "Bearer $token";
       imageUploadRequest.headers['Content-Type'] = "application/json";
-      final dateformat = new DateFormat('yyyy-MM-dd');
-      String dateOfBirthFormated =
-          dateOfBirth == null ? '' : dateformat.format(dateOfBirth);
       print(imageUploadRequest); // during development cycle
       imageUploadRequest.fields['first_name'] = firstName;
       imageUploadRequest.fields['last_name'] = lastName;
       imageUploadRequest.fields['address'] = address;
       imageUploadRequest.fields['gender'] = gender == null ? '' : gender;
-      imageUploadRequest.fields['date_of_birth'] = dateOfBirthFormated;
+      imageUploadRequest.fields['age'] = '$age';
       print(
           "here ${json.encode(imageUploadRequest.fields)}"); // during development cycle
       final streamedResponse = await imageUploadRequest.send();
@@ -291,8 +374,8 @@ class User with ChangeNotifier {
           if (responseData['msg'].containsKey('gender')) {
             errorMessage += "${responseData['msg']['gender'][0]}\n";
           }
-          if (responseData['msg'].containsKey('date_of_birth')) {
-            errorMessage += "${responseData['msg']['date_of_birth'][0]}\n";
+          if (responseData['msg'].containsKey('age')) {
+            errorMessage += "${responseData['msg']['age'][0]}\n";
           }
           if (responseData['msg'].containsKey('photo')) {
             errorMessage += "${responseData['msg']['photo'][0]}\n";

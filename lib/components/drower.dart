@@ -31,9 +31,8 @@ class MyDrawer extends StatelessWidget {
                   radius: 50.0,
                   backgroundColor: grey,
                   child: CircleAvatar(
-                    radius: 48,
-                    backgroundImage: NetworkImage(user.userData.photo),
-                  ),
+                      radius: 48,
+                      backgroundImage: NetworkImage(user.userData.photo)),
                 ),
                 SizedBox(
                   height: 5.0,
@@ -43,6 +42,12 @@ class MyDrawer extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
+                  ),
+                ),
+                Text(
+                  '${user.userData.phone}',
+                  style: TextStyle(
+                    fontSize: 13,
                   ),
                 ),
                 Divider(

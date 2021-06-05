@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 //apis url
 const String url = 'emergency-buzz.com';
 
+//agora live
+const APP_ID = '28f4c55d1a1b4f6bb628f6fa0bfbff28';
+
 //colors used in app
 const String appName = 'EBUZZ';
 

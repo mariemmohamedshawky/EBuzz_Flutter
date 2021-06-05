@@ -1,6 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:io';
-import 'package:ebuzz/components/pickers/dateofbirth_picker.dart';
 import 'package:ebuzz/components/pickers/profile_image_picker.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
@@ -24,14 +23,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _form = GlobalKey<FormState>();
   final _lastNameFocusNode = FocusNode();
   final _addressFocusNode = FocusNode();
+  final _ageFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   String _userFirstname, _userLastname, _userAddress, _gender;
-  DateTime _selectedDate;
+  int _userAge;
   File _image;
   var _isLoading = false;
-  var user;
   var _isInit = true;
+  var user;
 
   changeGender(value) {
     setState(() {
@@ -43,10 +43,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _image = image;
   }
 
-  void _pickedDate(DateTime date) {
-    _selectedDate = date;
-  }
-
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -55,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _userFirstname = user.userData.firstName;
       _userLastname = user.userData.lastName;
       _userAddress = user.userData.address;
-      _selectedDate = DateTime.parse(user.userData.dateOfBirth);
+      _userAge = user.userData.age;
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -81,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _userFirstname,
         _userLastname,
         _userAddress,
-        _selectedDate,
+        _userAge,
         _gender,
       );
       if (success) {
@@ -90,9 +86,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
-        setState(() {
-          _isLoading = false;
-        });
       }
     } catch (error) {
       WarningPopup.showWarningDialog(
@@ -233,6 +226,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
                                   initialValue: _userAddress,
+                                  onFieldSubmitted: (_) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_ageFocusNode);
+                                  },
                                   focusNode: _addressFocusNode,
                                   onSaved: (value) {
                                     setState(() {
@@ -252,9 +249,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               SizedBox(height: 20),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                child: DateOfBirthPicker(_pickedDate),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 1, 20, 1),
+                                child: Text(
+                                  'Age',
+                                  style: TextStyle(color: grey, fontSize: 10),
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: TextFormField(
+                                  initialValue: '$_userAge',
+                                  focusNode: _ageFocusNode,
+                                  onSaved: (value) {
+                                    setState(() {
+                                      _userAge = int.parse(value);
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: primary),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: primary),
+                                    ),
+                                  ),
+                                  keyboardType: TextInputType.streetAddress,
+                                ),
                               ),
                               SizedBox(height: 20),
                               Container(
