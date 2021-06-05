@@ -6,6 +6,8 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 
 import './providers/user.dart';
 import './providers/contact.dart';
+import './providers/emergency.dart';
+import './providers/notification.dart' as notificationProvider;
 import './screens/activity_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
@@ -54,6 +56,12 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Contact(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Emergency(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => notificationProvider.Notification(),
         ),
       ],
       child: Consumer<User>(

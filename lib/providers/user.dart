@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xml2json/xml2json.dart';
 
 import '../constants/constant.dart';
 import '../models/user_model.dart';
