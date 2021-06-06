@@ -1,3 +1,4 @@
+import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../constants/constant.dart';
@@ -75,24 +76,16 @@ class MyDrawer extends StatelessWidget {
         ),
         title: Text("  Profile"),
       ),
-      ListTile(
-        onTap: () async {
-          final PermissionStatus permissionStatus = await _getPermission();
-          if (permissionStatus == PermissionStatus.granted) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ContactsScreen()));
-          } else {
-            if (await Permission.contacts.request().isGranted) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ContactsScreen()));
-            }
-          }
+     ListTile(
+        onTap: () {
+          Navigator.of(context).pushNamed(SelectedContactsScreen.routeName);
         },
+        
         leading: Icon(
           Icons.contact_phone,
           color: grey,
         ),
-        title: Text("  Contact"),
+        title: Text(" My Contact"),
       ),
       ListTile(
         onTap: () {

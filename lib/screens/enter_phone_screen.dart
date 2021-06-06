@@ -56,104 +56,88 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: grey,
-            ),
-            onPressed: () => Navigator.of(context).pop(),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: grey,
           ),
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          centerTitle: true,
-          actions: [
-            Row(
-              children: [
-                Text(
-                  user.locale == 'ar' ? 'عربي' : 'English',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 17,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.language_rounded),
-                  color: grey,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(ChangeLanguage.routeName);
-                  },
-                ),
-              ],
-            ),
-          ],
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        body: Container(
-          child: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Center(
-                        child: Column(
-                          children: <Widget>[
-                            CommonText(),
-                            SizedBox(height: 30),
-                            Commontitle(
-                              translator.translate(
-                                'appTitle',
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "join our community",
-                              style: TextStyle(color: grey, fontSize: 10),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(20),
-                              child: TextField(
-                                controller: _phoneController,
-                                decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: primary),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: primary),
-                                  ),
-                                  hintText: "Enter Number",
-                                  hintStyle: TextStyle(fontSize: 10),
-                                ),
-                                keyboardType: TextInputType.phone,
-                                onSubmitted: (_) => _submitData(),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "We will send confirmation code",
-                              style: TextStyle(color: grey, fontSize: 10),
-                            ),
-                            SizedBox(height: 190),
-                            Container(
-                              child: CommonButton(
-                                child: Text('Continue '),
-                                onPressed: () => _submitData(),
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Container(child: Footer()),
-                          ],
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        centerTitle: true,
+        actions: [
+          Row(
+            children: [
+              Text(
+                user.locale == 'ar' ? 'عربي' : 'English',
+                style: TextStyle(
+                  color: black,
+                  fontSize: 17,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.language_rounded),
+                color: grey,
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ChangeLanguage.routeName);
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Container(
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  CommonText(),
+                  Commontitle(
+                    translator.translate(
+                      'appTitle',
+                    ),
+                  ),
+                  Text(
+                    "join our community",
+                    style: TextStyle(color: grey, fontSize: 10),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    child: TextField(
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: primary),
                         ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: primary),
+                        ),
+                        hintText: "Enter Number",
+                        hintStyle: TextStyle(fontSize: 10),
                       ),
-                    ],
+                      keyboardType: TextInputType.phone,
+                      onSubmitted: (_) => _submitData(),
+                    ),
                   ),
-                ),
-        ),
+                  Text(
+                    "We will send confirmation code",
+                    style: TextStyle(color: grey, fontSize: 10),
+                  ),
+                  CommonButton(
+                    child: Text('Continue'),
+                    onPressed: () => _submitData(),
+                  ),
+                  Container(child: Footer()),
+                ],
+              ),
       ),
     );
   }

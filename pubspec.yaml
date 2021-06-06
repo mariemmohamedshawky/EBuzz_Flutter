@@ -46,6 +46,7 @@ dependencies:
   convex_bottom_bar: ^2.0.0
   agora_rtc_engine: ^1.0.12
   location: ^4.1.1
+  device_preview: any
   
 
 dev_dependencies:

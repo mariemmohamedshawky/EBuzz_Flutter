@@ -63,103 +63,92 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final phone = ModalRoute.of(context).settings.arguments as String;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          child: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      Center(
-                        child: Column(
-                          children: <Widget>[
-                            CommonText(),
-                            SizedBox(height: 60),
-                            Commontitle(
-                              'Enter Passward',
+    return Scaffold(
+      body: Container(
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+          :Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: CommonText(),
+                    ),
+                    Commontitle(
+                      'Enter Passward',
+                    ),
+                    Text(phone),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TextField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: primary),
                             ),
-                            Text(phone),
-                            SizedBox(height: 40),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible = !passwordVisible;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible,
-                              ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: primary),
                             ),
-                            SizedBox(height: 50),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordConfirmationController,
-                                onSubmitted: (_) => _submitData(phone),
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Confirm Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible2
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible2 = !passwordVisible2;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible2,
-                              ),
-                            ),
-                            SizedBox(height: 180),
-                            Container(
-                              child: CommonButton(
-                                child: Text('Login    '),
-                                onPressed: () => _submitData(phone),
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Container(child: Footer()),
-                          ],
-                        ),
+                            hintText: "Password",
+                            hintStyle: TextStyle(fontSize: 10),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              color: primary,
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                            )),
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: passwordVisible,
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TextField(
+                        controller: _passwordConfirmationController,
+                        onSubmitted: (_) => _submitData(phone),
+                        decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: primary),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: primary),
+                            ),
+                            hintText: "Confirm Password",
+                            hintStyle: TextStyle(fontSize: 10),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible2
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                              color: primary,
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible2 = !passwordVisible2;
+                                });
+                              },
+                            )),
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: passwordVisible2,
+                      ),
+                    ),
+                    Container(
+                      child: CommonButton(
+                        child: Text('Login    '),
+                        onPressed: () => _submitData(phone),
+                      ),
+                    ),
+                    Container(child: Footer()),
+                  ],
                 ),
-        ),
-      ),
+              ),
+      
     );
   }
 }

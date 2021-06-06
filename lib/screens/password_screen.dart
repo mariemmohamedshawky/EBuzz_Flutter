@@ -51,75 +51,65 @@ class _PasswordScreenState extends State<PasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final phone = ModalRoute.of(context).settings.arguments as String;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          child: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      Center(
-                        child: Column(
-                          children: <Widget>[
-                            CommonText(),
-                            SizedBox(height: 60),
-                            Commontitle(
-                              translator.translate(
-                                'Title',
-                              ),
-                            ),
-                            Text(phone),
-                            SizedBox(height: 40),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible = !passwordVisible;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible,
-                              ),
-                            ),
-                            SizedBox(height: 50),
-                            Container(
-                              child: CommonButton(
-                                child: Text('Login    '),
-                                onPressed: () => _submitData(phone),
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Container(child: Footer()),
-                          ],
+    return Scaffold(
+      body: Container(
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            
+                 :Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: CommonText(),
                         ),
-                      ),
-                    ],
-                  ),
+                        Commontitle(
+                          translator.translate(
+                            'Title',
+                          ),
+                        ),
+                        Text(phone),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: TextField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: primary),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: primary),
+                                ),
+                                hintText: "Password",
+                                hintStyle: TextStyle(fontSize: 10),
+                                suffixIcon: IconButton(
+                                  icon: Icon(passwordVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility),
+                                  color: primary,
+                                  onPressed: () {
+                                    setState(() {
+                                      passwordVisible = !passwordVisible;
+                                    });
+                                  },
+                                )),
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText: passwordVisible,
+                             
+                          ),
+                        ),
+                        CommonButton(
+                          child: Text('Login    '),
+                          onPressed: () => _submitData(phone),
+                        ),
+                        Container(child: Footer()),
+                      ],
                 ),
-        ),
-      ),
+              ),
+      
     );
   }
 }

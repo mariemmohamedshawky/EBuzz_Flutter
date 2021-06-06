@@ -41,9 +41,13 @@ class CommonButton extends StatelessWidget {
             textStyle: new TextStyle(color: Colors.white),
             shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(100),
+              
             ),
+            shadowColor: black,
+             elevation: 15.0,
             padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
           ),
+          
           onPressed: onPressed,
           child: child,
         ),

@@ -167,17 +167,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     });
                                   },
                                   decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
                                   ),
                                   keyboardType: TextInputType.name,
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 10),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
@@ -202,17 +202,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     });
                                   },
                                   decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
                                   ),
                                   keyboardType: TextInputType.name,
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 10),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
@@ -237,17 +237,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     });
                                   },
                                   decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
                                   ),
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
-                              SizedBox(height: 20),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),

@@ -1,4 +1,6 @@
+import 'package:ebuzz/providers/contact.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
+import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,8 +25,6 @@ import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
 import './screens/notification_screen.dart';
 import './screens/call_screen.dart';
-//import './screens/contacts_screen.dart';
-
 import './components/change_language.dart';
 
 Future<void> main() async {
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (ctx) => User(),
         ),
-        ChangeNotifierProvider(
+         ChangeNotifierProvider(
           create: (ctx) => Contact(),
         ),
         ChangeNotifierProvider(
@@ -89,13 +89,12 @@ class _MyAppState extends State<MyApp> {
               HistoryScreen.routeName: (ctx) => HistoryScreen(),
               CongratsScreen.routeName: (ctx) => CongratsScreen(),
               ActivityScreen.routeName: (ctx) => ActivityScreen(),
-              // ContactsScreen.routeName: (ctx) => ContactsScreen(),
-
               VerificationCodeScreen.routeName: (ctx) =>
                   VerificationCodeScreen(),
               ChangeLanguage.routeName: (ctx) => ChangeLanguage(),
               NotificationScreen.routeName: (ctx) => NotificationScreen(),
               CallScreen.routeName: (ctx) => CallScreen(),
+              SelectedContactsScreen.routeName:(ctx)=>SelectedContactsScreen(),
             }),
       ),
     );

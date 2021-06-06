@@ -6,7 +6,6 @@ import '../providers/contact.dart' as contactProvider;
 import '../components/warning_popup.dart';
 import '../constants/constant.dart';
 import '../screens/history_screen.dart';
-import '../widgets/widgets.dart';
 
 class MassageScreen extends StatefulWidget {
   static const String routeName = 'masssage-screen';
@@ -74,186 +73,125 @@ class _MassageScreenState extends State<MassageScreen> {
     });
   }
 
-  Future<void> _deleteContact(int id) async {
-    if (id == null) {
-      WarningPopup.showWarningDialog(
-          context, false, 'Phone Number Required', () {});
-      return;
-    }
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      var success =
-          await Provider.of<contactProvider.Contact>(context, listen: false)
-              .deleteContact(id);
-      if (success) {
-        WarningPopup.showWarningDialog(
-            context, true, 'Contact Deleted Successfully', () => {});
-      } else {
-        WarningPopup.showWarningDialog(context, false,
-            Provider.of<User>(context, listen: false).errorMessage, () {});
-      }
-    } catch (error) {
-      print(error);
-      WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
-      return;
-    }
-    setState(() {
-      _isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    final myAddedContacts = Provider.of<contactProvider.Contact>(context).items;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text(
-            'Massege',
-            style: TextStyle(
-                color: black, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HistoryScreen()),
-                );
-              },
-              child: Text(
-                'Add New Contact',
-                style: TextStyle(
-                  color: grey,
-                  fontSize: 10,
-                ),
-              ),
-            ),
-          ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text(
+          'Massege',
+          style: TextStyle(
+              color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        body: _isLoading
+        actions: [
+           IconButton(
+          icon: Icon(
+            Icons.add_call,
+            color: primary,
+          ),
+          onPressed: () =>  Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HistoryScreen()),
+              ),
+        ),
+        
+        ],
+      ),
+      body: Container(
+        child: _isLoading
             ? Center(child: const CircularProgressIndicator())
             : Column(
+              //  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //  crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    height: 150,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                        child: Form(
-                          child: TextField(
-                            controller: _messageController
-                              ..text = user.userData.smsAlert,
-                            decoration: InputDecoration.collapsed(
-                              hintText: "Write Your own Message",
-                              hintStyle: TextStyle(
-                                color: grey,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: secondary,
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: CommonButton(
-                      child: Text('Save '),
-                      onPressed: () => _submitData(),
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Container(
-                    child: Text("This is your message that send to",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: grey,
-                        )),
-                  ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        text: 'Conacts',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: primary,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: ' To get  ',
+                  Column(
+                    children: [
+                      SizedBox(height: 50),
+                      Container(
+                        child: Text("This is your message that send to",
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 12,
                               color: grey,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'help',
+                            )),
+                      ),
+                      RichText(
+                      //  textAlign: TextAlign.center,
+                        text: TextSpan(
+                            text: 'Conacts',
                             style: TextStyle(
                               fontSize: 15,
                               color: primary,
                             ),
+                            children: [
+                              TextSpan(
+                                text: ' To get  ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: grey,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'help',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: primary,
+                                ),
+                              ),
+                            ]),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        height: 200,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                            child: Form(
+                              child: TextField(
+                                controller: _messageController
+                                  ..text = user.userData.smsAlert,
+                                decoration: InputDecoration.collapsed(
+                                  hintText: "Write Your own Message",
+                                  hintStyle: TextStyle(
+                                    color: grey,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ]),
+                        ),
+                        decoration: BoxDecoration(
+                          color: secondary,
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                     
+                        FloatingActionButton.extended(
+                          backgroundColor: primary,
+                          onPressed: () => _submitData(),
+                          icon: Icon(Icons.save),
+                          label: Text("Save"),
+                        
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: myAddedContacts.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        var contact = myAddedContacts[index];
-                        return ListTile(
-                          leading: IconButton(
-                            onPressed: () async {
-                              _deleteContact(contact.id);
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red[300],
-                              size: 30,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 18),
-                          title: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(contact.fullName,
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                Text(contact.phone,
-                                    style:
-                                        TextStyle(color: black, fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                 
+              
                 ],
               ),
       ),

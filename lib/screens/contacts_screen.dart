@@ -109,22 +109,22 @@ class _ContactsScreenState extends State<ContactsScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'Contacts',
+          'All Contacts',
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
-          TextButton(
-            onPressed: () {
+             SizedBox(
+              width:81,
+              child: IconButton( 
+               icon: Icon (Icons.assignment_turned_in_outlined),
+                color: primary,
+                onPressed: () {
               print(mapContacts);
               _submitData(mapContacts);
             },
-            child: Icon(
-              Icons.check_circle_outline,
-              color: Colors.green[300],
-              size: 30,
+              ),
             ),
-          ),
         ],
       ),
       body: _contacts != null && _isLoading == false
@@ -157,15 +157,15 @@ class _ContactsScreenState extends State<ContactsScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                //  backgroundColor: Theme.of(context).accentColor,
+                                
                                 backgroundColor: primary,
                               ),
-                        title: Container(
-                          color: selectedContacts.contains(index)
-                              ? Colors.green
-                              : Colors.white,
-                          child: InkWell(
-                            onTap: () {
+                        trailing: Checkbox(
+                            activeColor: selectedContacts.contains(index)
+                                ? primary
+                                : Colors.white,
+                            value: selectedContacts.contains(index),
+                            onChanged: (bool value) {
                               setState(() {
                                 if (selectedContacts.contains(index)) {
                                   selectedContacts.remove(index);
@@ -190,7 +190,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
                                   print(mapContacts);
                                 }
                               });
-                            },
+                            }),
+                        title: Container(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -206,7 +207,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                               ],
                             ),
                           ),
-                        ),
+                        
                       );
               },
             )
