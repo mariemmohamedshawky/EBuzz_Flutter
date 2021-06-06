@@ -1,6 +1,5 @@
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
-import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/models/notification_model.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
 import 'package:ebuzz/widgets/widgets.dart';
@@ -43,7 +42,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     if (_isInit) {
       getNotifications(1);
     }
@@ -82,7 +80,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     setState(() {
       _isLoading = false;
       if (page == totalPages) {
-        print('enought');
+        print('end of lazy loading');
         _loadMore = false;
       } else {
         page++;

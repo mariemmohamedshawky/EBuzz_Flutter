@@ -37,7 +37,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     if (_isInit) {
       getEmergencies(1);
     }
@@ -61,7 +60,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     try {
       totalPages = await Provider.of<Emergency>(context, listen: false)
           .viewHistory(index);
-      myData = Provider.of<Emergency>(context, listen: false).items;
+      myData = Provider.of<Emergency>(context, listen: false).historyItems;
       myEmergencies.addAll(myData);
     } catch (error) {
       print(error);
@@ -73,7 +72,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       _isLoading = false;
       if (page == totalPages) {
-        print('enought');
+        print('end of lazy loading');
         _loadMore = false;
       } else {
         page++;
@@ -83,7 +82,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final myEmergencies = Provider.of<Emergency>(context).items;
     return (MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

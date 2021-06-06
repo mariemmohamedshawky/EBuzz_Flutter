@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isLoading = false;
 
   Future<void> _getCurrentUserLocation() async {
-    Map<Permission, PermissionStatus> statuses = await [
+    await [
       Permission.location,
     ].request();
     final locData = await location_package.Location().getLocation();
@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _handleCameraAndMic() async {
-    Map<Permission, PermissionStatus> statuses = await [
+    await [
       Permission.camera,
       Permission.microphone,
     ].request();
