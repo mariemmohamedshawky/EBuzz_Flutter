@@ -72,7 +72,7 @@ class Notification with ChangeNotifier {
           });
           _items = loadedNotification;
           notifyListeners();
-          return true;
+          return responseData['pagination']['meta']['total_pages'];
         } else if (responseData['errNum'] == "401") {
           return false;
         } else {

@@ -17,8 +17,9 @@ class Emergency with ChangeNotifier {
   }
 
 // --------------------------------- View Contacts ---------------------------------
-  Future viewHistory() async {
-    Uri apiLink = Uri.https(url, '/api/v1/user/notifications');
+  Future viewHistory(int page) async {
+    Uri apiLink =
+        Uri.https(url, '/api/v1/user/emergencies/history', {'page': '$page'});
     print(apiLink); // during development cycle
     errorMessage = '';
     try {
@@ -46,28 +47,25 @@ class Emergency with ChangeNotifier {
           data.forEach((element) {
             loadedEmergency.add(
               EmergencyModel(
-                id: element['emergency']['id'],
-                userName: element['emergency']['user_name'],
-                date: element['emergency']['date'],
-                photo: element['emergency']['photo'],
-                latitude:
-                    double.tryParse('${element['emergency']['latitude']}'),
-                longitude:
-                    double.tryParse('${element['emergency']['longitude']}'),
-                country: element['emergency']['country'],
-                countryCode: element['emergency']['country_code'],
-                city: element['emergency']['city'],
-                state: element['emergency']['state'],
-                road: element['emergency']['road'],
-                notificationCount:
-                    '${element['emergency']['notification_count']}',
-                massageCount: '${element['emergency']['massage_count']}',
+                id: element['id'],
+                userName: element['user_name'],
+                date: element['date'],
+                photo: element['photo'],
+                latitude: double.tryParse('${element['latitude']}'),
+                longitude: double.tryParse('${element['longitude']}'),
+                country: element['country'],
+                countryCode: element['country_code'],
+                city: element['city'],
+                state: element['state'],
+                road: element['road'],
+                notificationCount: '${element['notification_count']}',
+                massageCount: '${element['massage_count']}',
               ),
             );
           });
           _items = loadedEmergency;
           notifyListeners();
-          return true;
+          return responseData['pagination']['meta']['total_pages'];
         } else if (responseData['errNum'] == "401") {
           return false;
         } else {

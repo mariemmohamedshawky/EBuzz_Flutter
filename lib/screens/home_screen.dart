@@ -90,74 +90,76 @@ class _HomeScreenState extends State<HomeScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: TextField(
-                        controller: _channelController,
-                        decoration: InputDecoration(
-                          errorText: _validateError
-                              ? 'Channel name is mandatory'
-                              : null,
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 1),
+          : SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: TextField(
+                          controller: _channelController,
+                          decoration: InputDecoration(
+                            errorText: _validateError
+                                ? 'Channel name is mandatory'
+                                : null,
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(width: 1),
+                            ),
+                            hintText: 'Channel name',
                           ),
-                          hintText: 'Channel name',
+                        ))
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        ListTile(
+                          title: Text(ClientRole.Broadcaster.toString()),
+                          leading: Radio(
+                            value: ClientRole.Broadcaster,
+                            groupValue: _role,
+                            onChanged: (ClientRole value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
+                          ),
                         ),
-                      ))
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      ListTile(
-                        title: Text(ClientRole.Broadcaster.toString()),
-                        leading: Radio(
-                          value: ClientRole.Broadcaster,
-                          groupValue: _role,
-                          onChanged: (ClientRole value) {
-                            setState(() {
-                              _role = value;
-                            });
-                          },
+                        ListTile(
+                          title: Text(ClientRole.Audience.toString()),
+                          leading: Radio(
+                            value: ClientRole.Audience,
+                            groupValue: _role,
+                            onChanged: (ClientRole value) {
+                              setState(() {
+                                _role = value;
+                              });
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    TextButton.icon(
+                      onPressed: _getCurrentUserLocation,
+                      icon: Icon(Icons.location_on),
+                      label: Text('Current Location'),
+                    ),
+                    Container(
+                      child: Row(children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                onJoin();
+                              });
+                            },
+                            child: Image.asset('assets/images/ebuzz.png'),
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        title: Text(ClientRole.Audience.toString()),
-                        leading: Radio(
-                          value: ClientRole.Audience,
-                          groupValue: _role,
-                          onChanged: (ClientRole value) {
-                            setState(() {
-                              _role = value;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  TextButton.icon(
-                    onPressed: _getCurrentUserLocation,
-                    icon: Icon(Icons.location_on),
-                    label: Text('Current Location'),
-                  ),
-                  Container(
-                    child: Row(children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              onJoin();
-                            });
-                          },
-                          child: Image.asset('assets/images/ebuzz.png'),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ],
+                      ]),
+                    ),
+                  ],
+                ),
               ),
             ),
       bottomNavigationBar: ButtomBarCommon(
