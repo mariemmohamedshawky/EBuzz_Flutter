@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.17.0
   firebase_auth: ^1.2.0
   firebase_core: ^1.2.0
+  firebase_messaging: ^10.0.1
   flutter_rounded_date_picker: 1.0.0
   permission_handler: ^8.0.0+1
   contacts_service: ^0.3.10

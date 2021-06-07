@@ -134,7 +134,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                         image: DecorationImage(
                           image: AssetImage("assets/images/1.jpeg"),
-                          //  fit: BoxFit.fitWidth,
+                          fit: BoxFit.fitWidth,
                           alignment: Alignment.topCenter,
                         ),
                       ),
@@ -158,7 +158,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                     maxRadius: 20,
                                     backgroundColor: Colors.brown.shade800,
                                     child: Image.network(
-                                        '${myEmergencies[index].photo}'),
+                                      '${myEmergencies[index].photo}',
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -193,20 +194,17 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                     borderRadius: BorderRadius.circular(20.0),
                                     image: DecorationImage(
                                       image: AssetImage("assets/images/3.jpg"),
-                                      fit: BoxFit.fitWidth,
                                       //alignment: Alignment.topCenter,
                                     ),
                                   ),
                                   width: 140,
                                   height: 90,
                                   child: Card(
-                                   
-                                      child: Icon(
-                                         Icons.live_tv_rounded ,
-                                        color: primary,
-                                        size: 25,
-                                      ),
-                                    
+                                    child: Icon(
+                                      Icons.live_tv_rounded,
+                                      color: primary,
+                                      size: 25,
+                                    ),
                                     color: Colors.black.withOpacity(0),
                                     shadowColor: black,
                                     elevation: 0.0,

@@ -11,11 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:location/location.dart' as location_package;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  final user;
   static const String routeName = 'home-screen';
-  HomeScreen({Key key, this.title}) : super(key: key);
+  HomeScreen({Key key, this.title, this.user}) : super(key: key);
 
   final String title;
 
@@ -24,27 +26,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  /// create a channelController to retrieve text value
   final _channelController = TextEditingController();
-
-  /// if channel textField is validated to have error
   bool _validateError = false;
-
   ClientRole _role = ClientRole.Broadcaster;
-
   int aindex = 0;
-
   var _isLoading = false;
+  Timer timer;
 
   Future<void> _getCurrentUserLocation() async {
     await [
       Permission.location,
     ].request();
     final locData = await location_package.Location().getLocation();
-    
+
     print(locData.latitude);
     print(locData.longitude);
-   
+
     try {
       var success = await Provider.of<User>(context, listen: false)
           .updateLocation(locData.latitude, locData.longitude);
@@ -59,24 +56,75 @@ class _HomeScreenState extends State<HomeScreen> {
           context, false, 'SomeThing Went Wrong..', () {});
       return;
     }
-   
   }
 
   @override
   void dispose() {
     // dispose input controller
     _channelController.dispose();
-     timer?.cancel();
+    timer?.cancel();
     super.dispose();
   }
-Timer timer;
 
-@override
-void initState() {
-  super.initState();
-  timer = Timer.periodic(Duration(seconds: 10), (Timer t) => _getCurrentUserLocation());
-}
+  Future<void> _updateFcm() async {
+    String token = await FirebaseMessaging.instance.getToken();
+    print('token:$token');
+    setState(() {
+      Provider.of<User>(context, listen: false).updateFCMToken(token);
+    });
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(
+        Duration(seconds: 10), (Timer t) => _getCurrentUserLocation());
+    _updateFcm();
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        print(message);
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('New Notification!!'),
+            content: Container(
+              height: 50,
+              child: Column(
+                children: [
+                  Text(
+                    notification.title,
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  Text(notification.body),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              )
+            ],
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

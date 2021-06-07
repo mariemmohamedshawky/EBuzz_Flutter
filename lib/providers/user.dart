@@ -454,6 +454,7 @@ class User with ChangeNotifier {
       _authTimer.cancel();
       _authTimer = null;
     }
+    await updateFCMToken('null');
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     // prefs.remove('userData');
@@ -492,4 +493,19 @@ class User with ChangeNotifier {
 
   // ------------------------------------------------------------------
 
+  Future<void> updateFCMToken(fcmToken) async {
+    try {
+      final response = await http.post(
+        Uri.https(url, '/api/v1/user/fcm-token'),
+        body: {"fcm_token": fcmToken},
+        headers: {
+          'Authorization': "Bearer $token",
+          'Accept': "application/json",
+        },
+      );
+      print(response.body);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
