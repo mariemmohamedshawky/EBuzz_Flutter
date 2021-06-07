@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
@@ -39,11 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Permission.location,
     ].request();
     final locData = await location_package.Location().getLocation();
+    
     print(locData.latitude);
     print(locData.longitude);
-    setState(() {
-      _isLoading = true;
-    });
+   
     try {
       var success = await Provider.of<User>(context, listen: false)
           .updateLocation(locData.latitude, locData.longitude);
@@ -58,17 +59,24 @@ class _HomeScreenState extends State<HomeScreen> {
           context, false, 'SomeThing Went Wrong..', () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
+   
   }
 
   @override
   void dispose() {
     // dispose input controller
     _channelController.dispose();
+     timer?.cancel();
     super.dispose();
   }
+Timer timer;
+
+@override
+void initState() {
+  super.initState();
+  timer = Timer.periodic(Duration(seconds: 10), (Timer t) => _getCurrentUserLocation());
+}
+
 
   @override
   Widget build(BuildContext context) {
