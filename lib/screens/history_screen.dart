@@ -82,74 +82,145 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return (MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text(
-            'History',
-            style: TextStyle(
-                color: black, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HistoryScreen()),
-                );
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                  color: grey,
-                  fontSize: 10,
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text(
+          'History',
+          style: TextStyle(
+              color: black, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HistoryScreen()),
+              );
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: grey,
+                fontSize: 10,
               ),
             ),
-          ],
-        ),
-        body: Column(
-          children: [
-            SizedBox(height: 30),
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: myEmergencies.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == myEmergencies.length) {
-                    return _buildProgressIndicator();
-                  } else {
-                    return Container(
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 30),
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: myEmergencies.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == myEmergencies.length) {
+                  return _buildProgressIndicator();
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(11.0),
+                    child: Container(
                       height: 120,
                       child: Card(
-                        shadowColor: Color(0xFFf25757),
+                        shadowColor: black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         elevation: 6,
-                        margin: EdgeInsets.all(5),
                         child: Padding(
-                          child: Text(
-                            '${myEmergencies[index].massageCount},, ${myEmergencies[index].notificationCount}, ${myEmergencies[index].road}, ${myEmergencies[index].city}, ${myEmergencies[index].country}, ${myEmergencies[index].state}, ${myEmergencies[index].countryCode} (${myEmergencies[index].latitude}, ${myEmergencies[index].longitude}), ${myEmergencies[index].date}',
-                            style: TextStyle(fontSize: 10.0),
+                          child: Row(
+                            //  mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: AssetImage("assets/images/1.jpeg"),
+                                    fit: BoxFit.fitWidth,
+                                    //alignment: Alignment.topCenter,
+                                  ),
+                                ),
+                                width: 140,
+                                height: 100,
+                                child: Card(
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
+                                        style: TextStyle(fontSize: 5),
+                                      ),
+                                    ],
+                                  ),
+                                  color: Colors.black.withOpacity(0),
+                                  shadowColor: black,
+                                  elevation: 0.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.message,
+                                        color: primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '${myEmergencies[index].massageCount}Message',
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.notifications_active_outlined,
+                                        color: primary,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        '${myEmergencies[index].notificationCount} Notified',
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ],
+                                  ),
+                                  
+                                ],
+                              )
+                            ],
                           ),
                           padding: EdgeInsets.all(20.0),
                         ),
                       ),
-                    );
-                  }
-                },
-              ),
+                    ),
+                  );
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    ));
+    );
   }
 
   Widget _buildProgressIndicator() {

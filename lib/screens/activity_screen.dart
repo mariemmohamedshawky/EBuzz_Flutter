@@ -109,7 +109,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 30),
+          SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -118,21 +118,110 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 if (index == myEmergencies.length) {
                   return _buildProgressIndicator();
                 } else {
-                  return Container(
-                    height: 120,
-                    child: Card(
-                      shadowColor: Color(0xFFf25757),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      elevation: 6,
-                      margin: EdgeInsets.all(5),
-                      child: Padding(
-                        child: Text(
-                          '${myEmergencies[index].massageCount},, ${myEmergencies[index].notificationCount}, ${myEmergencies[index].road}, ${myEmergencies[index].city}, ${myEmergencies[index].country}, ${myEmergencies[index].state}, ${myEmergencies[index].countryCode} (${myEmergencies[index].latitude}, ${myEmergencies[index].longitude}), ${myEmergencies[index].date}',
-                          style: TextStyle(fontSize: 10.0),
+                  return Padding(
+                    padding: const EdgeInsets.all(11.0),
+                    child: Container(
+                      // height: 260,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 2), // changes position of shadow
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/1.jpeg"),
+                          //  fit: BoxFit.fitWidth,
+                          alignment: Alignment.topCenter,
                         ),
-                        padding: EdgeInsets.all(20.0),
+                      ),
+                      child: Card(
+                        color: Colors.black.withOpacity(0),
+                        shadowColor: black,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        //  elevation: 6,
+
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CircleAvatar(
+                                    minRadius: 20,
+                                    maxRadius: 20,
+                                    backgroundColor: Colors.brown.shade800,
+                                    child: Image.network(
+                                        '${myEmergencies[index].photo}'),
+                                  ),
+                                ),
+                                Text(
+                                  '${myEmergencies[index].userName}',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 25.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: primary,
+                                    size: 20,
+                                  ),
+                                  Text(
+                                    '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
+                                    style: TextStyle(fontSize: 6),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/images/3.jpg"),
+                                      fit: BoxFit.fitWidth,
+                                      //alignment: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  width: 140,
+                                  height: 90,
+                                  child: Card(
+                                   
+                                      child: Icon(
+                                         Icons.live_tv_rounded ,
+                                        color: primary,
+                                        size: 25,
+                                      ),
+                                    
+                                    color: Colors.black.withOpacity(0),
+                                    shadowColor: black,
+                                    elevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(4.0),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

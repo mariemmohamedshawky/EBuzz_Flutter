@@ -3,7 +3,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../constants/constant.dart';
 import '../providers/user.dart';
-import '../screens/contacts_screen.dart';
 import '../screens/history_screen.dart';
 import '../screens/massage_screen.dart';
 import '../screens/profile_screen.dart';
@@ -122,6 +121,7 @@ class MyDrawer extends StatelessWidget {
   }
 
   //Check contacts permission
+  // ignore: unused_element
   Future<PermissionStatus> _getPermission() async {
     final PermissionStatus permission = await Permission.contacts.status;
     if (permission != PermissionStatus.granted &&

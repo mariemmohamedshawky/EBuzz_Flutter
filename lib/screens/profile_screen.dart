@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () => _saveForm(),
               child: Icon(
                 Icons.check_circle_outline,
-                color: Colors.green[300],
+                color: primary,
                 size: 30,
               ),
             ),
@@ -267,10 +267,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     });
                                   },
                                   decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
                                   ),

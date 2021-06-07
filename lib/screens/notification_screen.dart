@@ -2,7 +2,6 @@ import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/notification_model.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
-import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -96,16 +95,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: grey,
+            color: white,
+            size: 30,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         elevation: 0.00,
-        backgroundColor: white,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 0.1),
-          child: Commontitle('Notification'),
-        ),
+        backgroundColor: primary,
+        title: Text('Notification'),
       ),
       body: ListView.builder(
         controller: _scrollController,
@@ -117,25 +114,49 @@ class _NotificationScreenState extends State<NotificationScreen> {
             return _buildProgressIndicator();
           } else {
             return Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(emergency.photo),
-                  backgroundColor: primary,
-                ),
-                title: RichText(
-                  text: TextSpan(
-                      text: '${emergency.userName} ',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, color: black),
-                      children: [
-                        TextSpan(
-                            text:
-                                '${emergency.road}, ${emergency.city}, ${emergency.country}, ${emergency.state}, ${emergency.countryCode} (${emergency.latitude}, ${emergency.longitude}), ${emergency.date}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                            )),
-                      ]),
-                ),
+              child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(emergency.photo),
+                      backgroundColor: primary,
+                    ),
+                    title: RichText(
+                      text: TextSpan(
+                          text: '${emergency.userName} ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: primary),
+                          children: [
+                            TextSpan(
+                                text:
+                                    'in danger near you in ${emergency.road} in ${emergency.city}  please help',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.normal,
+                                  color: black,
+                                )),
+                          ]),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.notifications_active_outlined,
+                        color: primary,
+                        size: 20,
+                      ),
+                      Text(
+                        '${emergency.date}',
+                        style: TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             );
           }
