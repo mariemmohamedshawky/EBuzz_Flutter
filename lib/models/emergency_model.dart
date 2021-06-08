@@ -1,6 +1,7 @@
 class EmergencyModel {
   int id;
   String userName,
+      phone,
       photo,
       date,
       country,
@@ -15,6 +16,7 @@ class EmergencyModel {
   EmergencyModel({
     this.id,
     this.userName,
+    this.phone,
     this.photo,
     this.date,
     this.country,

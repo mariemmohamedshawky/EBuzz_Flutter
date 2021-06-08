@@ -57,12 +57,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  User user = User();
+
+  @override
+  void initState() {
+    super.initState();
+    user.tryAutoLogin();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => User(),
+          create: (ctx) => user,
         ),
         ChangeNotifierProvider(
           create: (ctx) => Contact(),
@@ -77,12 +85,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<User>(
         builder: (ctx, auth, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: auth.isAuth
-                ? HomeScreen()
-                : FutureBuilder(
-                    future: auth.tryAutoLogin(),
-                    builder: (ctx, authResultSnapshot) => SplashScreen(),
-                  ),
+            home: auth.isAuth == true ? HomeScreen() : SplashScreen(),
             localizationsDelegates: translator.delegates,
             locale: translator.locale,
             supportedLocales: translator.locals(),

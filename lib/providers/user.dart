@@ -117,8 +117,6 @@ class User with ChangeNotifier {
       countryCode = locationData['address']['country_code'] ?? '';
       state = locationData['address']['state'] ?? '';
       city = locationData['address']['city'] ?? '';
-      print(latitude);
-      print(longitude);
     } catch (error) {
       print(error); // during development cycle
       errorMessage = "SomeThing Went Wrong!!!\n";

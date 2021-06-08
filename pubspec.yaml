@@ -48,7 +48,13 @@ dependencies:
   agora_rtc_engine: ^1.0.12
   location: ^4.1.1
   device_preview: any
+  flutter_launcher_icons: "^0.8.0"
   
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#C0392B"
 
 dev_dependencies:
   flutter_test:

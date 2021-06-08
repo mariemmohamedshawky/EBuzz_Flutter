@@ -1,11 +1,14 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/providers/emergency.dart';
+import 'package:ebuzz/screens/call_screen.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:ebuzz/constants/constant.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -200,10 +203,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                   width: 140,
                                   height: 90,
                                   child: Card(
-                                    child: Icon(
-                                      Icons.live_tv_rounded,
-                                      color: primary,
-                                      size: 25,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.live_tv_rounded,
+                                        color: primary,
+                                        size: 25,
+                                      ),
+                                      onPressed: () =>
+                                          onJoin(myEmergencies[index].phone),
                                     ),
                                     color: Colors.black.withOpacity(0),
                                     shadowColor: black,
@@ -250,5 +257,27 @@ class _ActivityScreenState extends State<ActivityScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> onJoin(phone) async {
+    // await for camera and mic permissions before pushing video page
+    await _handleCameraAndMic();
+    // push video page with given channel name
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CallScreen(
+          channelName: phone ?? 'test',
+          role: ClientRole.Audience,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleCameraAndMic() async {
+    await [
+      Permission.camera,
+      Permission.microphone,
+    ].request();
   }
 }

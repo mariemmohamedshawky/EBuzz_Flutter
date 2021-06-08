@@ -52,6 +52,7 @@ class Notification with ChangeNotifier {
                 emergency: EmergencyModel(
                   id: element['emergency']['id'],
                   userName: element['emergency']['user_name'],
+                  phone: element['emergency']['phone'],
                   date: element['emergency']['date'],
                   photo: element['emergency']['photo'],
                   latitude:

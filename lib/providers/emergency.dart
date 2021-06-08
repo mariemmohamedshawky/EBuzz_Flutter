@@ -54,6 +54,7 @@ class Emergency with ChangeNotifier {
               EmergencyModel(
                 id: element['id'],
                 userName: element['user_name'],
+                phone: element['phone'],
                 date: element['date'],
                 photo: element['photo'],
                 latitude: double.tryParse('${element['latitude']}'),
@@ -124,6 +125,7 @@ class Emergency with ChangeNotifier {
               EmergencyModel(
                 id: element['id'],
                 userName: element['user_name'],
+                phone: element['phone'],
                 date: element['date'],
                 photo: element['photo'],
                 latitude: double.tryParse('${element['latitude']}'),
@@ -161,4 +163,49 @@ class Emergency with ChangeNotifier {
   }
 // --------------------------------------------------------------------------------------------
 
+// --------------------------------- View Emergencies History ---------------------------------
+  Future startEmergency() async {
+    Uri apiLink = Uri.https(url, '/api/v1/user/emergencies/start');
+    print(apiLink); // during development cycle
+    errorMessage = '';
+    try {
+      //get use token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final extractedUserData =
+          json.decode(prefs.getString('userData')) as Map<String, Object>;
+      var token = extractedUserData['token'];
+      //------------------------------------
+
+      final response = await http.get(
+        apiLink,
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+      );
+      print(response.body); // during development cycle
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      //-------------start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
+          return true;
+        } else if (responseData['errNum'] == "401") {
+          return false;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return false;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return false;
+      }
+      //-------------end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
+// --------------------------------------------------------------------------------------------
 }

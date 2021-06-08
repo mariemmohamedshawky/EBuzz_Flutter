@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/providers/user.dart';
 import 'package:ebuzz/screens/call_screen.dart';
 import 'package:ebuzz/widgets/bottom_bar.dart';
@@ -26,9 +27,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _channelController = TextEditingController();
-  bool _validateError = false;
-  ClientRole _role = ClientRole.Broadcaster;
   int aindex = 0;
   var _isLoading = false;
   Timer timer;
@@ -39,17 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
     ].request();
     final locData = await location_package.Location().getLocation();
 
-    print(locData.latitude);
-    print(locData.longitude);
-
     try {
-      var success = await Provider.of<User>(context, listen: false)
+      await Provider.of<User>(context, listen: false)
           .updateLocation(locData.latitude, locData.longitude);
-      if (success) {
-        print(success);
-      } else {
-        print(success);
-      }
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
@@ -58,10 +48,35 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> startEmergencies() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final success =
+          await Provider.of<Emergency>(context, listen: false).startEmergency();
+      if (success) {
+        onJoin();
+      } else {
+        WarningPopup.showWarningDialog(
+            context, false, 'SomeThing Went Wrong !=!', () {});
+      }
+    } catch (error) {
+      print(error);
+      WarningPopup.showWarningDialog(
+          context, false, 'SomeThing Went Wrong..', () {});
+      return;
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   void dispose() {
     // dispose input controller
-    _channelController.dispose();
     timer?.cancel();
     super.dispose();
   }
@@ -150,63 +165,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: TextField(
-                          controller: _channelController,
-                          decoration: InputDecoration(
-                            errorText: _validateError
-                                ? 'Channel name is mandatory'
-                                : null,
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(width: 1),
-                            ),
-                            hintText: 'Channel name',
-                          ),
-                        ))
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        ListTile(
-                          title: Text(ClientRole.Broadcaster.toString()),
-                          leading: Radio(
-                            value: ClientRole.Broadcaster,
-                            groupValue: _role,
-                            onChanged: (ClientRole value) {
-                              setState(() {
-                                _role = value;
-                              });
-                            },
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(ClientRole.Audience.toString()),
-                          leading: Radio(
-                            value: ClientRole.Audience,
-                            groupValue: _role,
-                            onChanged: (ClientRole value) {
-                              setState(() {
-                                _role = value;
-                              });
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                    TextButton.icon(
-                      onPressed: _getCurrentUserLocation,
-                      icon: Icon(Icons.location_on),
-                      label: Text('Current Location'),
-                    ),
                     Container(
                       child: Row(children: [
                         Expanded(
                           child: TextButton(
                             onPressed: () {
                               setState(() {
-                                onJoin();
+                                startEmergencies();
                               });
                             },
                             child: Image.asset('assets/images/ebuzz.png'),
@@ -230,26 +195,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> onJoin() async {
-    // update input validation
-    setState(() {
-      _channelController.text.isEmpty
-          ? _validateError = true
-          : _validateError = false;
-    });
-    if (_channelController.text.isNotEmpty) {
-      // await for camera and mic permissions before pushing video page
-      await _handleCameraAndMic();
-      // push video page with given channel name
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CallScreen(
-            channelName: _channelController.text,
-            role: _role,
-          ),
+    // await for camera and mic permissions before pushing video page
+    final user = Provider.of<User>(context, listen: false).userData;
+    await _handleCameraAndMic();
+    // push video page with given channel name
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CallScreen(
+          channelName: user.phone ?? 'test',
+          role: ClientRole.Broadcaster,
         ),
-      );
-    }
+      ),
+    );
   }
 
   Future<void> _handleCameraAndMic() async {
