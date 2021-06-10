@@ -6,7 +6,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/providers/user.dart';
 import 'package:ebuzz/screens/call_screen.dart';
-import 'package:ebuzz/widgets/bottom_bar.dart';
+
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -183,14 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: ButtomBarCommon(
-        onPressed: (index) {
-          print(index);
-          setState(() {
-            aindex = index;
-          });
-        },
-      ),
     );
   }
 

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
+import './screens/bottomappbar_screen.dart';
 import './providers/user.dart';
 import './providers/contact.dart';
 import './providers/emergency.dart';
@@ -102,6 +103,7 @@ class _MyAppState extends State<MyApp> {
               HistoryScreen.routeName: (ctx) => HistoryScreen(),
               CongratsScreen.routeName: (ctx) => CongratsScreen(),
               ActivityScreen.routeName: (ctx) => ActivityScreen(),
+              BottomappbarScreen.routeName: (ctx) => BottomappbarScreen(),
               VerificationCodeScreen.routeName: (ctx) =>
                   VerificationCodeScreen(),
               ChangeLanguage.routeName: (ctx) => ChangeLanguage(),

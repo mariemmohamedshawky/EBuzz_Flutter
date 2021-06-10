@@ -1,7 +1,7 @@
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/notification_model.dart';
-import 'package:ebuzz/widgets/bottom_bar.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -160,14 +160,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             );
           }
-        },
-      ),
-      bottomNavigationBar: ButtomBarCommon(
-        onPressed: (index) {
-          print(index);
-          setState(() {
-            // aindex = index;
-          });
         },
       ),
     );

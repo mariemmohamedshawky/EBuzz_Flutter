@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
-
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import './home_screen.dart';
 import '../providers/user.dart';
 import '../components/warning_popup.dart';
@@ -32,7 +32,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       var success = await Provider.of<User>(context, listen: false)
           .login(phone, _passwordController.text);
       if (success) {
-        Navigator.of(context).pushNamed(HomeScreen.routeName);
+        Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
@@ -57,59 +57,56 @@ class _PasswordScreenState extends State<PasswordScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            
-                 :Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
-                          child: CommonText(),
-                        ),
-                        Commontitle(
-                          translator.translate(
-                            'Title',
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: CommonText(),
+                  ),
+                  Commontitle(
+                    translator.translate(
+                      'Title',
+                    ),
+                  ),
+                  Text(phone),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
                           ),
-                        ),
-                        Text(phone),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                          child: TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: primary),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: primary),
-                                ),
-                                hintText: "Password",
-                                hintStyle: TextStyle(fontSize: 10),
-                                suffixIcon: IconButton(
-                                  icon: Icon(passwordVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
-                                  color: primary,
-                                  onPressed: () {
-                                    setState(() {
-                                      passwordVisible = !passwordVisible;
-                                    });
-                                  },
-                                )),
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: passwordVisible,
-                             
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
                           ),
-                        ),
-                        CommonButton(
-                          child: Text('Login    '),
-                          onPressed: () => _submitData(phone),
-                        ),
-                        Container(child: Footer()),
-                      ],
-                ),
+                          hintText: "Password",
+                          hintStyle: TextStyle(fontSize: 10),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: primary,
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          )),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: passwordVisible,
+                    ),
+                  ),
+                  CommonButton(
+                    child: Text('Login    '),
+                    onPressed: () => _submitData(phone),
+                  ),
+                  Container(child: Footer()),
+                ],
               ),
-      
+      ),
     );
   }
 }

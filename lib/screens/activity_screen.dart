@@ -236,14 +236,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: ButtomBarCommon(
-        onPressed: (index) {
-          print(index);
-          setState(() {
-            // aindex = index;
-          });
-        },
-      ),
     );
   }
 

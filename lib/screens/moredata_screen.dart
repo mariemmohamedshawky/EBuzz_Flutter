@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 //import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import '../providers/user.dart';
 import '../components/pickers/profile_image_picker.dart';
 import '../components/warning_popup.dart';
@@ -64,7 +64,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
         _gender,
       );
       if (success) {
-        Navigator.of(context).pushNamed(CongratsScreen.routeName);
+        Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
@@ -272,7 +272,8 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()),
+                                          builder: (context) =>
+                                              BottomappbarScreen()),
                                     );
                                   },
                                 ),

@@ -1,7 +1,7 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:ebuzz/screens/home_screen.dart';
 
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 
 // ignore: camel_case_types
@@ -48,7 +48,7 @@ class _CongratsScreenState extends State<CongratsScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
+                                  builder: (context) => BottomappbarScreen()),
                             );
                           },
                         ),
