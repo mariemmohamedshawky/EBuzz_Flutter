@@ -199,8 +199,15 @@ class _ContactsScreenState extends State<ContactsScreen> {
                                     color: black,
                                     fontWeight: FontWeight.bold,
                                   )),
-                              Text(contact.phones.first.value.toString() ?? '',
-                                  style: TextStyle(color: black, fontSize: 14)),
+                              Text(
+                                contact.phones.isNotEmpty
+                                    ? contact.phones.first.value
+                                    : '',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 14,
+                                ),
+                              ),
                             ],
                           ),
                         ),
