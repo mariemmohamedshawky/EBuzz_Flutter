@@ -56,22 +56,22 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
       var success =
           await Provider.of<contactProvider.Contact>(context, listen: false)
               .deleteContact(id);
-      if (success) {
-        WarningPopup.showWarningDialog(
-            context, true, 'Contact Deleted Successfully', () => {});
-      } else {
+      if (!success) {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
+      setState(() {
+        _isLoading = false;
+      });
     } catch (error) {
       print(error);
+      setState(() {
+        _isLoading = false;
+      });
       WarningPopup.showWarningDialog(
           context, false, 'SomeThing Went Wrong..', () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override

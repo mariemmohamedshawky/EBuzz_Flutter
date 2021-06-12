@@ -1,3 +1,4 @@
+import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
@@ -71,11 +72,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
           await Provider.of<contactProvider.Contact>(context, listen: false)
               .addContacts(contacts);
       if (success) {
-        WarningPopup.showWarningDialog(
-            context,
-            true,
-            'Contacts Added Successfully',
-            () => Navigator.of(context).pushNamed(HomeScreen.routeName));
+        WarningPopup.showWarningDialog(context, true,
+            'Contacts Added Successfully', () => Navigator.of(context).pop());
       } else {
         WarningPopup.showWarningDialog(
             context,
@@ -135,83 +133,89 @@ class _ContactsScreenState extends State<ContactsScreen> {
               itemBuilder: (BuildContext context, int index) {
                 Contact contact = _contacts?.elementAt(index);
                 var tempC = myAddedContacts.where((element) =>
-                    element.phone == contact.phones.first.value.toString());
+                    element.phone ==
+                    (contact.phones.isEmpty ? '' : contact.phones.first.value));
                 return tempC.isNotEmpty
                     ? SizedBox(
                         width: 0,
                       )
-                    : ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 2, horizontal: 18),
-                        leading: (contact.avatar != null &&
-                                contact.avatar.isNotEmpty)
-                            ? CircleAvatar(
-                                backgroundColor: white,
-                                backgroundImage: MemoryImage(contact.avatar),
-                              )
-                            : CircleAvatar(
-                                child: Text(
-                                  contact.initials(),
-                                  style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.bold,
+                    : contact.phones.isEmpty
+                        ? SizedBox(width: 0)
+                        : ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 18),
+                            leading: (contact.avatar != null &&
+                                    contact.avatar.isNotEmpty)
+                                ? CircleAvatar(
+                                    backgroundColor: white,
+                                    backgroundImage:
+                                        MemoryImage(contact.avatar),
+                                  )
+                                : CircleAvatar(
+                                    child: Text(
+                                      contact.initials(),
+                                      style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    backgroundColor: primary,
                                   ),
-                                ),
-                                backgroundColor: primary,
-                              ),
-                        trailing: Checkbox(
-                            activeColor: selectedContacts.contains(index)
-                                ? primary
-                                : Colors.white,
-                            value: selectedContacts.contains(index),
-                            onChanged: (bool value) {
-                              setState(() {
-                                if (selectedContacts.contains(index)) {
-                                  selectedContacts.remove(index);
-                                  mapContacts.removeWhere((element) =>
-                                      element['phone'] ==
-                                      contact.phones.first.value.toString());
-                                  print(mapContacts);
-                                } else {
-                                  selectedContacts.add(index);
-                                  Map tempContact = Map<String, String>();
-                                  tempContact['phone'] =
-                                      contact.phones.first.value.toString() ??
+                            trailing: Checkbox(
+                                activeColor: selectedContacts.contains(index)
+                                    ? primary
+                                    : Colors.white,
+                                value: selectedContacts.contains(index),
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    if (selectedContacts.contains(index)) {
+                                      selectedContacts.remove(index);
+                                      mapContacts.removeWhere((element) =>
+                                          element['phone'] ==
+                                          contact.phones.first.value
+                                              .toString());
+                                      print(mapContacts);
+                                    } else {
+                                      selectedContacts.add(index);
+                                      Map tempContact = Map<String, String>();
+                                      tempContact['phone'] = contact
+                                              .phones.first.value
+                                              .toString() ??
                                           '';
-                                  tempContact['first_name'] =
-                                      contact.givenName ?? '';
-                                  tempContact['last_name'] =
-                                      contact.familyName != null
-                                          ? contact.familyName
-                                          : '.';
-                                  mapContacts.add(tempContact);
-                                  print(contact.familyName);
-                                  print(mapContacts);
-                                }
-                              });
-                            }),
-                        title: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(contact.displayName ?? '',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              Text(
-                                contact.phones.isNotEmpty
-                                    ? contact.phones.first.value
-                                    : '',
-                                style: TextStyle(
-                                  color: black,
-                                  fontSize: 14,
-                                ),
+                                      tempContact['first_name'] =
+                                          contact.givenName ?? '';
+                                      tempContact['last_name'] =
+                                          contact.familyName != null
+                                              ? contact.familyName
+                                              : '.';
+                                      mapContacts.add(tempContact);
+                                      print(contact.familyName);
+                                      print(mapContacts);
+                                    }
+                                  });
+                                }),
+                            title: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(contact.displayName ?? '',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(
+                                    contact.phones.isEmpty
+                                        ? ''
+                                        : contact.phones.first.value,
+                                    style: TextStyle(
+                                      color: black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      );
+                            ),
+                          );
               },
             )
           : Center(child: const CircularProgressIndicator()),
