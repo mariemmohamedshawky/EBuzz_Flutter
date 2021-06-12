@@ -84,6 +84,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: grey,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -93,23 +100,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HistoryScreen()),
-              );
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: grey,
-                fontSize: 10,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -173,11 +163,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 width: 10,
                               ),
                               Column(
-                                mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Icon(
                                         Icons.message,
@@ -191,7 +183,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     ],
                                   ),
                                   Row(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Icon(
                                         Icons.notifications_active_outlined,
@@ -204,7 +197,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                       ),
                                     ],
                                   ),
-                                  
                                 ],
                               )
                             ],

@@ -1,3 +1,4 @@
+import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/notification_model.dart';
@@ -92,17 +93,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: white,
-            size: 30,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        elevation: 0.00,
         backgroundColor: primary,
-        title: Text('Notification'),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 0.1),
+          child: Text(
+            'Notification',
+            style: TextStyle(color: white),
+          ),
+        ),
+
+        // centerTitle: false,
+      ),
+      drawer: Container(
+        width: 250,
+        child: Drawer(
+          child: Container(child: MyDrawer()),
+        ),
       ),
       body: ListView.builder(
         controller: _scrollController,
@@ -142,16 +148,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(
-                        Icons.notifications_active_outlined,
-                        color: primary,
-                        size: 20,
-                      ),
-                      Text(
-                        '${emergency.date}',
-                        style: TextStyle(
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${emergency.date}',
+                          style: TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],

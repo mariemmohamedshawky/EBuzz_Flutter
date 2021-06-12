@@ -5,7 +5,6 @@ import '../providers/user.dart';
 import '../providers/contact.dart' as contactProvider;
 import '../components/warning_popup.dart';
 import '../constants/constant.dart';
-import '../screens/history_screen.dart';
 
 class MassageScreen extends StatefulWidget {
   static const String routeName = 'masssage-screen';
@@ -73,13 +72,19 @@ class _MassageScreenState extends State<MassageScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: grey,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -89,26 +94,13 @@ class _MassageScreenState extends State<MassageScreen> {
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        actions: [
-           IconButton(
-          icon: Icon(
-            Icons.add_call,
-            color: primary,
-          ),
-          onPressed: () =>  Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HistoryScreen()),
-              ),
-        ),
-        
-        ],
       ),
       body: Container(
         child: _isLoading
             ? Center(child: const CircularProgressIndicator())
             : Column(
-              //  mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //  crossAxisAlignment: CrossAxisAlignment.center,
+                //  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //  crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
                     children: [
@@ -121,7 +113,7 @@ class _MassageScreenState extends State<MassageScreen> {
                             )),
                       ),
                       RichText(
-                      //  textAlign: TextAlign.center,
+                        //  textAlign: TextAlign.center,
                         text: TextSpan(
                             text: 'Conacts',
                             style: TextStyle(
@@ -180,18 +172,14 @@ class _MassageScreenState extends State<MassageScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                     
-                        FloatingActionButton.extended(
-                          backgroundColor: primary,
-                          onPressed: () => _submitData(),
-                          icon: Icon(Icons.save),
-                          label: Text("Save"),
-                        
+                      FloatingActionButton.extended(
+                        backgroundColor: primary,
+                        onPressed: () => _submitData(),
+                        icon: Icon(Icons.save),
+                        label: Text("Save"),
                       ),
                     ],
                   ),
-                 
-              
                 ],
               ),
       ),

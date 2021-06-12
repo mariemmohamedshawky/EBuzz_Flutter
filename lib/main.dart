@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<User>(
         builder: (ctx, auth, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: auth.isAuth == true ? HomeScreen() : SplashScreen(),
+            home: auth.isAuth == true ? BottomappbarScreen() : SplashScreen(),
             localizationsDelegates: translator.delegates,
             locale: translator.locale,
             supportedLocales: translator.locals(),

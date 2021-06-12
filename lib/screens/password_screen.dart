@@ -4,7 +4,6 @@ import 'package:ebuzz/widgets/widgets.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:ebuzz/screens/bottomappbar_screen.dart';
-import './home_screen.dart';
 import '../providers/user.dart';
 import '../components/warning_popup.dart';
 
@@ -32,7 +31,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
       var success = await Provider.of<User>(context, listen: false)
           .login(phone, _passwordController.text);
       if (success) {
-        Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            BottomappbarScreen.routeName, (Route<dynamic> route) => false);
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
@@ -43,9 +43,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
           context, false, 'SomeThing Went Wrong', () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -61,16 +58,23 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: CommonText(),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: CommonText(),
+                      ),
+                      Commontitle(
+                        translator.translate(
+                          'Title',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(phone)
+                    ],
                   ),
-                  Commontitle(
-                    translator.translate(
-                      'Title',
-                    ),
-                  ),
-                  Text(phone),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: TextField(

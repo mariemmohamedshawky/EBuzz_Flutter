@@ -73,18 +73,17 @@ class MyDrawer extends StatelessWidget {
           Icons.person,
           color: grey,
         ),
-        title: Text("  Profile"),
+        title: Text("Profile"),
       ),
-     ListTile(
+      ListTile(
         onTap: () {
           Navigator.of(context).pushNamed(SelectedContactsScreen.routeName);
         },
-        
         leading: Icon(
           Icons.contact_phone,
           color: grey,
         ),
-        title: Text(" My Contact"),
+        title: Text("My Contact"),
       ),
       ListTile(
         onTap: () {
@@ -94,7 +93,7 @@ class MyDrawer extends StatelessWidget {
           Icons.message,
           color: grey,
         ),
-        title: Text("  Message"),
+        title: Text("Message"),
       ),
       ListTile(
         onTap: () {
@@ -104,18 +103,19 @@ class MyDrawer extends StatelessWidget {
           Icons.history,
           color: grey,
         ),
-        title: Text("  History"),
+        title: Text("History"),
       ),
       ListTile(
         onTap: () async {
           await Provider.of<User>(context, listen: false).logout();
-          Navigator.of(context).pushNamed(SplashScreen.routeName);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              SplashScreen.routeName, (Route<dynamic> route) => false);
         },
         leading: Icon(
           Icons.logout,
           color: grey,
         ),
-        title: Text("  Logout"),
+        title: Text("Logout"),
       ),
     ]);
   }

@@ -48,9 +48,6 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
           context, false, 'SomeThing Went Wrong..', () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -99,15 +96,25 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  CommonText(),
-                  Commontitle(
-                    translator.translate(
-                      'appTitle',
-                    ),
-                  ),
-                  Text(
-                    "join our community",
-                    style: TextStyle(color: grey, fontSize: 10),
+                  Column(
+                    children: [
+                      CommonText(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Commontitle(
+                        translator.translate(
+                          'appTitle',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "join our community",
+                        style: TextStyle(color: grey, fontSize: 10),
+                      ),
+                    ],
                   ),
                   Container(
                     margin: EdgeInsets.all(20),

@@ -70,16 +70,23 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: CommonText(),
-              ),
-              Commontitle(
-                'Enter Code',
-              ),
-              Text(
-                "We Send it to the number",
-                style: TextStyle(color: grey, fontSize: 10),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: CommonText(),
+                  ),
+                  Commontitle(
+                    'Enter Code',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "We Send it to the number",
+                    style: TextStyle(color: grey, fontSize: 10),
+                  ),
+                ],
               ),
               Container(
                 margin: EdgeInsets.all(50),
@@ -109,10 +116,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                               smsCode: _verificationCodeController.text))
                           .then((value) async {
                         if (value.user != null) {
-                          Navigator.of(context).pushNamed(
-                            NewPasswordScreen.routeName,
-                            arguments: widget.phone,
-                          );
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              NewPasswordScreen.routeName,
+                              (Route<dynamic> route) => false,
+                              arguments: widget.phone);
                         }
                       });
                     } catch (e) {

@@ -1,12 +1,9 @@
 import 'dart:io';
 
 import 'package:ebuzz/constants/constant.dart';
-import 'package:ebuzz/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
-//import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import '../providers/user.dart';
 import '../components/pickers/profile_image_picker.dart';
 import '../components/warning_popup.dart';
@@ -64,7 +61,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
         _gender,
       );
       if (success) {
-        Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
+        Navigator.of(context).pushNamed(CongratsScreen.routeName);
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
@@ -73,14 +70,13 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
         });
       }
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
       WarningPopup.showWarningDialog(
           context, false, 'SomeThing Went Wrong', () {});
       return;
     }
-
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -113,53 +109,64 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                 child: ProfileImagePicker(_pickedImage),
                               ),
                               SizedBox(height: 20),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: TextFormField(
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(_lastNameFocusNode);
-                                  },
-                                  onSaved: (value) {
-                                    _userFirstname = value;
-                                  },
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                      child: TextFormField(
+                                        onFieldSubmitted: (_) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_lastNameFocusNode);
+                                        },
+                                        onSaved: (value) {
+                                          _userFirstname = value;
+                                        },
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: primary),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: primary),
+                                          ),
+                                          hintText: "First Name",
+                                          hintStyle: TextStyle(fontSize: 10),
+                                        ),
+                                        keyboardType: TextInputType.name,
+                                      ),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "First Name",
-                                    hintStyle: TextStyle(fontSize: 10),
                                   ),
-                                  keyboardType: TextInputType.name,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: TextFormField(
-                                  focusNode: _lastNameFocusNode,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(_addressFocusNode);
-                                  },
-                                  onSaved: (value) {
-                                    _userLastname = value;
-                                  },
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
+                                  Flexible(
+                                    child: Container(
+                                      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                      child: TextFormField(
+                                        focusNode: _lastNameFocusNode,
+                                        onFieldSubmitted: (_) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_addressFocusNode);
+                                        },
+                                        onSaved: (value) {
+                                          _userLastname = value;
+                                        },
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: primary),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: primary),
+                                          ),
+                                          hintText: "Last Name",
+                                          hintStyle: TextStyle(fontSize: 10),
+                                        ),
+                                        keyboardType: TextInputType.name,
+                                      ),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Last Name",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                  ),
-                                  keyboardType: TextInputType.name,
-                                ),
+                                  )
+                                ],
                               ),
                               SizedBox(height: 20),
                               Container(
@@ -186,6 +193,7 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
+                              SizedBox(height: 20),
                               Container(
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
@@ -266,15 +274,12 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     'Skip',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.black,
                                         fontSize: 15),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              BottomappbarScreen()),
-                                    );
+                                    Navigator.of(context)
+                                        .pushNamed(CongratsScreen.routeName);
                                   },
                                 ),
                               ),

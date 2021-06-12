@@ -7,13 +7,14 @@ import '../providers/user.dart';
 import '../providers/contact.dart' as contactProvider;
 import '../components/warning_popup.dart';
 import '../constants/constant.dart';
+
 class SelectedContactsScreen extends StatefulWidget {
   static const String routeName = 'selected-contacts-screen';
   @override
-  _SelectedContactsScreenState createState() =>  _SelectedContactsScreenState();
+  _SelectedContactsScreenState createState() => _SelectedContactsScreenState();
 }
 
-class  _SelectedContactsScreenState extends State<SelectedContactsScreen> {
+class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
   var _isLoading = false;
 
   @override
@@ -41,6 +42,7 @@ class  _SelectedContactsScreenState extends State<SelectedContactsScreen> {
       _isLoading = false;
     });
   }
+
   Future<void> _deleteContact(int id) async {
     if (id == null) {
       WarningPopup.showWarningDialog(
@@ -74,7 +76,7 @@ class  _SelectedContactsScreenState extends State<SelectedContactsScreen> {
 
   @override
   Widget build(BuildContext context) {
-   // final user = Provider.of<User>(context);
+    // final user = Provider.of<User>(context);
     final myAddedContacts = Provider.of<contactProvider.Contact>(context).items;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -96,25 +98,26 @@ class  _SelectedContactsScreenState extends State<SelectedContactsScreen> {
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
-           IconButton(
-          icon: Icon(
-            Icons.add_call,
-            color: primary,
+          IconButton(
+            icon: Icon(
+              Icons.add_call,
+              color: primary,
+            ),
+            onPressed: () async {
+              final PermissionStatus permissionStatus = await _getPermission();
+              if (permissionStatus == PermissionStatus.granted) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ContactsScreen()));
+              } else {
+                if (await Permission.contacts.request().isGranted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ContactsScreen()));
+                }
+              }
+            },
           ),
-          onPressed: () async {
-          final PermissionStatus permissionStatus = await _getPermission();
-          if (permissionStatus == PermissionStatus.granted) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ContactsScreen()));
-          } else {
-            if (await Permission.contacts.request().isGranted) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ContactsScreen()));
-            }
-          }
-        },
-        ),
-        
         ],
       ),
       body: Container(
@@ -171,9 +174,9 @@ class  _SelectedContactsScreenState extends State<SelectedContactsScreen> {
               ),
       ),
     );
-    
   }
-   Future<PermissionStatus> _getPermission() async {
+
+  Future<PermissionStatus> _getPermission() async {
     final PermissionStatus permission = await Permission.contacts.status;
     if (permission != PermissionStatus.granted &&
         permission != PermissionStatus.denied) {

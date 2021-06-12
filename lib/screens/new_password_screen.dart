@@ -43,21 +43,28 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
           _passwordController.text,
           _passwordConfirmationController.text);
       if (success) {
-        WarningPopup.showWarningDialog(context, true, 'success created account',
-            () => Navigator.of(context).pushNamed(MoreDataScreen.routeName));
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            'success created account',
+            () => Navigator.of(context).pushNamedAndRemoveUntil(
+                MoreDataScreen.routeName, (Route<dynamic> route) => false));
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
       print(error);
       WarningPopup.showWarningDialog(
           context, false, 'SomeThing Went Wrong', () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
@@ -73,14 +80,21 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: CommonText(),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: CommonText(),
+                      ),
+                      Commontitle(
+                        'Enter Passward',
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(phone),
+                    ],
                   ),
-                  Commontitle(
-                    'Enter Passward',
-                  ),
-                  Text(phone),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: TextField(

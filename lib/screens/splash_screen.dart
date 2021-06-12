@@ -1,4 +1,3 @@
-import 'dart:async';
 import '../screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import '../constants/constant.dart';

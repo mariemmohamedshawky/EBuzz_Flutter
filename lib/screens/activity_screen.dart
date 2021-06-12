@@ -1,12 +1,11 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/screens/call_screen.dart';
-import 'package:ebuzz/widgets/bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ebuzz/widgets/widgets.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -93,22 +92,22 @@ class _ActivityScreenState extends State<ActivityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: grey,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: Colors.transparent,
-        bottomOpacity: 0.0,
-        elevation: 0.0,
+        backgroundColor: primary,
         title: Padding(
           padding: const EdgeInsets.only(left: 0.1),
-          child: Commontitle('Activity'),
+          child: Text(
+            'Activity',
+            style: TextStyle(color: white),
+          ),
         ),
 
         // centerTitle: false,
+      ),
+      drawer: Container(
+        width: 250,
+        child: Drawer(
+          child: Container(child: MyDrawer()),
+        ),
       ),
       body: Column(
         children: [
@@ -157,10 +156,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: CircleAvatar(
-                                    minRadius: 20,
-                                    maxRadius: 20,
-                                    backgroundColor: Colors.brown.shade800,
-                                    child: Image.network(
+                                    minRadius: 25,
+                                    maxRadius: 25,
+                                    backgroundImage: NetworkImage(
                                       '${myEmergencies[index].photo}',
                                     ),
                                   ),
@@ -197,7 +195,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                     borderRadius: BorderRadius.circular(20.0),
                                     image: DecorationImage(
                                       image: AssetImage("assets/images/3.jpg"),
-                                      //alignment: Alignment.topCenter,
+                                      fit: BoxFit.fitWidth,
                                     ),
                                   ),
                                   width: 140,

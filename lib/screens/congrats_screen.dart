@@ -28,7 +28,7 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       CommonText(),
                       SizedBox(height: 40),
                       Commontitle(
-                        'congrats!',
+                        'Congrats!',
                       ),
                       SizedBox(height: 30),
                       Text(
@@ -45,11 +45,9 @@ class _CongratsScreenState extends State<CongratsScreen> {
                         child: CommonButton(
                           child: Text('Home page '),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BottomappbarScreen()),
-                            );
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                BottomappbarScreen.routeName,
+                                (Route<dynamic> route) => false);
                           },
                         ),
                       ),

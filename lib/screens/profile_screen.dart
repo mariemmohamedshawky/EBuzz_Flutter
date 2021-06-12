@@ -144,75 +144,109 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Center(
                                 child: ProfileImagePicker(_pickedImage),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 1, 20, 1),
-                                child: Text(
-                                  'First Name',
-                                  style: TextStyle(color: grey, fontSize: 10),
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: TextFormField(
-                                  initialValue: _userFirstname,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(_lastNameFocusNode);
-                                  },
-                                  onSaved: (value) {
-                                    setState(() {
-                                      _userFirstname = value;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                  ),
-                                  keyboardType: TextInputType.name,
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 1, 20, 1),
-                                child: Text(
-                                  'Last Name',
-                                  style: TextStyle(color: grey, fontSize: 10),
-                                ),
-                              ),
-                              Container(
-                                height: 40,
-                                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: TextFormField(
-                                  initialValue: _userLastname,
-                                  focusNode: _lastNameFocusNode,
-                                  onFieldSubmitted: (_) {
-                                    FocusScope.of(context)
-                                        .requestFocus(_addressFocusNode);
-                                  },
-                                  onSaved: (value) {
-                                    setState(() {
-                                      _userLastname = value;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
+                              SizedBox(height: 30),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 1, 20, 1),
+                                          child: Text(
+                                            'First Name',
+                                            style: TextStyle(
+                                                color: grey, fontSize: 10),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          margin:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: TextFormField(
+                                            initialValue: _userFirstname,
+                                            onFieldSubmitted: (_) {
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _lastNameFocusNode);
+                                            },
+                                            onSaved: (value) {
+                                              setState(() {
+                                                _userFirstname = value;
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: primary),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: primary),
+                                              ),
+                                            ),
+                                            keyboardType: TextInputType.name,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  keyboardType: TextInputType.name,
-                                ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 1, 20, 1),
+                                          child: Text(
+                                            'Last Name',
+                                            style: TextStyle(
+                                                color: grey, fontSize: 10),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          margin:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: TextFormField(
+                                            initialValue: _userLastname,
+                                            focusNode: _lastNameFocusNode,
+                                            onFieldSubmitted: (_) {
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _addressFocusNode);
+                                            },
+                                            onSaved: (value) {
+                                              setState(() {
+                                                _userLastname = value;
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: primary),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: primary),
+                                              ),
+                                            ),
+                                            keyboardType: TextInputType.name,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 20),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
@@ -222,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               Container(
-                                height: 40,
+                                height: 30,
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
                                   initialValue: _userAddress,
@@ -247,6 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
+                              SizedBox(height: 20),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
@@ -256,7 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               Container(
-                                height: 40,
+                                height: 30,
                                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                                 child: TextFormField(
                                   initialValue: '$_userAge',
@@ -277,7 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 30),
                               Container(
                                 margin: EdgeInsets.only(
                                     left: mediaQuery.size.width * 0.01,
@@ -325,6 +360,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      FloatingActionButton.extended(
+                        backgroundColor: primary,
+                        onPressed: () => _saveForm(),
+                        label: Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: Text(
+                            "Update",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),

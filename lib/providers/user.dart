@@ -445,6 +445,9 @@ class User with ChangeNotifier {
 
 // ----------------------------- Logout -----------------------------
   Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('userData');
+    prefs.clear();
     _token = null;
     _userId = null;
     _expiryDate = null;
@@ -454,9 +457,6 @@ class User with ChangeNotifier {
     }
     await updateFCMToken('null');
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    // prefs.remove('userData');
-    prefs.clear();
   }
   // ------------------------------------------------------------------
 

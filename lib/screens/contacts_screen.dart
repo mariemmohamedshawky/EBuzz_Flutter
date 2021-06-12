@@ -114,17 +114,17 @@ class _ContactsScreenState extends State<ContactsScreen> {
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
-             SizedBox(
-              width:81,
-              child: IconButton( 
-               icon: Icon (Icons.assignment_turned_in_outlined),
-                color: primary,
-                onPressed: () {
-              print(mapContacts);
-              _submitData(mapContacts);
-            },
-              ),
+          SizedBox(
+            width: 81,
+            child: IconButton(
+              icon: Icon(Icons.assignment_turned_in_outlined),
+              color: primary,
+              onPressed: () {
+                print(mapContacts);
+                _submitData(mapContacts);
+              },
             ),
+          ),
         ],
       ),
       body: _contacts != null && _isLoading == false
@@ -157,7 +157,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                
                                 backgroundColor: primary,
                               ),
                         trailing: Checkbox(
@@ -192,22 +191,19 @@ class _ContactsScreenState extends State<ContactsScreen> {
                               });
                             }),
                         title: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(contact.displayName ?? '',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                Text(
-                                    contact.phones.first.value.toString() ?? '',
-                                    style:
-                                        TextStyle(color: black, fontSize: 14)),
-                              ],
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(contact.displayName ?? '',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              Text(contact.phones.first.value.toString() ?? '',
+                                  style: TextStyle(color: black, fontSize: 14)),
+                            ],
                           ),
-                        
+                        ),
                       );
               },
             )

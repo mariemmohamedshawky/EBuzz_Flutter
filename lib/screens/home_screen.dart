@@ -161,26 +161,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: [
-                    Container(
-                      child: Row(children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() {
-                                startEmergencies();
-                              });
-                            },
-                            child: Image.asset('assets/images/ebuzz.png'),
-                          ),
-                        ),
-                      ]),
+          : Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    shape: CircleBorder(),
+                    onPressed: () {
+                      setState(() {
+                        onJoin();
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(7),
+                      child: Image.asset('assets/images/EBUZZ BUTTON.png'),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
     );
