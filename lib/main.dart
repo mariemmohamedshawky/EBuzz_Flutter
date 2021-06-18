@@ -1,6 +1,7 @@
 import 'package:ebuzz/providers/contact.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
+import 'package:ebuzz/widgets/speech_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +112,7 @@ class _MyAppState extends State<MyApp> {
               CallScreen.routeName: (ctx) => CallScreen(),
               SelectedContactsScreen.routeName: (ctx) =>
                   SelectedContactsScreen(),
+              SpeechScreen.routeName: (ctx) => SpeechScreen(),
             }),
       ),
     );

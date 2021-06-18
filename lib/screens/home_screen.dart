@@ -6,6 +6,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/providers/user.dart';
 import 'package:ebuzz/screens/call_screen.dart';
+import 'package:ebuzz/widgets/speech_screen.dart';
 
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: primary,
         elevation: 00.0,
         title: CommonText(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(SpeechScreen.routeName);
+            },
+            icon: Icon(Icons.mic_none),
+          ),
+        ],
       ),
       drawer: Container(
         width: 250,
@@ -165,6 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // ignore: missing_required_param
+
                   MaterialButton(
                     shape: CircleBorder(),
                     onPressed: () {

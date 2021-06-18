@@ -54,6 +54,7 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
