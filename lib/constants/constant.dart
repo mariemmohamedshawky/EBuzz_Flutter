@@ -7,6 +7,9 @@ const String url = 'emergency-buzz.com';
 //agora live
 const APP_ID = '28f4c55d1a1b4f6bb628f6fa0bfbff28';
 
+// map key
+const Map_Key = 'AIzaSyDDHaXjuV0i_Vx5w1tpMomsazWj4bHerJg';
+
 //colors used in app
 const String appName = 'EBUZZ';
 

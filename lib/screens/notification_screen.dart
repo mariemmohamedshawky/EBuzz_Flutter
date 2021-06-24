@@ -2,6 +2,7 @@ import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/notification_model.dart';
+import 'package:ebuzz/screens/map_screen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,48 +120,57 @@ class _NotificationScreenState extends State<NotificationScreen> {
           if (index == myNotifications.length) {
             return _buildProgressIndicator();
           } else {
-            return Card(
-              child: Column(
-                // mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(emergency.photo),
-                      backgroundColor: primary,
+            return InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(MapScreen.routeName, arguments: {
+                  'latitude': emergency.latitude,
+                  'longitude': emergency.longitude,
+                });
+              },
+              child: Card(
+                child: Column(
+                  // mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(emergency.photo),
+                        backgroundColor: primary,
+                      ),
+                      title: RichText(
+                        text: TextSpan(
+                            text: '${emergency.userName} ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: primary),
+                            children: [
+                              TextSpan(
+                                  text:
+                                      'in danger near you in ${emergency.road} in ${emergency.city}  please help',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.normal,
+                                    color: black,
+                                  )),
+                            ]),
+                      ),
                     ),
-                    title: RichText(
-                      text: TextSpan(
-                          text: '${emergency.userName} ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: primary),
-                          children: [
-                            TextSpan(
-                                text:
-                                    'in danger near you in ${emergency.road} in ${emergency.city}  please help',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.normal,
-                                  color: black,
-                                )),
-                          ]),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${emergency.date}',
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '${emergency.date}',
+                            style: TextStyle(
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           }

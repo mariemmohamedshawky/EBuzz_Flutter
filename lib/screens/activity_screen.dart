@@ -1,9 +1,11 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:ebuzz/components/drower.dart';
+import 'package:ebuzz/components/maps/map_snapshot.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/screens/call_screen.dart';
+import 'package:ebuzz/screens/map_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/constants/constant.dart';
@@ -120,110 +122,121 @@ class _ActivityScreenState extends State<ActivityScreen> {
                 if (index == myEmergencies.length) {
                   return _buildProgressIndicator();
                 } else {
+                  String mapsnap = MapSnapshot.generateLocationPreviewImage(
+                      latitude: myEmergencies[index].latitude,
+                      longitude: myEmergencies[index].longitude);
                   return Padding(
                     padding: const EdgeInsets.all(11.0),
-                    child: Container(
-                      // height: 260,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 2), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20.0),
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/1.jpeg"),
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.topCenter,
-                        ),
-                      ),
-                      child: Card(
-                        color: Colors.black.withOpacity(0),
-                        shadowColor: black,
-                        elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        //  elevation: 6,
-
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                    minRadius: 25,
-                                    maxRadius: 25,
-                                    backgroundImage: NetworkImage(
-                                      '${myEmergencies[index].photo}',
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${myEmergencies[index].userName}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
-                                )
-                              ],
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(MapScreen.routeName, arguments: {
+                          'latitude': myEmergencies[index].latitude,
+                          'longitude': myEmergencies[index].longitude,
+                        });
+                      },
+                      child: Container(
+                        // height: 260,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 2), // changes position of shadow
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 25.0),
-                              child: Row(
+                          ],
+                          borderRadius: BorderRadius.circular(20.0),
+                          image: DecorationImage(
+                            image: NetworkImage(mapsnap),
+                            fit: BoxFit.fitWidth,
+                            alignment: Alignment.topCenter,
+                          ),
+                        ),
+                        child: Card(
+                          color: Colors.black.withOpacity(0),
+                          shadowColor: black,
+                          elevation: 0.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          //  elevation: 6,
+
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  print('profile');
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircleAvatar(
+                                        minRadius: 25,
+                                        maxRadius: 25,
+                                        backgroundImage: NetworkImage(
+                                          '${myEmergencies[index].photo}',
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${myEmergencies[index].userName}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(bottom: 15),
+                                child: Text(
+                                  '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
+                                  style: TextStyle(fontSize: 6, color: primary),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: primary,
-                                    size: 20,
-                                  ),
-                                  Text(
-                                    '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
-                                    style: TextStyle(fontSize: 6),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage("assets/images/3.jpg"),
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                    ),
+                                    width: 140,
+                                    height: 90,
+                                    child: Card(
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.live_tv_rounded,
+                                          color: primary,
+                                          size: 25,
+                                        ),
+                                        onPressed: () =>
+                                            onJoin(myEmergencies[index].phone),
+                                      ),
+                                      color: Colors.black.withOpacity(0),
+                                      shadowColor: black,
+                                      elevation: 0.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    image: DecorationImage(
-                                      image: AssetImage("assets/images/3.jpg"),
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                  ),
-                                  width: 140,
-                                  height: 90,
-                                  child: Card(
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.live_tv_rounded,
-                                        color: primary,
-                                        size: 25,
-                                      ),
-                                      onPressed: () =>
-                                          onJoin(myEmergencies[index].phone),
-                                    ),
-                                    color: Colors.black.withOpacity(0),
-                                    shadowColor: black,
-                                    elevation: 0.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(4.0),
-                            ),
-                          ],
+                              Padding(
+                                padding: EdgeInsets.all(4.0),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

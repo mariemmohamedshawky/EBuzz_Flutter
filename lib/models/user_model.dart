@@ -1,8 +1,10 @@
 class UserModel {
   String phone, firstName, lastName, address, gender, smsAlert, photo;
-  int age;
+  int age, id;
+  double latitude, longitude;
 
   UserModel({
+    this.id,
     this.firstName,
     this.lastName,
     this.address,
@@ -11,5 +13,7 @@ class UserModel {
     this.smsAlert,
     this.phone,
     this.photo,
+    this.latitude,
+    this.longitude,
   });
 }

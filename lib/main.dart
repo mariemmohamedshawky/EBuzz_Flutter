@@ -1,4 +1,5 @@
 import 'package:ebuzz/providers/contact.dart';
+import 'package:ebuzz/providers/users.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:ebuzz/widgets/speech_screen.dart';
@@ -28,6 +29,7 @@ import './screens/congrats_screen.dart';
 import './screens/verification_code_screen.dart';
 import './screens/notification_screen.dart';
 import './screens/call_screen.dart';
+import 'screens/map_screen.dart';
 import './components/change_language.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -75,6 +77,9 @@ class _MyAppState extends State<MyApp> {
           create: (ctx) => user,
         ),
         ChangeNotifierProvider(
+          create: (ctx) => Users(),
+        ),
+        ChangeNotifierProvider(
           create: (ctx) => Contact(),
         ),
         ChangeNotifierProvider(
@@ -113,6 +118,7 @@ class _MyAppState extends State<MyApp> {
               SelectedContactsScreen.routeName: (ctx) =>
                   SelectedContactsScreen(),
               SpeechScreen.routeName: (ctx) => SpeechScreen(),
+              MapScreen.routeName: (ctx) => MapScreen(),
             }),
       ),
     );

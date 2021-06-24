@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 
-import './home_screen.dart';
 import '../components/warning_popup.dart';
 import '../constants/constant.dart';
 import '../providers/contact.dart' as contactProvider;
@@ -72,8 +71,13 @@ class _ContactsScreenState extends State<ContactsScreen> {
           await Provider.of<contactProvider.Contact>(context, listen: false)
               .addContacts(contacts);
       if (success) {
-        WarningPopup.showWarningDialog(context, true,
-            'Contacts Added Successfully', () => Navigator.of(context).pop());
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            'Contacts Added Successfully',
+            () => Navigator.of(context).pushNamedAndRemoveUntil(
+                SelectedContactsScreen.routeName,
+                (Route<dynamic> route) => false));
       } else {
         WarningPopup.showWarningDialog(
             context,

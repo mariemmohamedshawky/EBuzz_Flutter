@@ -1,7 +1,9 @@
+import 'package:ebuzz/components/maps/map_snapshot.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/providers/emergency.dart';
+import 'package:ebuzz/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -112,6 +114,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 if (index == myEmergencies.length) {
                   return _buildProgressIndicator();
                 } else {
+                  String mapsnap = MapSnapshot.generateLocationPreviewImage(
+                      latitude: myEmergencies[index].latitude,
+                      longitude: myEmergencies[index].longitude);
                   return Padding(
                     padding: const EdgeInsets.all(11.0),
                     child: Container(
@@ -130,7 +135,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
-                                    image: AssetImage("assets/images/1.jpeg"),
+                                    image: NetworkImage(mapsnap),
                                     fit: BoxFit.fitWidth,
                                     //alignment: Alignment.topCenter,
                                   ),
@@ -140,14 +145,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 child: Card(
                                   child: Row(
                                     children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: primary,
-                                        size: 20,
-                                      ),
                                       Text(
                                         '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
-                                        style: TextStyle(fontSize: 5),
+                                        style: TextStyle(
+                                            fontSize: 5, color: primary),
                                       ),
                                     ],
                                   ),

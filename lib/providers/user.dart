@@ -219,7 +219,7 @@ class User with ChangeNotifier {
           _userId = responseData['data']['user_id'];
           _expiryDate = DateTime.now().add(
             Duration(
-              seconds: (60 * 24 * 7),
+              seconds: (60 * 60 * 24 * 7),
             ),
           );
           _autoLogout();
@@ -285,16 +285,20 @@ class User with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseData['errNum'] == "200") {
           userData = UserModel(
-              phone: responseData['data']['phone'],
-              address: responseData['data']['address'],
-              gender: responseData['data']['gender'],
-              age: responseData['data']['age'] != null
-                  ? int.parse(responseData['data']['age'])
-                  : 0,
-              smsAlert: responseData['data']['sms_alert'],
-              firstName: responseData['data']['first_name'],
-              lastName: responseData['data']['last_name'],
-              photo: responseData['data']['photo']);
+            id: responseData['data']['id'],
+            phone: responseData['data']['phone'],
+            address: responseData['data']['address'],
+            gender: responseData['data']['gender'],
+            age: responseData['data']['age'] != null
+                ? int.parse(responseData['data']['age'])
+                : 0,
+            smsAlert: responseData['data']['sms_alert'],
+            firstName: responseData['data']['first_name'],
+            lastName: responseData['data']['last_name'],
+            photo: responseData['data']['photo'],
+            latitude: double.tryParse('${responseData['data']['latitude']}'),
+            longitude: double.tryParse('${responseData['data']['longitude']}'),
+          );
           return true;
         } else if (responseData['errNum'] == "401") {
           return false;

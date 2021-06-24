@@ -6,6 +6,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/providers/user.dart';
 import 'package:ebuzz/screens/call_screen.dart';
+import 'package:ebuzz/screens/map_screen.dart';
 import 'package:ebuzz/widgets/speech_screen.dart';
 
 import 'package:ebuzz/widgets/widgets.dart';
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(
-        Duration(seconds: 10), (Timer t) => _getCurrentUserLocation());
+        Duration(seconds: 120), (Timer t) => _getCurrentUserLocation());
     _updateFcm();
     FirebaseMessaging.instance
         .getInitialMessage()
@@ -171,23 +172,40 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             )
           : Center(
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ignore: missing_required_param
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // ignore: missing_required_param
 
-                  MaterialButton(
-                    shape: CircleBorder(),
-                    onPressed: () {
-                      setState(() {
-                        onJoin();
+                      MaterialButton(
+                        shape: CircleBorder(),
+                        onPressed: () {
+                          setState(() {
+                            onJoin();
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(7),
+                          child: Image.asset('assets/images/EBUZZ BUTTON.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      final locData =
+                          await location_package.Location().getLocation();
+                      Navigator.of(context)
+                          .pushNamed(MapScreen.routeName, arguments: {
+                        'latitude': locData.latitude,
+                        'longitude': locData.longitude,
                       });
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(7),
-                      child: Image.asset('assets/images/EBUZZ BUTTON.png'),
-                    ),
-                  ),
+                    icon: Icon(Icons.share_location_outlined),
+                  )
                 ],
               ),
             ),

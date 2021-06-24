@@ -1,26 +1,22 @@
 import 'dart:convert';
-import 'dart:async';
 
+import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/models/user_model.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 
-import '../constants/constant.dart';
-import '../models/notification_model.dart';
-import '../models/emergency_model.dart';
-
-class Notification with ChangeNotifier {
+class Users with ChangeNotifier {
   String errorMessage = '';
-  List<NotificationModel> _items = [];
+  List<UserModel> _items = [];
 
-  List<NotificationModel> get items {
+  List<UserModel> get items {
     return [..._items];
   }
 
 // --------------------------------- View Notifications ---------------------------------
-  Future viewNotifications(int page) async {
-    Uri apiLink =
-        Uri.https(url, '/api/v1/user/notifications', {'page': '$page'});
+  Future viewUsers() async {
+    Uri apiLink = Uri.https(url, '/api/v1/user/users/all');
     print(apiLink); // during development cycle
     errorMessage = '';
     try {
@@ -43,37 +39,28 @@ class Notification with ChangeNotifier {
       //-------------start error handling -------------
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseData['errNum'] == "200") {
-          final List<NotificationModel> loadedNotification = [];
+          final List<UserModel> loadedUser = [];
           var data = responseData['data'] as List<dynamic>;
           data.forEach((element) {
-            loadedNotification.add(
-              NotificationModel(
+            loadedUser.add(
+              UserModel(
                 id: element['id'],
-                emergency: EmergencyModel(
-                  id: element['emergency']['id'],
-                  userName: element['emergency']['user_name'],
-                  phone: element['emergency']['phone'],
-                  date: element['emergency']['date'],
-                  photo: element['emergency']['photo'],
-                  latitude:
-                      double.tryParse('${element['emergency']['latitude']}'),
-                  longitude:
-                      double.tryParse('${element['emergency']['longitude']}'),
-                  country: element['emergency']['country'],
-                  countryCode: element['emergency']['country_code'],
-                  city: element['emergency']['city'],
-                  state: element['emergency']['state'],
-                  road: element['emergency']['road'],
-                  notificationCount:
-                      '${element['emergency']['notification_count']}',
-                  massageCount: '${element['emergency']['massage_count']}',
-                ),
+                age: element['age'] != null ? int.parse(element['age']) : 0,
+                address: element['address'],
+                gender: element['gender'],
+                phone: element['phone'],
+                smsAlert: element['sms_alert'],
+                firstName: element['first_name'],
+                lastName: element['last_name'],
+                photo: element['photo'],
+                latitude: double.tryParse('${element['latitude']}'),
+                longitude: double.tryParse('${element['longitude']}'),
               ),
             );
           });
-          _items = loadedNotification;
+          _items = loadedUser;
           notifyListeners();
-          return responseData['pagination']['meta']['total_pages'];
+          return true;
         } else if (responseData['errNum'] == "401") {
           return false;
         } else {
