@@ -1,7 +1,10 @@
 import 'package:ebuzz/providers/contact.dart';
 import 'package:ebuzz/providers/users.dart';
+import 'package:ebuzz/screens/addpost_screen.dart';
+import 'package:ebuzz/screens/news_screen.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
+import 'package:ebuzz/screens/tabbar_screen.dart';
 import 'package:ebuzz/widgets/speech_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +122,9 @@ class _MyAppState extends State<MyApp> {
                   SelectedContactsScreen(),
               SpeechScreen.routeName: (ctx) => SpeechScreen(),
               MapScreen.routeName: (ctx) => MapScreen(),
+              NewsScreen.routeName: (ctx) => NewsScreen(),
+              TabbarScreen.routeName: (ctx) => TabbarScreen(),
+              AddpostScreen.routeName: (ctx) => AddpostScreen(),
             }),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:ebuzz/screens/activity_screen.dart';
 import 'package:ebuzz/screens/home_screen.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
+import 'package:ebuzz/screens/tabbar_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -19,7 +20,7 @@ class _BottomappbarScreenState extends State<BottomappbarScreen> {
   final page = [
     HomeScreen(),
     NotificationScreen(),
-    ActivityScreen(),
+    TabbarScreen(),
   ];
   @override
   Widget build(BuildContext context) {

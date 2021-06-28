@@ -204,7 +204,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         'longitude': locData.longitude,
                       });
                     },
-                    icon: Icon(Icons.share_location_outlined),
+                    icon: Icon(
+                      Icons.share_location_outlined,
+                      size: 50,
+                      color: primary,
+                    ),
                   )
                 ],
               ),

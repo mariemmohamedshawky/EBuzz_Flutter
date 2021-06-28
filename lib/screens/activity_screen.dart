@@ -93,24 +93,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primary,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 0.1),
-          child: Text(
-            'Activity',
-            style: TextStyle(color: white),
-          ),
-        ),
-
-        // centerTitle: false,
-      ),
-      drawer: Container(
-        width: 250,
-        child: Drawer(
-          child: Container(child: MyDrawer()),
-        ),
-      ),
       body: Column(
         children: [
           SizedBox(height: 10),

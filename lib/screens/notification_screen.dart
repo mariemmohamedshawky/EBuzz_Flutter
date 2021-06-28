@@ -94,12 +94,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: primary,
+        elevation: 0.0,
+        backgroundColor: white,
+        iconTheme: IconThemeData(color: grey),
         title: Padding(
           padding: const EdgeInsets.only(left: 0.1),
           child: Text(
             'Notification',
-            style: TextStyle(color: white),
+            style: TextStyle(color: black),
           ),
         ),
 
