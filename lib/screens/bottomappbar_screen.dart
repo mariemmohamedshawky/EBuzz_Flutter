@@ -1,6 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-import 'package:ebuzz/screens/activity_screen.dart';
 import 'package:ebuzz/screens/home_screen.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/screens/tabbar_screen.dart';

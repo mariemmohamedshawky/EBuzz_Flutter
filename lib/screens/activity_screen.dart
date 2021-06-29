@@ -1,5 +1,4 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/maps/map_snapshot.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/models/emergency_model.dart';
@@ -201,7 +200,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                           size: 25,
                                         ),
                                         onPressed: () =>
-                                            onJoin(myEmergencies[index].phone),
+                                            onJoin(myEmergencies[index].id),
                                       ),
                                       color: Colors.black.withOpacity(0),
                                       shadowColor: black,
@@ -244,7 +243,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
     );
   }
 
-  Future<void> onJoin(phone) async {
+  Future<void> onJoin(id) async {
     // await for camera and mic permissions before pushing video page
     await _handleCameraAndMic();
     // push video page with given channel name
@@ -252,7 +251,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => CallScreen(
-          channelName: phone ?? 'test',
+          channelName: '$id' ?? 'test',
           role: ClientRole.Audience,
         ),
       ),

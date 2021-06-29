@@ -2,6 +2,7 @@ import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/notification_model.dart';
+import 'package:ebuzz/providers/report.dart';
 import 'package:ebuzz/screens/map_screen.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   List<NotificationModel> myData = [];
   static int page = 1;
   ScrollController _scrollController = new ScrollController();
+  final _reasonController = new TextEditingController();
+  int emergencyReportedId;
 
   @override
   void initState() {
@@ -87,6 +90,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
         page++;
       }
     });
+  }
+
+  void _submitReport(BuildContext ctx) async {
+    if (_reasonController.text.isEmpty) {
+      return;
+    }
+    try {
+      var success = await Provider.of<Report>(context, listen: false)
+          .report(emergencyReportedId, _reasonController.text);
+      if (success) {
+        Navigator.of(ctx).pop();
+        WarningPopup.showWarningDialog(
+            context, true, 'Report Sent Success To Admin', () {});
+        _reasonController.text = '';
+      } else {
+        Navigator.of(ctx).pop();
+        WarningPopup.showWarningDialog(
+            context, false, 'SomeThing Went Wrong !=!', () {});
+      }
+    } catch (error) {
+      print(error);
+      Navigator.of(ctx).pop();
+      WarningPopup.showWarningDialog(
+          context, false, 'SomeThing Went Wrong..', () {});
+      return;
+    }
   }
 
   @override
@@ -156,21 +185,65 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             ]),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton.icon(
+                            label: Text(
+                              'Report',
+                              style: TextStyle(color: black, fontSize: 10),
+                            ),
+                            icon: Icon(
+                              Icons.report_gmailerrorred_outlined,
+                              color: primary,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                emergencyReportedId = emergency.id;
+                              });
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text('Report User'),
+                                  content: Container(
+                                    height: 100,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Resason',
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 14),
+                                        ),
+                                        TextField(
+                                          controller: _reasonController,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: Text('Report'),
+                                      onPressed: () async {
+                                        _submitReport(ctx);
+                                      },
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          Text(
                             '${emergency.date}',
                             style: TextStyle(
                               fontSize: 8,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ],
-                    )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

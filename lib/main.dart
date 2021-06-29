@@ -1,10 +1,15 @@
+import 'package:ebuzz/providers/city.dart';
 import 'package:ebuzz/providers/contact.dart';
+import 'package:ebuzz/providers/post.dart';
+import 'package:ebuzz/providers/report.dart';
 import 'package:ebuzz/providers/users.dart';
 import 'package:ebuzz/screens/addpost_screen.dart';
+import 'package:ebuzz/screens/myposts_screen.dart';
 import 'package:ebuzz/screens/news_screen.dart';
 import 'package:ebuzz/screens/notification_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:ebuzz/screens/tabbar_screen.dart';
+import 'package:ebuzz/screens/updatepost_screen.dart';
 import 'package:ebuzz/widgets/speech_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +94,15 @@ class _MyAppState extends State<MyApp> {
           create: (ctx) => Emergency(),
         ),
         ChangeNotifierProvider(
+          create: (ctx) => City(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Post(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Report(),
+        ),
+        ChangeNotifierProvider(
           create: (ctx) => notificationProvider.Notification(),
         ),
       ],
@@ -125,6 +139,8 @@ class _MyAppState extends State<MyApp> {
               NewsScreen.routeName: (ctx) => NewsScreen(),
               TabbarScreen.routeName: (ctx) => TabbarScreen(),
               AddpostScreen.routeName: (ctx) => AddpostScreen(),
+              MypostsScreen.routeName: (ctx) => MypostsScreen(),
+              UpdatepostScreen.routeName: (ctx) => UpdatepostScreen(),
             }),
       ),
     );

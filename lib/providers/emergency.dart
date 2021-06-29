@@ -188,6 +188,53 @@ class Emergency with ChangeNotifier {
       //-------------start error handling -------------
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseData['errNum'] == "200") {
+          return responseData['data'];
+        } else if (responseData['errNum'] == "401") {
+          return 0;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return 0;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return 0;
+      }
+      //-------------end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
+// --------------------------------------------------------------------------------------------
+
+// --------------------------------- View Emergencies History ---------------------------------
+  Future stopEmergency(var emergencyId, String feedback) async {
+    Uri apiLink = Uri.https(
+        url, '/api/v1/user/emergencies/stop/' + emergencyId + '/' + feedback);
+    print(apiLink); // during development cycle
+    errorMessage = '';
+    try {
+      //get use token from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final extractedUserData =
+          json.decode(prefs.getString('userData')) as Map<String, Object>;
+      var token = extractedUserData['token'];
+      //------------------------------------
+
+      final response = await http.get(
+        apiLink,
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+      );
+      print(response.body); // during development cycle
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      //-------------start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
           return true;
         } else if (responseData['errNum'] == "401") {
           return false;

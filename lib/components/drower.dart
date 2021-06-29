@@ -1,3 +1,5 @@
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
+import 'package:ebuzz/screens/myposts_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -32,7 +34,7 @@ class MyDrawer extends StatelessWidget {
                   backgroundColor: grey,
                   child: CircleAvatar(
                       radius: 48,
-                      backgroundImage: NetworkImage(user.userData.photo)),
+                      backgroundImage: NetworkImage(user.userData.photo ?? '')),
                 ),
                 SizedBox(
                   height: 5.0,
@@ -67,6 +69,16 @@ class MyDrawer extends StatelessWidget {
       ),
       ListTile(
         onTap: () {
+          Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
+        },
+        leading: Icon(
+          Icons.home,
+          color: grey,
+        ),
+        title: Text("Home"),
+      ),
+      ListTile(
+        onTap: () {
           Navigator.of(context).pushNamed(ProfileScreen.routeName);
         },
         leading: Icon(
@@ -84,6 +96,16 @@ class MyDrawer extends StatelessWidget {
           color: grey,
         ),
         title: Text("My Contact"),
+      ),
+      ListTile(
+        onTap: () {
+          Navigator.of(context).pushNamed(MypostsScreen.routeName);
+        },
+        leading: Icon(
+          Icons.podcasts_sharp,
+          color: grey,
+        ),
+        title: Text("My Posts"),
       ),
       ListTile(
         onTap: () {

@@ -56,18 +56,24 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final success =
+      final emergencyId =
           await Provider.of<Emergency>(context, listen: false).startEmergency();
-      if (success) {
-        onJoin();
+      if (emergencyId != 0 && emergencyId != false) {
+        onJoin(emergencyId);
       } else {
         WarningPopup.showWarningDialog(
             context, false, 'SomeThing Went Wrong !=!', () {});
+        setState(() {
+          _isLoading = false;
+        });
       }
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
           context, false, 'SomeThing Went Wrong..', () {});
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
@@ -114,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (ctx) => AlertDialog(
             title: Text('New Notification!!'),
             content: Container(
-              height: 50,
+              height: 100,
               child: Column(
                 children: [
                   Text(
@@ -184,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: CircleBorder(),
                         onPressed: () {
                           setState(() {
-                            onJoin();
+                            startEmergencies();
                           });
                         },
                         child: Padding(
@@ -216,16 +222,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> onJoin() async {
+  Future<void> onJoin(var emergencyId) async {
     // await for camera and mic permissions before pushing video page
-    final user = Provider.of<User>(context, listen: false).userData;
     await _handleCameraAndMic();
     // push video page with given channel name
     await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CallScreen(
-          channelName: user.phone ?? 'test',
+          channelName: '$emergencyId' ?? 'test',
           role: ClientRole.Broadcaster,
         ),
       ),

@@ -5,22 +5,28 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/city_model.dart';
 import 'package:ebuzz/providers/city.dart';
 import 'package:ebuzz/providers/post.dart';
+import 'package:ebuzz/screens/myposts_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddpostScreen extends StatefulWidget {
-  static const String routeName = 'addpost-screen';
+// ignore: must_be_immutable
+class UpdatepostScreen extends StatefulWidget {
+  static const String routeName = 'updatepost-screen';
+  String postImage;
+  String description;
+  int postId;
+  int cityId;
+  CityModel selectedCity;
   @override
-  _AddpostScreenState createState() => _AddpostScreenState();
+  _UpdatepostScreenState createState() => _UpdatepostScreenState();
 }
 
-class _AddpostScreenState extends State<AddpostScreen> {
+class _UpdatepostScreenState extends State<UpdatepostScreen> {
   final _descriptionController = TextEditingController();
   File _image;
   final picker = ImagePicker();
-  CityModel selectedCity;
   List<CityModel> cities = [];
   var _isInit = true;
   var _isLoading = false;
@@ -29,6 +35,18 @@ class _AddpostScreenState extends State<AddpostScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       getCities();
+
+      final args =
+          ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+      setState(() {
+        widget.postImage = args['image'];
+        widget.cityId = args['city_id'];
+        widget.postId = args['id'];
+        widget.selectedCity =
+            CityModel(id: args['city_id'], name: args['city']);
+        widget.description = args['description'];
+        _descriptionController..text = args['description'];
+      });
     }
     setState(() {
       _isInit = false;
@@ -76,10 +94,7 @@ class _AddpostScreenState extends State<AddpostScreen> {
       WarningPopup.showWarningDialog(
           context, false, 'Description Required', () {});
       return;
-    } else if (_image == null) {
-      WarningPopup.showWarningDialog(context, false, 'Image Required', () {});
-      return;
-    } else if (selectedCity == null) {
+    } else if (widget.selectedCity == null) {
       WarningPopup.showWarningDialog(context, false, 'City Required', () {});
       return;
     } else {
@@ -88,15 +103,13 @@ class _AddpostScreenState extends State<AddpostScreen> {
       });
       try {
         var success = await Provider.of<Post>(context, listen: false)
-            .addPost(_image, _descriptionController.text, selectedCity.id);
+            .updatePost(_image, _descriptionController.text,
+                widget.selectedCity.id, widget.postId);
         if (success) {
-          WarningPopup.showWarningDialog(context, true,
-              'Post Added Successfully Admin Will Review it Soon', () {});
-          setState(() {
-            _descriptionController.text = '';
-            _image = null;
-            selectedCity = null;
-          });
+          WarningPopup.showWarningDialog(
+              context, true, 'Post Updated Successfully', () {});
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              MypostsScreen.routeName, (Route<dynamic> route) => false);
         } else {
           WarningPopup.showWarningDialog(context, false,
               Provider.of<Post>(context, listen: false).errorMessage, () {});
@@ -168,6 +181,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
               child: Container(
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 30,
+                    ),
                     Container(
                       padding: EdgeInsets.all(5),
                       margin: EdgeInsets.fromLTRB(6, 20, 6, 10),
@@ -220,8 +236,8 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                       size: 22,
                                     ),
                                     Text(
-                                      selectedCity != null
-                                          ? selectedCity.name
+                                      widget.selectedCity != null
+                                          ? widget.selectedCity.name
                                           : 'location',
                                       style: TextStyle(
                                           color: Colors.grey, fontSize: 15),
@@ -267,7 +283,8 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                             fit: BoxFit.cover,
                                             image: _image != null
                                                 ? FileImage(_image)
-                                                : NetworkImage(
+                                                : NetworkImage(widget
+                                                        .postImage ??
                                                     "https://cdn.questionpro.com/userimages/site_media/no-image.png")),
                                       ),
                                     )
@@ -314,10 +331,10 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                         decoration: InputDecoration.collapsed(
                                             hintText: ''),
                                         hint: Text('Select City'),
-                                        value: selectedCity != null
-                                            ? cities.firstWhere(
-                                                (c) => c.id == selectedCity.id)
-                                            : selectedCity,
+                                        value: widget.selectedCity != null
+                                            ? cities.firstWhere((c) =>
+                                                c.id == widget.selectedCity.id)
+                                            : widget.selectedCity,
                                         items: cities.map(
                                           (value) {
                                             return DropdownMenuItem<CityModel>(
@@ -328,7 +345,7 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                         ).toList(),
                                         onChanged: (value) {
                                           setState(() {
-                                            selectedCity = value;
+                                            widget.selectedCity = value;
                                           });
                                         },
                                       ),
@@ -348,9 +365,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                           _submitForm();
                         },
                         backgroundColor: Color(0xFF8C0202),
-                        icon: Icon(Icons.post_add_outlined),
+                        icon: Icon(Icons.file_upload_outlined),
                         label: Text(
-                          "Add post",
+                          "Update post",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

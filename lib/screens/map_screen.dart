@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location_package;
 import 'package:provider/provider.dart';
+import 'package:flutter_animarker/flutter_map_marker_animation.dart';
 
 class MapScreen extends StatefulWidget {
   static const String routeName = 'map0-screen';
@@ -35,6 +36,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
   CameraPosition initialLocation;
   GoogleMapController _googleMapController;
+  final controller = Completer<GoogleMapController>();
   Marker _origin;
   Marker _destination;
   Directions _info;
@@ -172,7 +174,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
             markers.add(_origin);
             _getUsersLocation();
             markers.add(
-              Marker(
+              RippleMarker(
                   markerId: MarkerId(place['place_id']),
                   infoWindow: InfoWindow(title: place['name']),
                   icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -181,8 +183,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                     place['geometry']['location']['lat'],
                     place['geometry']['location']['lng'],
                   ),
+                  ripple: true, //Ripple state
                   onTap: () async {
-                    _destination = Marker(
+                    _destination = RippleMarker(
                       markerId: MarkerId(place['place_id']),
                       infoWindow: InfoWindow(title: place['name']),
                       icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -230,8 +233,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
         zoom: 11.5,
         target: LatLng(locData.latitude, locData.longitude),
       );
-      _origin = Marker(
+      _origin = RippleMarker(
         markerId: MarkerId('${user.userData.id}'),
+        ripple: true, //Ripple state
         infoWindow: InfoWindow(
             title: '${user.userData.firstName} ${user.userData.lastName}'),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose),
@@ -266,14 +270,30 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
               // final Uint8List resizedMarkerImageBytes =
               //     byteData.buffer.asUint8List();
-              markers.add(Marker(
-                markerId: MarkerId('${user.id}'),
-                infoWindow:
-                    InfoWindow(title: '${user.firstName} ${user.lastName}'),
-                icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueViolet),
-                position: LatLng(user.latitude, user.longitude),
-              ));
+              markers.add(
+                Marker(
+                  markerId: MarkerId('${user.id}'),
+                  infoWindow:
+                      InfoWindow(title: '${user.firstName} ${user.lastName}'),
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueViolet),
+                  position: LatLng(user.latitude, user.longitude),
+                  onTap: () async {
+                    setState(() {
+                      _destination = RippleMarker(
+                        markerId: MarkerId('${user.id}'),
+                        infoWindow: InfoWindow(
+                            title: '${user.firstName} ${user.lastName}'),
+                        icon: BitmapDescriptor.defaultMarkerWithHue(
+                            BitmapDescriptor.hueViolet),
+                        position: LatLng(user.latitude, user.longitude),
+                        ripple: true, //Ripple state
+                      );
+                      markers.add(_destination);
+                    });
+                  },
+                ),
+              );
             }
           });
         }
@@ -306,36 +326,47 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            GoogleMap(
-              myLocationEnabled: false,
-              zoomControlsEnabled: false,
-              compassEnabled: true,
-              initialCameraPosition: initialLocation,
-              onMapCreated: (controller) => _googleMapController = controller,
-              polylines: {
-                if (_info != null)
-                  Polyline(
-                    polylineId: const PolylineId('overview_polyline'),
-                    color: Colors.red,
-                    width: 5,
-                    points: _info.polylinePoints
-                        .map((e) => LatLng(e.latitude, e.longitude))
-                        .toList(),
-                  )
-              },
-              markers: Set<Marker>.of(markers),
-              onTap: (pos) async {
-                setState(() {
-                  _destination = Marker(
-                    markerId: MarkerId('destination'),
-                    infoWindow: InfoWindow(title: ('Destination')),
-                    icon: BitmapDescriptor.defaultMarkerWithHue(
-                        BitmapDescriptor.hueRed),
-                    position: pos,
-                  );
-                  markers.add(_destination);
-                });
-              },
+            Animarker(
+              curve: Curves.bounceInOut,
+              rippleRadius: 0.2,
+              useRotation: true,
+              duration: Duration(milliseconds: 2300),
+              mapId: controller.future.then<int>((value) => value.mapId),
+              child: GoogleMap(
+                myLocationEnabled: false,
+                zoomControlsEnabled: false,
+                compassEnabled: true,
+                initialCameraPosition: initialLocation,
+                onMapCreated: (gController) {
+                  _googleMapController = gController;
+                  controller.complete(gController);
+                },
+                polylines: {
+                  if (_info != null)
+                    Polyline(
+                      polylineId: const PolylineId('overview_polyline'),
+                      color: Colors.red,
+                      width: 5,
+                      points: _info.polylinePoints
+                          .map((e) => LatLng(e.latitude, e.longitude))
+                          .toList(),
+                    )
+                },
+                markers: Set<Marker>.of(markers),
+                onTap: (pos) async {
+                  setState(() {
+                    _destination = RippleMarker(
+                      markerId: MarkerId('destination'),
+                      infoWindow: InfoWindow(title: ('Destination')),
+                      icon: BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueRed),
+                      position: pos,
+                      ripple: true, //Ripple state
+                    );
+                    markers.add(_destination);
+                  });
+                },
+              ),
             ),
             if (_info != null)
               Positioned(

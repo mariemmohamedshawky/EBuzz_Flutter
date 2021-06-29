@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:ebuzz/providers/emergency.dart';
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constant.dart';
 
@@ -24,6 +27,7 @@ class _CallScreenState extends State<CallScreen> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
+  String _feedback;
 
   @override
   void dispose() {
@@ -289,8 +293,91 @@ class _CallScreenState extends State<CallScreen> {
     );
   }
 
-  void _onCallEnd(BuildContext context) {
-    Navigator.pop(context);
+  void _onCallEnd(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Emergency Feedback'),
+        content: Container(
+          height: 100,
+          child: Column(
+            children: [
+              Text(
+                'Is Any user came to help You',
+                style: TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+              Row(
+                children: <Widget>[
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: RadioListTile(
+                      activeColor: primary,
+                      title: Text(
+                        "Yes",
+                        style: const TextStyle(
+                          color: Color(0xff1c305b),
+                        ),
+                      ),
+                      value: 'yes',
+                      groupValue: _feedback,
+                      onChanged: (value) {
+                        setState(() {
+                          _feedback = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: RadioListTile(
+                      activeColor: primary,
+                      title: Text(
+                        "No",
+                        style: const TextStyle(
+                          color: Color(0xff1c305b),
+                        ),
+                      ),
+                      value: 'no',
+                      groupValue: _feedback,
+                      onChanged: (value) {
+                        setState(() {
+                          _feedback = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: Text('Done'),
+            onPressed: () async {
+              try {
+                final success =
+                    await Provider.of<Emergency>(context, listen: false)
+                        .stopEmergency(widget.channelName, _feedback);
+                if (success) {
+                  print('success end live');
+                } else {
+                  print('something went wrong in end live');
+                }
+              } catch (error) {
+                print(error);
+                print('something went wrong in end live!!!!!!');
+                return;
+              }
+              Navigator.pop(context);
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  BottomappbarScreen.routeName,
+                  (Route<dynamic> route) => false);
+            },
+          )
+        ],
+      ),
+    );
   }
 
   void _onToggleMute() {
