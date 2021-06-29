@@ -299,6 +299,9 @@ class User with ChangeNotifier {
             latitude: double.tryParse('${responseData['data']['latitude']}'),
             longitude: double.tryParse('${responseData['data']['longitude']}'),
           );
+          if (responseData['data']['block'] == "1") {
+            logout();
+          }
           return true;
         } else if (responseData['errNum'] == "401") {
           return false;

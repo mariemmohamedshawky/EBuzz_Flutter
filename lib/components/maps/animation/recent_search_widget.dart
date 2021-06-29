@@ -18,13 +18,7 @@ class RecentSearchWidget extends StatelessWidget {
             height: realH(494),
             child: Opacity(
               opacity: currentSearchPercent,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  "assets/recent.png",
-                  fit: BoxFit.contain,
-                ),
-              ),
+              child: Text('hello'),
             ),
           )
         : const Padding(

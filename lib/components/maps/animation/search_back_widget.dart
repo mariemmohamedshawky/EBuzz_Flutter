@@ -5,9 +5,10 @@ class SearchBackWidget extends StatelessWidget {
   final double currentSearchPercent;
 
   final Function(bool) animateSearch;
+  final Function(String) searchfn;
 
   const SearchBackWidget(
-      {Key key, this.currentSearchPercent, this.animateSearch})
+      {Key key, this.currentSearchPercent, this.animateSearch, this.searchfn})
       : super(key: key);
 
   @override
@@ -48,6 +49,9 @@ class SearchBackWidget extends StatelessWidget {
                       border: InputBorder.none,
                     ),
                     style: TextStyle(fontSize: realW(22)),
+                    onChanged: (value) async {
+                      searchfn(value);
+                    },
                   ),
                 ),
               )

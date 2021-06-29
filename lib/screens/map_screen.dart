@@ -8,6 +8,7 @@ import 'package:ebuzz/components/maps/animation/ui_helper.dart';
 import 'package:ebuzz/components/maps/directions.dart';
 import 'package:ebuzz/components/maps/directions_repository.dart';
 import 'package:ebuzz/components/maps/get_places.dart';
+import 'package:ebuzz/components/maps/place_search.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/user_model.dart';
@@ -43,6 +44,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   Timer timer;
   String placeType;
   List<Marker> markers = [];
+  List<PlaceSearch> autocompletePlaces = [];
+  var _isLoading = false;
 
   /// get currentOffset percent
   get currentExplorePercent =>
@@ -245,6 +248,17 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     });
   }
 
+  Future<void> autocompletefn(String value) async {
+    setState(() {
+      _isLoading = true;
+    });
+    var results = await GetPlaces().getPlacesAutocomplete(value);
+    setState(() {
+      autocompletePlaces = results;
+      _isLoading = false;
+    });
+  }
+
   Future<void> _getUsersLocation() async {
     try {
       await Provider.of<Users>(context, listen: false).viewUsers();
@@ -304,6 +318,20 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
           context, false, 'SomeThing Went Wrong!@!..', () {});
       return;
     }
+  }
+
+  Future<void> _goToPlace(String placeId) async {
+    var results = await GetPlaces().getPlaceDetails(placeId);
+    animateSearch(false);
+    final GoogleMapController tmpcontroller = await controller.future;
+    tmpcontroller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(results['lat'], results['lng']),
+          zoom: 14.0,
+        ),
+      ),
+    );
   }
 
   @override
@@ -397,14 +425,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-            SearchWidget(
-              currentSearchPercent: currentSearchPercent,
-              currentExplorePercent: currentExplorePercent,
-              isSearchOpen: isSearchOpen,
-              animateSearch: animateSearch,
-              onHorizontalDragUpdate: onSearchHorizontalDragUpdate,
-              onPanDown: () => animationControllerSearch?.stop(),
-            ),
             //explore
             ExploreWidget(
               currentExplorePercent: currentExplorePercent,
@@ -437,32 +457,36 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               animateExplore: animateExplore,
               togglePlaceType: togglePlaceType,
             ),
-            //search menu background
-            offsetSearch != 0
-                ? Positioned(
-                    bottom: realH(88),
+            //recent search
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Positioned(
+                    top: realH(-(75.0 + 494.0) +
+                        (75 + 75.0 + 494.0) * currentSearchPercent),
                     left: realW((standardWidth - 320) / 2),
                     width: realW(320),
-                    height: realH(135 * currentSearchPercent),
+                    height: realH(494),
                     child: Opacity(
                       opacity: currentSearchPercent,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(realW(33)),
-                                topRight: Radius.circular(realW(33)))),
+                      child: Container(
+                        width: double.infinity,
+                        child: ListView.builder(
+                            itemCount: autocompletePlaces.length,
+                            itemBuilder: (ctx, index) {
+                              return InkWell(
+                                onTap: () {
+                                  _goToPlace(autocompletePlaces[index].placeId);
+                                },
+                                child:
+                                    Text(autocompletePlaces[index].description),
+                              );
+                            }),
                       ),
                     ),
-                  )
-                : const Padding(
-                    padding: const EdgeInsets.all(0),
                   ),
-            //search menu
-            SearchMenuWidget(
-              currentSearchPercent: currentSearchPercent,
-            ),
-            //search
+            //search button
             SearchWidget(
               currentSearchPercent: currentSearchPercent,
               currentExplorePercent: currentExplorePercent,
@@ -475,6 +499,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
             SearchBackWidget(
               currentSearchPercent: currentSearchPercent,
               animateSearch: animateSearch,
+              searchfn: autocompletefn,
             ),
             //zoom button
             MapButton(
@@ -536,39 +561,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               height: 71,
               icon: Icons.my_location,
               iconColor: primary,
-            ),
-            //menu button
-            Positioned(
-              bottom: realH(53.0),
-              left: realW(-71 * (currentExplorePercent + currentSearchPercent)),
-              child: GestureDetector(
-                onTap: () {
-                  animateMenu(true);
-                },
-                child: Opacity(
-                  opacity: 1 - (currentSearchPercent + currentExplorePercent),
-                  child: Container(
-                    width: realW(71),
-                    height: realH(71),
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: realW(17)),
-                    child: Icon(
-                      Icons.menu,
-                      size: realW(34),
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(realW(36)),
-                            topRight: Radius.circular(realW(36))),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.3),
-                              blurRadius: realW(36)),
-                        ]),
-                  ),
-                ),
-              ),
             ),
           ],
         ),
