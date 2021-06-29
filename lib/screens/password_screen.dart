@@ -113,6 +113,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     child: Text('Login    '),
                     onPressed: () => _submitData(phone),
                   ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      primary: primary,
+                      textStyle: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {},
+                    child: const Text('Forget Password ?  '),
+                  ),
                   Container(child: Footer()),
                 ],
               ),

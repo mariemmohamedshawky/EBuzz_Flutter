@@ -154,8 +154,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: grey),
         centerTitle: true,
-        backgroundColor: primary,
+        backgroundColor: white,
         elevation: 00.0,
         title: CommonText(),
         actions: [
@@ -212,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     icon: Icon(
                       Icons.share_location_outlined,
-                      size: 50,
+                      size: 30,
                       color: primary,
                     ),
                   )

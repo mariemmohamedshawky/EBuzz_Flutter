@@ -127,18 +127,26 @@ class _AddpostScreenState extends State<AddpostScreen> {
                 ),
                 Row(children: <Widget>[
                   Text(
-                    'pick image',
-                    style: theme.textTheme.headline5,
+                    'Pick Image',
+                    //  style: theme.textTheme.headline5,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                 ]),
-                SizedBox(
-                  height: mediaQuery.size.height * 0.05,
-                ),
+                // SizedBox(
+                //   height: mediaQuery.size.height * 0.05,
+                // ),
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     'use Camera',
-                    style: theme.textTheme.bodyText1,
+                    //   style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.camera),
                 ),
@@ -146,7 +154,11 @@ class _AddpostScreenState extends State<AddpostScreen> {
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     "use Gallary",
-                    style: theme.textTheme.bodyText1,
+                    // style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.gallery),
                 ),

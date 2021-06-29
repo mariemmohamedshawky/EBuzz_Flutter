@@ -119,10 +119,12 @@ class _MypostsScreenState extends State<MypostsScreen> {
         iconTheme: IconThemeData(color: grey),
         title: const Text(
           'My posts',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
         elevation: 0.0,
-        backgroundColor: Colors.white,
       ),
       drawer: Container(
         width: 250,
@@ -144,33 +146,22 @@ class _MypostsScreenState extends State<MypostsScreen> {
                   return Wrap(
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(8, 0, 8, 2),
                         child: Center(
                           child: Card(
                             child: Column(
                               children: [
-                                Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 5),
-                                    child: Text(
-                                      '${usersPosts[index].date} (${usersPosts[index].status})',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 12),
-                                    )),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Wrap(
                                       children: [
-                                        Center(
-                                          child: Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                25, 10, 25, 3),
-                                            child: (Text(
-                                              usersPosts[index].description ??
-                                                  '',
-                                              style: TextStyle(fontSize: 14),
-                                            )),
-                                          ),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(
+                                              25, 10, 25, 3),
+                                          child: (Text(
+                                            usersPosts[index].description ?? '',
+                                            style: TextStyle(fontSize: 12),
+                                          )),
                                         ),
                                       ],
                                     ),
@@ -192,23 +183,25 @@ class _MypostsScreenState extends State<MypostsScreen> {
                                     ),
                                     Padding(
                                       padding:
-                                          EdgeInsets.fromLTRB(40, 0, 40, 8),
+                                          EdgeInsets.fromLTRB(30, 0, 32, 8),
                                       child: Container(
                                         child: (Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceAround,
                                           children: [
                                             TextButton.icon(
                                               onPressed: () {},
                                               icon: Icon(
                                                 Icons.place,
                                                 color: Color(0xFF8C0202),
-                                                size: 24,
+                                                size: 22,
                                               ),
                                               label: Text(
                                                 usersPosts[index].city,
                                                 style: TextStyle(
-                                                    color: Colors.grey),
+                                                  color: Colors.grey,
+                                                  fontSize: 10,
+                                                ),
                                               ),
                                             ),
                                             Row(
@@ -239,13 +232,15 @@ class _MypostsScreenState extends State<MypostsScreen> {
                                                   },
                                                   icon: Icon(
                                                     Icons.edit,
-                                                    color: Colors.blue,
-                                                    size: 24,
+                                                    color: primary,
+                                                    size: 22,
                                                   ),
                                                   label: Text(
                                                     'edit',
                                                     style: TextStyle(
-                                                        color: Colors.grey),
+                                                      color: Colors.grey,
+                                                      fontSize: 10,
+                                                    ),
                                                   ),
                                                 ),
                                                 TextButton.icon(
@@ -256,18 +251,33 @@ class _MypostsScreenState extends State<MypostsScreen> {
                                                   icon: Icon(
                                                     Icons.delete,
                                                     color: Color(0xFF8C0202),
-                                                    size: 24,
+                                                    size: 22,
                                                   ),
                                                   label: Text(
                                                     'delete',
                                                     style: TextStyle(
-                                                        color: Colors.grey),
+                                                      color: Colors.grey,
+                                                      fontSize: 10,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
                                             )
                                           ],
                                         )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '${usersPosts[index].date}    (${usersPosts[index].status})',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 10),
                                       ),
                                     ),
                                   ],

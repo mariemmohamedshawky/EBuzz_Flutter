@@ -117,7 +117,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                         });
                       },
                       child: Container(
-                        // height: 260,
+                        //   height: 180,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -172,7 +172,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(bottom: 15),
+                                padding: EdgeInsets.only(bottom: 10),
                                 child: Text(
                                   '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
                                   style: TextStyle(fontSize: 6, color: primary),
@@ -182,16 +182,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      image: DecorationImage(
-                                        image:
-                                            AssetImage("assets/images/3.jpg"),
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                    ),
-                                    width: 140,
-                                    height: 90,
+                                    width: 40,
+                                    height: 35,
                                     child: Card(
                                       child: IconButton(
                                         icon: Icon(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/city_model.dart';
@@ -141,17 +142,25 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 Row(children: <Widget>[
                   Text(
                     'pick image',
-                    style: theme.textTheme.headline5,
+                    // style: theme.textTheme.headline5,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                 ]),
-                SizedBox(
-                  height: mediaQuery.size.height * 0.05,
-                ),
+                // SizedBox(
+                //   height: mediaQuery.size.height * 0.05,
+                // ),
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     'use Camera',
-                    style: theme.textTheme.bodyText1,
+                    //style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.camera),
                 ),
@@ -159,7 +168,11 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     "use Gallary",
-                    style: theme.textTheme.bodyText1,
+                    // style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.gallery),
                 ),
@@ -173,6 +186,18 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: grey),
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+      ),
+      drawer: Container(
+        width: 250,
+        child: Drawer(
+          child: Container(child: MyDrawer()),
+        ),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -181,9 +206,6 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
               child: Container(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 30,
-                    ),
                     Container(
                       padding: EdgeInsets.all(5),
                       margin: EdgeInsets.fromLTRB(6, 20, 6, 10),

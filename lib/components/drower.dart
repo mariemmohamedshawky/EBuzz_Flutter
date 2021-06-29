@@ -19,127 +19,128 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return Column(children: [
-      Container(
-        // margin: EdgeInsets.all(10),
-        child: Padding(
-          padding: EdgeInsets.only(top: 50.0),
-          child: Container(
-            margin: EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundColor: grey,
-                  child: CircleAvatar(
-                      radius: 48,
-                      backgroundImage: NetworkImage(user.userData.photo ?? '')),
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  '${user.userData.firstName} ${user.userData.lastName}',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w800,
+    return Scaffold(
+        // resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+      child: Column(children: [
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only(top: 25.0),
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10, left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: grey,
+                    child: CircleAvatar(
+                        radius: 38,
+                        backgroundImage:
+                            NetworkImage(user.userData.photo ?? '')),
                   ),
-                ),
-                Text(
-                  '${user.userData.phone}',
-                  style: TextStyle(
-                    fontSize: 13,
+                  SizedBox(
+                    height: 4,
                   ),
-                ),
-                Divider(
-                  color: grey,
-                  height: 25,
-                  thickness: 2,
-                  indent: 1,
-                  endIndent: 1,
-                ),
-              ],
+                  Text(
+                    '${user.userData.firstName} ${user.userData.lastName}',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    '${user.userData.phone}',
+                    style: TextStyle(
+                      fontSize: 13,
+                    ),
+                  ),
+                  Divider(
+                    color: grey,
+                    height: 20,
+                    thickness: 2,
+                    indent: 1,
+                    endIndent: 1,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      SizedBox(
-        height: 8.0,
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
-        },
-        leading: Icon(
-          Icons.home,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
+          },
+          leading: Icon(
+            Icons.home,
+            color: grey,
+          ),
+          title: Text("Home"),
         ),
-        title: Text("Home"),
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(ProfileScreen.routeName);
-        },
-        leading: Icon(
-          Icons.person,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(ProfileScreen.routeName);
+          },
+          leading: Icon(
+            Icons.person,
+            color: grey,
+          ),
+          title: Text("Profile"),
         ),
-        title: Text("Profile"),
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(SelectedContactsScreen.routeName);
-        },
-        leading: Icon(
-          Icons.contact_phone,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(SelectedContactsScreen.routeName);
+          },
+          leading: Icon(
+            Icons.contact_phone,
+            color: grey,
+          ),
+          title: Text("My Contact"),
         ),
-        title: Text("My Contact"),
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(MypostsScreen.routeName);
-        },
-        leading: Icon(
-          Icons.podcasts_sharp,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(MypostsScreen.routeName);
+          },
+          leading: Icon(
+            Icons.podcasts_sharp,
+            color: grey,
+          ),
+          title: Text("My Posts"),
         ),
-        title: Text("My Posts"),
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(MassageScreen.routeName);
-        },
-        leading: Icon(
-          Icons.message,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(MassageScreen.routeName);
+          },
+          leading: Icon(
+            Icons.message,
+            color: grey,
+          ),
+          title: Text("Message"),
         ),
-        title: Text("Message"),
-      ),
-      ListTile(
-        onTap: () {
-          Navigator.of(context).pushNamed(HistoryScreen.routeName);
-        },
-        leading: Icon(
-          Icons.history,
-          color: grey,
+        ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(HistoryScreen.routeName);
+          },
+          leading: Icon(
+            Icons.history,
+            color: grey,
+          ),
+          title: Text("History"),
         ),
-        title: Text("History"),
-      ),
-      ListTile(
-        onTap: () async {
-          await Provider.of<User>(context, listen: false).logout();
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              SplashScreen.routeName, (Route<dynamic> route) => false);
-        },
-        leading: Icon(
-          Icons.logout,
-          color: grey,
+        ListTile(
+          onTap: () async {
+            await Provider.of<User>(context, listen: false).logout();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                SplashScreen.routeName, (Route<dynamic> route) => false);
+          },
+          leading: Icon(
+            Icons.logout,
+            color: grey,
+          ),
+          title: Text("Logout"),
         ),
-        title: Text("Logout"),
-      ),
-    ]);
+      ]),
+    ));
   }
 
   //Check contacts permission
