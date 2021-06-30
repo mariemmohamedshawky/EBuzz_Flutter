@@ -2,7 +2,7 @@ import 'package:ebuzz/components/maps/map_snapshot.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/emergency_model.dart';
-import 'package:ebuzz/providers/emergency.dart'; 
+import 'package:ebuzz/providers/emergency.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -90,7 +91,7 @@ class _MassageScreenState extends State<MassageScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'Massege',
+          translator.translate('massege-title'),
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
@@ -106,7 +107,7 @@ class _MassageScreenState extends State<MassageScreen> {
                     children: [
                       SizedBox(height: 50),
                       Container(
-                        child: Text("This is your message that send to",
+                        child: Text(translator.translate(' massege-header'),
                             style: TextStyle(
                               fontSize: 12,
                               color: grey,
@@ -115,21 +116,21 @@ class _MassageScreenState extends State<MassageScreen> {
                       RichText(
                         //  textAlign: TextAlign.center,
                         text: TextSpan(
-                            text: 'Conacts',
+                            text: translator.translate('massege-header2'),
                             style: TextStyle(
                               fontSize: 15,
                               color: primary,
                             ),
                             children: [
                               TextSpan(
-                                text: ' To get  ',
+                                text: translator.translate('massege-header3'),
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: grey,
                                 ),
                               ),
                               TextSpan(
-                                text: 'help',
+                                text: translator.translate('massege-header4'),
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: primary,
@@ -149,7 +150,8 @@ class _MassageScreenState extends State<MassageScreen> {
                                 controller: _messageController
                                   ..text = user.userData.smsAlert,
                                 decoration: InputDecoration.collapsed(
-                                  hintText: "Write Your own Message",
+                                  hintText:
+                                      translator.translate('massege-textfield'),
                                   hintStyle: TextStyle(
                                     color: grey,
                                     fontSize: 10,
@@ -176,7 +178,9 @@ class _MassageScreenState extends State<MassageScreen> {
                         backgroundColor: primary,
                         onPressed: () => _submitData(),
                         icon: Icon(Icons.save),
-                        label: Text("Save"),
+                        label: Text(
+                          translator.translate('massege-button'),
+                        ),
                       ),
                     ],
                   ),

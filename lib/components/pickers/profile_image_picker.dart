@@ -52,6 +52,13 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
                         fontWeight: FontWeight.bold),
                   ),
                 ]),
+                Divider(
+                  color: grey,
+                  height: 20,
+                  thickness: 2,
+                  indent: 1,
+                  endIndent: 1,
+                ),
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(

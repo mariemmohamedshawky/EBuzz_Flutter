@@ -118,7 +118,7 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.all(20),
+                    // margin: EdgeInsets.all(10),
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(

@@ -206,12 +206,12 @@ class _CallScreenState extends State<CallScreen> {
             onPressed: _onToggleMute,
             child: Icon(
               muted ? Icons.mic_off : Icons.mic,
-              color: muted ? Colors.white : Colors.blueAccent,
+              color: muted ? Colors.white : primary,
               size: 20.0,
             ),
             shape: CircleBorder(),
             elevation: 2.0,
-            fillColor: muted ? Colors.blueAccent : Colors.white,
+            fillColor: muted ? primary : Colors.white,
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
@@ -230,7 +230,7 @@ class _CallScreenState extends State<CallScreen> {
             onPressed: _onSwitchCamera,
             child: Icon(
               Icons.switch_camera,
-              color: Colors.blueAccent,
+              color: primary,
               size: 20.0,
             ),
             shape: CircleBorder(),
@@ -274,12 +274,12 @@ class _CallScreenState extends State<CallScreen> {
                           horizontal: 5,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
+                          color: primary,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Text(
                           _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
+                          style: TextStyle(color: white),
                         ),
                       ),
                     )
@@ -297,13 +297,16 @@ class _CallScreenState extends State<CallScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(32.0))),
+        contentPadding: EdgeInsets.all(5.0),
         title: Text('Emergency Feedback'),
         content: Container(
           height: 100,
           child: Column(
             children: [
               Text(
-                'Is Any user came to help You',
+                'Is Any user came to help You ?',
                 style: TextStyle(color: Colors.grey, fontSize: 14),
               ),
               Row(
@@ -315,6 +318,7 @@ class _CallScreenState extends State<CallScreen> {
                       title: Text(
                         "Yes",
                         style: const TextStyle(
+                          fontSize: 5,
                           color: Color(0xff1c305b),
                         ),
                       ),
@@ -334,6 +338,7 @@ class _CallScreenState extends State<CallScreen> {
                       title: Text(
                         "No",
                         style: const TextStyle(
+                          fontSize: 5,
                           color: Color(0xff1c305b),
                         ),
                       ),
@@ -353,7 +358,12 @@ class _CallScreenState extends State<CallScreen> {
         ),
         actions: [
           TextButton(
-            child: Text('Done'),
+            child: Text(
+              'Done',
+              style: TextStyle(
+                color: primary,
+              ),
+            ),
             onPressed: () async {
               try {
                 final success =
@@ -395,7 +405,11 @@ class _CallScreenState extends State<CallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Flutter QuickStart'),
+        backgroundColor: primary,
+        title: Text(
+          'Agora Flutter QuickStart',
+          style: TextStyle(fontSize: 15),
+        ),
       ),
       backgroundColor: Colors.black,
       body: Center(

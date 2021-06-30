@@ -152,6 +152,13 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 // SizedBox(
                 //   height: mediaQuery.size.height * 0.05,
                 // ),
+                Divider(
+                  color: grey,
+                  height: 20,
+                  thickness: 2,
+                  indent: 1,
+                  endIndent: 1,
+                ),
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(

@@ -1,5 +1,15 @@
 {
     "appTitle": "Create better together",
     "Title":"Enter passward",
-    "buttonTitle": "العربية"
+    "buttonTitle": "العربية",
+    "home-notidication-alert-title":"New Notification!!",
+    "home-alert-oky":"oky",
+    "massege-title":"Massege",
+    "massege-header":"This is your message that send to",
+    "massege-header2":"Conacts",
+    "massege-header3":"To get ",
+    "massege-header4":"help",
+    "massege-textfield":"Write Your own Message",
+    "massege-button":"Save"
+    
 }

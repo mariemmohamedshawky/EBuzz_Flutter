@@ -1,6 +1,15 @@
 {
     "appTitle": "نخلق معًا بشكل أفضل ", 
     "Title":"ادخل كلمة المرور",
-    "buttonTitle": "English"
-   
+    "buttonTitle": "English",
+    "home-notidication-alert-title":"!!اشعار جديد",
+    "home-alert-oky":"تم",
+    "massege-title":"الرسالة",
+    "massege-header":"  هذه هي رسالتك التي ترسل إلي",
+    "massege-header2":"الارقام",
+    "massege-header3":"لطلب ",
+    "massege-header4":"المساعدة",
+    "massege-textfield":"اكتب رسالتك ",
+    "massege-button":"حفظ"
 }
+   

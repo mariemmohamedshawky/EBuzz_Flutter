@@ -12,6 +12,7 @@ import 'package:ebuzz/widgets/speech_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:location/location.dart' as location_package;
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -118,22 +119,45 @@ class _HomeScreenState extends State<HomeScreen> {
         return showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text('New Notification!!'),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: EdgeInsets.all(5.0),
+            title: Text(
+              translator.translate(
+                'home-notidication-alert-title',
+              ),
+              style: TextStyle(fontSize: 18),
+            ),
             content: Container(
-              height: 100,
+              height: 120,
               child: Column(
                 children: [
+                  Icon(
+                    Icons.notification_important,
+                    color: primary,
+                    size: 20,
+                  ),
                   Text(
                     notification.title,
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
-                  Text(notification.body),
+                  Text(
+                    notification.body,
+                    style: TextStyle(fontSize: 10),
+                  ),
                 ],
               ),
             ),
             actions: [
               TextButton(
-                child: Text('Okay'),
+                child: Text(
+                  translator.translate(
+                    'home-alert-oky',
+                  ),
+                  style: TextStyle(
+                    color: primary,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
