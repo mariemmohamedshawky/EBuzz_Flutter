@@ -6,6 +6,7 @@ import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/models/post_model.dart';
 import 'package:ebuzz/providers/post.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 class MypostsScreen extends StatefulWidget {
@@ -68,7 +69,12 @@ class _MypostsScreenState extends State<MypostsScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -85,7 +91,13 @@ class _MypostsScreenState extends State<MypostsScreen> {
 
   Future<void> _deletePost(int id) async {
     if (id == null) {
-      WarningPopup.showWarningDialog(context, false, 'Post Id Missing', () {});
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'mypost-post-id',
+          ),
+          () {});
       return;
     }
     setState(() {
@@ -107,7 +119,12 @@ class _MypostsScreenState extends State<MypostsScreen> {
         _isLoading = false;
       });
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -117,8 +134,10 @@ class _MypostsScreenState extends State<MypostsScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: grey),
-        title: const Text(
-          'My posts',
+        title: Text(
+          translator.translate(
+            'mypost-tittle',
+          ),
           style: TextStyle(
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
@@ -236,7 +255,9 @@ class _MypostsScreenState extends State<MypostsScreen> {
                                                     size: 22,
                                                   ),
                                                   label: Text(
-                                                    'edit',
+                                                    translator.translate(
+                                                      'mypost-edit-label',
+                                                    ),
                                                     style: TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 10,
@@ -254,7 +275,9 @@ class _MypostsScreenState extends State<MypostsScreen> {
                                                     size: 22,
                                                   ),
                                                   label: Text(
-                                                    'delete',
+                                                    translator.translate(
+                                                      'mypost-delete-label',
+                                                    ),
                                                     style: TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 10,

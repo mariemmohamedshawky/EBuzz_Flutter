@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import '../providers/user.dart';
 import '../components/pickers/profile_image_picker.dart';
@@ -74,7 +75,12 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
         _isLoading = false;
       });
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -102,7 +108,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                               CommonText(),
                               SizedBox(height: 40),
                               Commontitle(
-                                'More Data',
+                                translator.translate(
+                                  'moredata-tittle',
+                                ),
                               ),
                               SizedBox(height: 20),
                               Center(
@@ -131,7 +139,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                             borderSide:
                                                 BorderSide(color: primary),
                                           ),
-                                          hintText: "First Name",
+                                          hintText: translator.translate(
+                                            'profile-page-first-name',
+                                          ),
                                           hintStyle: TextStyle(fontSize: 10),
                                         ),
                                         keyboardType: TextInputType.name,
@@ -159,7 +169,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                             borderSide:
                                                 BorderSide(color: primary),
                                           ),
-                                          hintText: "Last Name",
+                                          hintText: translator.translate(
+                                            'profile-page-last-name',
+                                          ),
                                           hintStyle: TextStyle(fontSize: 10),
                                         ),
                                         keyboardType: TextInputType.name,
@@ -187,7 +199,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    hintText: "Address",
+                                    hintText: translator.translate(
+                                      'profile-page-address',
+                                    ),
                                     hintStyle: TextStyle(fontSize: 10),
                                   ),
                                   keyboardType: TextInputType.streetAddress,
@@ -208,7 +222,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(color: primary),
                                     ),
-                                    hintText: "Age",
+                                    hintText: translator.translate(
+                                      'profile-page-age',
+                                    ),
                                     hintStyle: TextStyle(fontSize: 10),
                                   ),
                                   keyboardType: TextInputType.streetAddress,
@@ -229,7 +245,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                       child: RadioListTile(
                                         activeColor: primary,
                                         title: Text(
-                                          "Male",
+                                          translator.translate(
+                                            'profile-page-male',
+                                          ),
                                           style: const TextStyle(
                                             color: Color(0xff1c305b),
                                           ),
@@ -246,7 +264,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                       child: RadioListTile(
                                         activeColor: primary,
                                         title: Text(
-                                          "Female",
+                                          translator.translate(
+                                            'profile-page-female',
+                                          ),
                                           style: const TextStyle(
                                             color: Color(0xff1c305b),
                                           ),
@@ -271,7 +291,9 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    'Skip',
+                                    translator.translate(
+                                      'onboadr-skip',
+                                    ),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -286,7 +308,11 @@ class _MoreDataScreenState extends State<MoreDataScreen> {
                               SizedBox(height: 10),
                               Container(
                                 child: CommonButton(
-                                  child: Text('Continue'),
+                                  child: Text(
+                                    translator.translate(
+                                      'verification-cont',
+                                    ),
+                                  ),
                                   onPressed: () => _saveForm(),
                                 ),
                               ),

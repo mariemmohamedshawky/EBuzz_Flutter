@@ -8,6 +8,7 @@ import 'package:ebuzz/screens/map_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/constants/constant.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +75,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 

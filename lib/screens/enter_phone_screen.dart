@@ -23,7 +23,12 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
   Future<void> _submitData() async {
     if (_phoneController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Phone Number Required', () {});
+          context,
+          false,
+          translator.translate(
+            'phone-page-phone required',
+          ),
+          () {});
       return;
     }
     setState(() {
@@ -45,7 +50,12 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -112,7 +122,9 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                         height: 15,
                       ),
                       Text(
-                        "join our community",
+                        translator.translate(
+                          'phone-page-join',
+                        ),
                         style: TextStyle(color: grey, fontSize: 10),
                       ),
                     ],
@@ -128,7 +140,9 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: primary),
                         ),
-                        hintText: "Enter Number",
+                        hintText: translator.translate(
+                          'phone-page-hint',
+                        ),
                         hintStyle: TextStyle(fontSize: 10),
                       ),
                       keyboardType: TextInputType.phone,
@@ -136,11 +150,17 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                     ),
                   ),
                   Text(
-                    "We will send confirmation code",
+                    translator.translate(
+                      'phone-page-code',
+                    ),
                     style: TextStyle(color: grey, fontSize: 10),
                   ),
                   CommonButton(
-                    child: Text('Continue'),
+                    child: Text(
+                      translator.translate(
+                        'phone-page-cont',
+                      ),
+                    ),
                     onPressed: () => _submitData(),
                   ),
                   Container(child: Footer()),

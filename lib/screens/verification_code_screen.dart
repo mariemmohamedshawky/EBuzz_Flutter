@@ -2,6 +2,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 import './new_password_screen.dart';
 import '../components/warning_popup.dart';
@@ -81,13 +82,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     child: CommonText(),
                   ),
                   Commontitle(
-                    'Enter Code',
+                    translator.translate(
+                      'verification-tittle',
+                    ),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   Text(
-                    "We Send it to the number",
+                    translator.translate(
+                      'verification-text',
+                    ),
                     style: TextStyle(color: grey, fontSize: 10),
                   ),
                 ],
@@ -103,7 +108,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: primary),
                     ),
-                    hintText: "Code",
+                    hintText: translator.translate(
+                      'verification-hint',
+                    ),
                     hintStyle: TextStyle(fontSize: 10),
                   ),
                   keyboardType: TextInputType.number,
@@ -111,7 +118,11 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               ),
               Container(
                 child: CommonButton(
-                  child: Text('Continue'),
+                  child: Text(
+                    translator.translate(
+                      'verification-cont',
+                    ),
+                  ),
                   onPressed: () async {
                     try {
                       await FirebaseAuth.instance
@@ -131,7 +142,12 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                       });
                     } catch (e) {
                       WarningPopup.showWarningDialog(
-                          context, false, 'Code Not Correct', () {});
+                          context,
+                          false,
+                          translator.translate(
+                            'verification-wrong-code',
+                          ),
+                          () {});
                     }
                   },
                 ),

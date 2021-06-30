@@ -100,8 +100,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             padding: const EdgeInsets.all(15.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(EnterPhoneScreen.routeName);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EnterPhoneScreen()));
               },
               child: Card(
                 color: primary,
@@ -117,7 +117,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            'Skip',
+                            'NEXT',
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -130,6 +130,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
           ),
+          
+      
+         
         ],
       ),
     );

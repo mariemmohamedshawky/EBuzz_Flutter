@@ -5,6 +5,7 @@ import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/providers/user.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import '../providers/user.dart';
 import '../components/warning_popup.dart';
@@ -82,14 +83,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
       if (success) {
         WarningPopup.showWarningDialog(
-            context, true, 'Profile Updated Successfully', () {});
+            context,
+            true,
+            translator.translate(
+              'profile-page-update-success',
+            ),
+            () {});
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
     } catch (error) {
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -110,7 +121,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           elevation: 0.0,
           centerTitle: true,
           title: Text(
-            'Profile',
+            translator.translate(
+              'profile-page-tittle',
+            ),
             style: TextStyle(
                 color: black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
@@ -156,7 +169,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 1, 20, 1),
                                           child: Text(
-                                            'First Name',
+                                            translator.translate(
+                                              'profile-page-first-name',
+                                            ),
                                             style: TextStyle(
                                                 color: grey, fontSize: 10),
                                           ),
@@ -204,7 +219,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 1, 20, 1),
                                           child: Text(
-                                            'Last Name',
+                                            translator.translate(
+                                              'profile-page-last-name',
+                                            ),
                                             style: TextStyle(
                                                 color: grey, fontSize: 10),
                                           ),
@@ -251,7 +268,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
                                 child: Text(
-                                  'Address',
+                                  translator.translate(
+                                    'profile-page-address',
+                                  ),
                                   style: TextStyle(color: grey, fontSize: 10),
                                 ),
                               ),
@@ -286,7 +305,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 1, 20, 1),
                                 child: Text(
-                                  'Age',
+                                  translator.translate(
+                                    'profile-page-age',
+                                  ),
                                   style: TextStyle(color: grey, fontSize: 10),
                                 ),
                               ),
@@ -327,7 +348,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       child: RadioListTile(
                                         activeColor: primary,
                                         title: Text(
-                                          "Male",
+                                          translator.translate(
+                                            'profile-page-male',
+                                          ),
                                           style: const TextStyle(
                                             color: Color(0xff1c305b),
                                           ),
@@ -344,7 +367,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       child: RadioListTile(
                                         activeColor: primary,
                                         title: Text(
-                                          "Female",
+                                          translator.translate(
+                                            'profile-page-female',
+                                          ),
                                           style: const TextStyle(
                                             color: Color(0xff1c305b),
                                           ),
@@ -370,7 +395,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         label: Padding(
                           padding: const EdgeInsets.all(25.0),
                           child: Text(
-                            "Update",
+                            translator.translate(
+                              'profile-page-update',
+                            ),
                             style: TextStyle(
                               fontSize: 20,
                             ),

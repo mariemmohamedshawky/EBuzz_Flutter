@@ -7,6 +7,7 @@ import 'package:ebuzz/screens/map_screen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/notification.dart' as notificationProvider;
@@ -77,7 +78,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -102,18 +108,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
       if (success) {
         Navigator.of(ctx).pop();
         WarningPopup.showWarningDialog(
-            context, true, 'Report Sent Success To Admin', () {});
+            context,
+            true,
+            translator.translate(
+              'notification-page-report-success',
+            ),
+            () {});
         _reasonController.text = '';
       } else {
         Navigator.of(ctx).pop();
         WarningPopup.showWarningDialog(
-            context, false, 'SomeThing Went Wrong !=!', () {});
+            context,
+            false,
+            translator.translate(
+              'wrong-message',
+            ),
+            () {});
       }
     } catch (error) {
       print(error);
       Navigator.of(ctx).pop();
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -129,7 +150,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 0.1),
           child: Text(
-            'Notification',
+            translator.translate(
+              'notification-tittle',
+            ),
             style: TextStyle(color: black),
           ),
         ),
@@ -175,8 +198,41 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 fontWeight: FontWeight.bold, color: primary),
                             children: [
                               TextSpan(
-                                  text:
-                                      'in danger near you in ${emergency.road} in ${emergency.city}  please help',
+                                  text: translator.translate(
+                                    'notification-user-danger',
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.normal,
+                                    color: black,
+                                  )),
+                              TextSpan(
+                                  text: ' ${emergency.road}    ',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.normal,
+                                    color: black,
+                                  )),
+                              TextSpan(
+                                  text: translator.translate(
+                                    'notification-in',
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.normal,
+                                    color: black,
+                                  )),
+                              TextSpan(
+                                  text: '${emergency.city}',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.normal,
+                                    color: black,
+                                  )),
+                              TextSpan(
+                                  text: translator.translate(
+                                    'notification-help',
+                                  ),
                                   style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.normal,
@@ -192,7 +248,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         children: [
                           TextButton.icon(
                             label: Text(
-                              'Report',
+                              translator.translate(
+                                'notification-page-report-label',
+                              ),
                               style: TextStyle(color: black, fontSize: 10),
                             ),
                             icon: Icon(
@@ -206,13 +264,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                  title: Text('Report User'),
+                                  title: Text(
+                                    translator.translate(
+                                      'notification-page-report-user',
+                                    ),
+                                  ),
                                   content: Container(
                                     height: 100,
                                     child: Column(
                                       children: [
                                         Text(
-                                          'Resason',
+                                          translator.translate(
+                                            'notification-page-report-reason',
+                                          ),
                                           style: TextStyle(
                                               color: Colors.grey, fontSize: 14),
                                         ),
@@ -224,7 +288,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   ),
                                   actions: [
                                     TextButton(
-                                      child: Text('Report'),
+                                      child: Text(
+                                        translator.translate(
+                                          'notification-page-report-label',
+                                        ),
+                                      ),
                                       onPressed: () async {
                                         _submitReport(ctx);
                                       },

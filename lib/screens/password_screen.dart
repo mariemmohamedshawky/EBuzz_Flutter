@@ -22,7 +22,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Future<void> _submitData(phone) async {
     if (_passwordController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password cant be empty', () {});
+          context,
+          false,
+          translator.translate(
+            'password-page-error-message',
+          ),
+          () {});
       return;
     }
     setState(() {
@@ -44,7 +49,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       setState(() {
         _isLoading = false;
       });
@@ -93,7 +103,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary),
                           ),
-                          hintText: "Password",
+                          hintText: translator.translate(
+                            'password-page-hint',
+                          ),
                           hintStyle: TextStyle(fontSize: 10),
                           suffixIcon: IconButton(
                             icon: Icon(passwordVisible
@@ -111,7 +123,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     ),
                   ),
                   CommonButton(
-                    child: Text('Login    '),
+                    child: Text(
+                      translator.translate(
+                        'password-page-login',
+                      ),
+                    ),
                     onPressed: () => _submitData(phone),
                   ),
                   TextButton(
@@ -127,7 +143,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         arguments: {'phone': phone, 'type': 'forget'},
                       );
                     },
-                    child: const Text('Forget Password ?  '),
+                    child:  Text(translator.translate(
+                        'password-page-forget',
+                      )),
                   ),
                   Container(child: Footer()),
                 ],

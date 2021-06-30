@@ -8,6 +8,7 @@ import 'package:ebuzz/providers/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 class AddpostScreen extends StatefulWidget {
@@ -49,7 +50,12 @@ class _AddpostScreenState extends State<AddpostScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-massage',
+          ),
+          () {});
       return;
     }
 
@@ -74,13 +80,30 @@ class _AddpostScreenState extends State<AddpostScreen> {
   void _submitForm() async {
     if (_descriptionController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Description Required', () {});
+          context,
+          false,
+          translator.translate(
+            'post-description-message',
+          ),
+          () {});
       return;
     } else if (_image == null) {
-      WarningPopup.showWarningDialog(context, false, 'Image Required', () {});
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'post-image-message',
+          ),
+          () {});
       return;
     } else if (selectedCity == null) {
-      WarningPopup.showWarningDialog(context, false, 'City Required', () {});
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'post-city-message',
+          ),
+          () {});
       return;
     } else {
       setState(() {
@@ -90,8 +113,13 @@ class _AddpostScreenState extends State<AddpostScreen> {
         var success = await Provider.of<Post>(context, listen: false)
             .addPost(_image, _descriptionController.text, selectedCity.id);
         if (success) {
-          WarningPopup.showWarningDialog(context, true,
-              'Post Added Successfully Admin Will Review it Soon', () {});
+          WarningPopup.showWarningDialog(
+              context,
+              true,
+              translator.translate(
+                'post-sent-message',
+              ),
+              () {});
           setState(() {
             _descriptionController.text = '';
             _image = null;
@@ -103,7 +131,12 @@ class _AddpostScreenState extends State<AddpostScreen> {
         }
       } catch (error) {
         WarningPopup.showWarningDialog(
-            context, false, 'SomeThing Went Wrong', () {});
+            context,
+            false,
+            translator.translate(
+              'wrong-message',
+            ),
+            () {});
         return;
       }
 
@@ -127,7 +160,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                 ),
                 Row(children: <Widget>[
                   Text(
-                    'Pick Image',
+                    translator.translate(
+                      'post-image',
+                    ),
                     //  style: theme.textTheme.headline5,
                     style: TextStyle(
                         fontSize: 18,
@@ -148,7 +183,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
-                    'use Camera',
+                    translator.translate(
+                      'image-camera',
+                    ),
                     //   style: theme.textTheme.bodyText1,
                     style: TextStyle(
                         fontSize: 14,
@@ -160,7 +197,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
-                    "use Gallary",
+                    translator.translate(
+                      'image-gallery',
+                    ),
                     // style: theme.textTheme.bodyText1,
                     style: TextStyle(
                         fontSize: 14,
@@ -194,20 +233,28 @@ class _AddpostScreenState extends State<AddpostScreen> {
                       child: Center(
                         child: RichText(
                           text: TextSpan(
-                              text: 'please maintain ',
+                              text: translator.translate(
+                                'post-message-black-1',
+                              ),
                               style: TextStyle(color: Colors.grey),
                               children: [
                                 TextSpan(
-                                  text: '  integrity  ',
+                                  text: translator.translate(
+                                    'post-message-red-1',
+                                  ),
                                   style: TextStyle(
                                       color: Color(0xFF8C0202),
                                       fontWeight: FontWeight.bold),
                                 ),
                                 TextSpan(
-                                    text: 'and',
+                                    text: translator.translate(
+                                      'post-message-black-2',
+                                    ),
                                     style: TextStyle(color: Colors.grey)),
                                 TextSpan(
-                                  text: '  honesty  ',
+                                  text: translator.translate(
+                                    'post-message-red-2',
+                                  ),
                                   style: TextStyle(
                                       color: Color(0xFF8C0202),
                                       fontWeight: FontWeight.bold),
@@ -241,7 +288,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                     Text(
                                       selectedCity != null
                                           ? selectedCity.name
-                                          : 'location',
+                                          : translator.translate(
+                                              'post-location',
+                                            ),
                                       style: TextStyle(
                                           color: Colors.grey, fontSize: 15),
                                     ),
@@ -261,7 +310,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                           child: TextField(
                                             decoration:
                                                 InputDecoration.collapsed(
-                                              hintText: "Write Your post....",
+                                              hintText: translator.translate(
+                                                'post-hint',
+                                              ),
                                               hintStyle: TextStyle(
                                                 color: grey,
                                                 fontSize: 14,
@@ -312,7 +363,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                       color: Color(0xFF8C0202),
                                     ),
                                     label: Text(
-                                      "photo",
+                                      translator.translate(
+                                        'post-photo',
+                                      ),
                                       style: TextStyle(
                                         color: Color(0xFF8C0202),
                                       ),
@@ -332,7 +385,11 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                         menuMaxHeight: 150,
                                         decoration: InputDecoration.collapsed(
                                             hintText: ''),
-                                        hint: Text('Select City'),
+                                        hint: Text(
+                                          translator.translate(
+                                            'post-city-hint',
+                                          ),
+                                        ),
                                         value: selectedCity != null
                                             ? cities.firstWhere(
                                                 (c) => c.id == selectedCity.id)
@@ -369,7 +426,9 @@ class _AddpostScreenState extends State<AddpostScreen> {
                         backgroundColor: Color(0xFF8C0202),
                         icon: Icon(Icons.post_add_outlined),
                         label: Text(
-                          "Add post",
+                          translator.translate(
+                            'post-add-post',
+                          ),
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

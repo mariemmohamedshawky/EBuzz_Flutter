@@ -4,6 +4,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/models/emergency_model.dart';
 import 'package:ebuzz/providers/emergency.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -66,7 +67,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -97,7 +103,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'History',
+          translator.translate(
+            'history-tittle',
+          ),
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
@@ -176,10 +184,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         color: primary,
                                         size: 20,
                                       ),
-                                      Text(
-                                        '${myEmergencies[index].massageCount}Message',
-                                        style: TextStyle(fontSize: 10),
-                                      ),
+                                      RichText(
+                                          text: TextSpan(
+                                              text:
+                                                  '${myEmergencies[index].massageCount}',
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black),
+                                              children: [
+                                            TextSpan(
+                                              text: translator.translate(
+                                                'history-message',
+                                              ),
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black),
+                                            )
+                                          ]))
                                     ],
                                   ),
                                   Row(
@@ -191,10 +212,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         color: primary,
                                         size: 20,
                                       ),
-                                      Text(
-                                        '${myEmergencies[index].notificationCount} Notified',
-                                        style: TextStyle(fontSize: 10),
-                                      ),
+                                      RichText(
+                                          text: TextSpan(
+                                              text:
+                                                  '${myEmergencies[index].massageCount}',
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black),
+                                              children: [
+                                            TextSpan(
+                                              text: translator.translate(
+                                                'history-not',
+                                              ),
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black),
+                                            )
+                                          ]))
                                     ],
                                   ),
                                 ],

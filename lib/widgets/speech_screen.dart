@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -62,7 +63,11 @@ class _SpeechScreenState extends State<SpeechScreen> {
             children: <Widget>[
               TextButton(
                 onPressed: _hasSpeech ? null : initSpeechState,
-                child: Text('Initialize'),
+                child: Text(
+                  translator.translate(
+                    'speech-Initialize',
+                  ),
+                ),
               ),
             ],
           ),
@@ -73,15 +78,27 @@ class _SpeechScreenState extends State<SpeechScreen> {
             TextButton(
               onPressed:
                   !_hasSpeech || speech.isListening ? null : startListening,
-              child: Text('Start'),
+              child: Text(
+                translator.translate(
+                  'speech-start',
+                ),
+              ),
             ),
             TextButton(
               onPressed: speech.isListening ? stopListening : null,
-              child: Text('Stop'),
+              child: Text(
+                translator.translate(
+                  'speech-stop',
+                ),
+              ),
             ),
             TextButton(
               onPressed: speech.isListening ? cancelListening : null,
-              child: Text('Cancel'),
+              child: Text(
+                translator.translate(
+                  'speech-cancel',
+                ),
+              ),
             ),
           ],
         ),
@@ -108,7 +125,9 @@ class _SpeechScreenState extends State<SpeechScreen> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Recognized Words',
+                  translator.translate(
+                    'speech-recognize',
+                  ),
                   style: TextStyle(fontSize: 22.0),
                 ),
               ),
@@ -161,7 +180,9 @@ class _SpeechScreenState extends State<SpeechScreen> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Error Status',
+                  translator.translate(
+                    'speech-error',
+                  ),
                   style: TextStyle(fontSize: 22.0),
                 ),
               ),
@@ -177,11 +198,15 @@ class _SpeechScreenState extends State<SpeechScreen> {
           child: Center(
             child: speech.isListening
                 ? Text(
-                    "I'm listening...",
+                    translator.translate(
+                      'speech-listen',
+                    ),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 : Text(
-                    'Not listening',
+                    translator.translate(
+                      'speech-not-listen',
+                    ),
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
           ),

@@ -2,6 +2,7 @@ import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/screens/password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import './moredata_screen.dart';
@@ -71,13 +72,23 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     if (_passwordController.text.isEmpty ||
         _passwordConfirmationController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password Fileds cant be empty', () {});
+          context,
+          false,
+          translator.translate(
+            'new-password-empty-field',
+          ),
+          () {});
       return;
     }
 
     if (_passwordController.text != _passwordConfirmationController.text) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password Fileds must be identical', () {});
+          context,
+          false,
+          translator.translate(
+            'new-password-identical-field',
+          ),
+          () {});
       return;
     }
 
@@ -93,7 +104,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         WarningPopup.showWarningDialog(
             context,
             true,
-            'success created account',
+            translator.translate(
+              'new-password-success-created',
+            ),
             () => Navigator.of(context).pushNamedAndRemoveUntil(
                 MoreDataScreen.routeName, (Route<dynamic> route) => false));
       } else {
@@ -109,7 +122,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       });
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -135,7 +153,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                         child: CommonText(),
                       ),
                       Commontitle(
-                        'Enter Passward',
+                        translator.translate(
+                          'new-password-tittle',
+                        ),
                       ),
                       SizedBox(
                         height: 15,
@@ -154,7 +174,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary),
                           ),
-                          hintText: "Password",
+                          hintText: translator.translate(
+                            'password-page-hint',
+                          ),
                           hintStyle: TextStyle(fontSize: 10),
                           suffixIcon: IconButton(
                             icon: Icon(passwordVisible
@@ -189,7 +211,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary),
                           ),
-                          hintText: "Confirm Password",
+                          hintText: translator.translate(
+                            'new-password-confirm-hint',
+                          ),
                           hintStyle: TextStyle(fontSize: 10),
                           suffixIcon: IconButton(
                             icon: Icon(passwordVisible2
@@ -208,9 +232,15 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   Container(
                     child: CommonButton(
-                      child: Text(args['type'] == 'forget'
-                          ? 'Change Password   '
-                          : 'Login    '),
+                      child: Text(
+                        args['type'] == 'forget'
+                          ? translator.translate(
+                              'password-page-change-password',
+                            )
+                          : translator.translate(
+                              'password-page-login',
+                            ),
+                        ),
                       onPressed: () {
                         if (args['type'] == 'forget') {
                           _forgetPassword(args['phone']);

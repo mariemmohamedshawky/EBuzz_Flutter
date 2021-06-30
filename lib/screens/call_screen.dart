@@ -3,6 +3,7 @@ import 'package:ebuzz/providers/emergency.dart';
 import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constant.dart';
@@ -299,14 +300,18 @@ class _CallScreenState extends State<CallScreen> {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32.0))),
-        contentPadding: EdgeInsets.all(5.0),
-        title: Text('Emergency Feedback'),
+        contentPadding: EdgeInsets.all(5.0), 
+        title: Text(translator.translate(
+          'call-page-tittle',
+        )),
         content: Container(
           height: 100,
           child: Column(
             children: [
               Text(
-                'Is Any user came to help You ?',
+                translator.translate(
+                  'call-page-question',
+                ),
                 style: TextStyle(color: Colors.grey, fontSize: 14),
               ),
               Row(
@@ -316,7 +321,9 @@ class _CallScreenState extends State<CallScreen> {
                     child: RadioListTile(
                       activeColor: primary,
                       title: Text(
-                        "Yes",
+                        translator.translate(
+                          'call-page-yes',
+                        ),
                         style: const TextStyle(
                           fontSize: 5,
                           color: Color(0xff1c305b),
@@ -336,7 +343,9 @@ class _CallScreenState extends State<CallScreen> {
                     child: RadioListTile(
                       activeColor: primary,
                       title: Text(
-                        "No",
+                        translator.translate(
+                          'call-page-no',
+                        ),
                         style: const TextStyle(
                           fontSize: 5,
                           color: Color(0xff1c305b),
@@ -359,9 +368,8 @@ class _CallScreenState extends State<CallScreen> {
         actions: [
           TextButton(
             child: Text(
-              'Done',
-              style: TextStyle(
-                color: primary,
+              translator.translate(
+                'call-page-done',
               ),
             ),
             onPressed: () async {

@@ -10,6 +10,7 @@ import 'package:ebuzz/screens/myposts_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -68,7 +69,12 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -93,10 +99,21 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
   void _submitForm() async {
     if (_descriptionController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Description Required', () {});
+          context,
+          false,
+          translator.translate(
+            'post-description-message',
+          ),
+          () {});
       return;
     } else if (widget.selectedCity == null) {
-      WarningPopup.showWarningDialog(context, false, 'City Required', () {});
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'post-city-message',
+          ),
+          () {});
       return;
     } else {
       setState(() {
@@ -108,7 +125,12 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 widget.selectedCity.id, widget.postId);
         if (success) {
           WarningPopup.showWarningDialog(
-              context, true, 'Post Updated Successfully', () {});
+              context,
+              true,
+              translator.translate(
+                'update-post-success',
+              ),
+              () {});
           Navigator.of(context).pushNamedAndRemoveUntil(
               MypostsScreen.routeName, (Route<dynamic> route) => false);
         } else {
@@ -117,7 +139,12 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
         }
       } catch (error) {
         WarningPopup.showWarningDialog(
-            context, false, 'SomeThing Went Wrong', () {});
+            context,
+            false,
+            translator.translate(
+              'wrong-message',
+            ),
+            () {});
         return;
       }
 
@@ -141,7 +168,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 ),
                 Row(children: <Widget>[
                   Text(
-                    'pick image',
+                    translator.translate(
+                      'post-image',
+                    ),
                     // style: theme.textTheme.headline5,
                     style: TextStyle(
                         fontSize: 18,
@@ -162,7 +191,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
-                    'use Camera',
+                    translator.translate(
+                      'image-camera',
+                    ),
                     //style: theme.textTheme.bodyText1,
                     style: TextStyle(
                         fontSize: 14,
@@ -174,7 +205,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                 TextButton(
                   style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
-                    "use Gallary",
+                    translator.translate(
+                      'image-gallery',
+                    ),
                     // style: theme.textTheme.bodyText1,
                     style: TextStyle(
                         fontSize: 14,
@@ -220,20 +253,28 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                       child: Center(
                         child: RichText(
                           text: TextSpan(
-                              text: 'please maintain ',
+                              text: translator.translate(
+                                'post-message-black-1',
+                              ),
                               style: TextStyle(color: Colors.grey),
                               children: [
                                 TextSpan(
-                                  text: '  integrity  ',
+                                  text: translator.translate(
+                                    'post-message-red-1',
+                                  ),
                                   style: TextStyle(
                                       color: Color(0xFF8C0202),
                                       fontWeight: FontWeight.bold),
                                 ),
                                 TextSpan(
-                                    text: 'and',
+                                    text: translator.translate(
+                                      'post-message-black-2',
+                                    ),
                                     style: TextStyle(color: Colors.grey)),
                                 TextSpan(
-                                  text: '  honesty  ',
+                                  text: translator.translate(
+                                    'post-message-red-2',
+                                  ),
                                   style: TextStyle(
                                       color: Color(0xFF8C0202),
                                       fontWeight: FontWeight.bold),
@@ -267,7 +308,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                     Text(
                                       widget.selectedCity != null
                                           ? widget.selectedCity.name
-                                          : 'location',
+                                          : translator.translate(
+                                              'post-location',
+                                            ),
                                       style: TextStyle(
                                           color: Colors.grey, fontSize: 15),
                                     ),
@@ -287,7 +330,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                           child: TextField(
                                             decoration:
                                                 InputDecoration.collapsed(
-                                              hintText: "Write Your post....",
+                                              hintText: translator.translate(
+                                                'post-hint',
+                                              ),
                                               hintStyle: TextStyle(
                                                 color: grey,
                                                 fontSize: 14,
@@ -339,7 +384,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                       color: Color(0xFF8C0202),
                                     ),
                                     label: Text(
-                                      "photo",
+                                      translator.translate(
+                                        'post-photo',
+                                      ),
                                       style: TextStyle(
                                         color: Color(0xFF8C0202),
                                       ),
@@ -359,7 +406,11 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                         menuMaxHeight: 150,
                                         decoration: InputDecoration.collapsed(
                                             hintText: ''),
-                                        hint: Text('Select City'),
+                                        hint: Text(
+                                          translator.translate(
+                                            'post-city-hint',
+                                          ),
+                                        ),
                                         value: widget.selectedCity != null
                                             ? cities.firstWhere((c) =>
                                                 c.id == widget.selectedCity.id)
@@ -396,7 +447,9 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                         backgroundColor: Color(0xFF8C0202),
                         icon: Icon(Icons.file_upload_outlined),
                         label: Text(
-                          "Update post",
+                          translator.translate(
+                            'update-post-button',
+                          ),
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

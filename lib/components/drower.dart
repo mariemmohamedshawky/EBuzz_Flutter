@@ -1,6 +1,7 @@
 import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:ebuzz/screens/myposts_screen.dart';
 import 'package:ebuzz/screens/selected_contacts.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../constants/constant.dart';
@@ -75,7 +76,11 @@ class MyDrawer extends StatelessWidget {
             Icons.home,
             color: grey,
           ),
-          title: Text("Home"),
+          title: Text(
+            translator.translate(
+              'component-drawer-home',
+            ),
+          ),
         ),
         ListTile(
           onTap: () {
@@ -85,7 +90,11 @@ class MyDrawer extends StatelessWidget {
             Icons.person,
             color: grey,
           ),
-          title: Text("Profile"),
+          title: Text(
+            translator.translate(
+              'component-drawer-profile',
+            ),
+          ),
         ),
         ListTile(
           onTap: () {
@@ -95,7 +104,11 @@ class MyDrawer extends StatelessWidget {
             Icons.contact_phone,
             color: grey,
           ),
-          title: Text("My Contact"),
+          title: Text(
+            translator.translate(
+              'component-drawer-contacts',
+            ),
+          ),
         ),
         ListTile(
           onTap: () {
@@ -105,7 +118,11 @@ class MyDrawer extends StatelessWidget {
             Icons.podcasts_sharp,
             color: grey,
           ),
-          title: Text("My Posts"),
+          title: Text(
+            translator.translate(
+              'component-drawer-posts',
+            ),
+          ),
         ),
         ListTile(
           onTap: () {
@@ -115,7 +132,11 @@ class MyDrawer extends StatelessWidget {
             Icons.message,
             color: grey,
           ),
-          title: Text("Message"),
+          title: Text(
+            translator.translate(
+              'component-drawer-message',
+            ),
+          ),
         ),
         ListTile(
           onTap: () {
@@ -125,7 +146,11 @@ class MyDrawer extends StatelessWidget {
             Icons.history,
             color: grey,
           ),
-          title: Text("History"),
+          title: Text(
+            translator.translate(
+              'component-drawer-history',
+            ),
+          ),
         ),
         ListTile(
           onTap: () async {
@@ -137,7 +162,11 @@ class MyDrawer extends StatelessWidget {
             Icons.logout,
             color: grey,
           ),
-          title: Text("Logout"),
+          title: Text(
+            translator.translate(
+              'component-drawer-logout',
+            ),
+          ),
         ),
       ]),
     ));

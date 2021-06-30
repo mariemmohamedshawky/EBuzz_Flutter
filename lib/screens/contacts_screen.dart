@@ -1,4 +1,5 @@
 import 'package:ebuzz/screens/selected_contacts.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
@@ -46,7 +47,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -58,7 +64,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Future<void> _submitData(contacts) async {
     if (contacts.length < 1) {
       WarningPopup.showWarningDialog(
-          context, false, 'Please Select Contact', () {});
+          context,
+          false,
+          translator.translate(
+            'contact-page-select',
+          ),
+          () {});
       return;
     }
 
@@ -74,7 +85,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         WarningPopup.showWarningDialog(
             context,
             true,
-            'Contacts Added Successfully',
+            translator.translate("contact-page-succcess"),
             () => Navigator.of(context).pushNamedAndRemoveUntil(
                 SelectedContactsScreen.routeName,
                 (Route<dynamic> route) => false));
@@ -89,7 +100,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -111,7 +127,9 @@ class _ContactsScreenState extends State<ContactsScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'All Contacts',
+          translator.translate(
+            'contact-page-all-contacts',
+          ),
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),

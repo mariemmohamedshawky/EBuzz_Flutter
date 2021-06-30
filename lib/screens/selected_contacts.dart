@@ -1,5 +1,6 @@
 import 'package:ebuzz/screens/contacts_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,12 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
 
@@ -46,7 +52,12 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
   Future<void> _deleteContact(int id) async {
     if (id == null) {
       WarningPopup.showWarningDialog(
-          context, false, 'Phone Number Required', () {});
+          context,
+          false,
+          translator.translate(
+            'phone-page-phone required',
+          ),
+          () {});
       return;
     }
     setState(() {
@@ -69,7 +80,12 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
         _isLoading = false;
       });
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
@@ -93,7 +109,9 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'My Contacts',
+          translator.translate(
+            'selected-contact-tittle',
+          ),
           style: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 // ignore: camel_case_types
 class CongratsScreen extends StatefulWidget {
@@ -28,11 +29,15 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       CommonText(),
                       SizedBox(height: 40),
                       Commontitle(
-                        'Congrats!',
+                        translator.translate(
+                          'congrats-page-tittle',
+                        ),
                       ),
                       SizedBox(height: 30),
                       Text(
-                        "Your account already to build",
+                        translator.translate(
+                          'congrats-page-account-build',
+                        ),
                         style: TextStyle(color: grey, fontSize: 10),
                       ),
                       Icon(
@@ -43,7 +48,11 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       SizedBox(height: 110),
                       Container(
                         child: CommonButton(
-                          child: Text('Home page '),
+                          child: Text(
+                            translator.translate(
+                              'congrats-page-home',
+                            ),
+                          ),
                           onPressed: () {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 BottomappbarScreen.routeName,
