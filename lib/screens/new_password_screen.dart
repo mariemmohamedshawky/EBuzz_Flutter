@@ -1,4 +1,5 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,52 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
   var _isLoading = false;
+
+  Future<void> _forgetPassword(phone) async {
+    if (_passwordController.text.isEmpty ||
+        _passwordConfirmationController.text.isEmpty) {
+      WarningPopup.showWarningDialog(
+          context, false, 'Password Fileds cant be empty', () {});
+      return;
+    }
+
+    if (_passwordController.text != _passwordConfirmationController.text) {
+      WarningPopup.showWarningDialog(
+          context, false, 'Password Fileds must be identical', () {});
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var success = await Provider.of<User>(context, listen: false)
+          .forgetPassword(phone, _passwordController.text,
+              _passwordConfirmationController.text);
+      if (success) {
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            'Success Changed Password',
+            () => Navigator.of(context)
+                .pushNamed(PasswordScreen.routeName, arguments: phone));
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        WarningPopup.showWarningDialog(context, false,
+            Provider.of<User>(context, listen: false).errorMessage, () {});
+      }
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      print(error);
+      WarningPopup.showWarningDialog(
+          context, false, 'SomeThing Went Wrong', () {});
+      return;
+    }
+  }
 
   Future<void> _submitData(phone) async {
     if (_passwordController.text.isEmpty ||
@@ -69,7 +116,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final phone = ModalRoute.of(context).settings.arguments as String;
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
     return Scaffold(
       body: Container(
         child: _isLoading
@@ -92,7 +140,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      Text(phone),
+                      Text(args['phone']),
                     ],
                   ),
                   Container(
@@ -127,7 +175,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: TextField(
                       controller: _passwordConfirmationController,
-                      onSubmitted: (_) => _submitData(phone),
+                      onSubmitted: (_) {
+                        if (args['type'] == 'forget') {
+                          _forgetPassword(args['phone']);
+                        } else {
+                          _submitData(args['phone']);
+                        }
+                      },
                       decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: primary),
@@ -154,8 +208,16 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   Container(
                     child: CommonButton(
-                      child: Text('Login    '),
-                      onPressed: () => _submitData(phone),
+                      child: Text(args['type'] == 'forget'
+                          ? 'Change Password   '
+                          : 'Login    '),
+                      onPressed: () {
+                        if (args['type'] == 'forget') {
+                          _forgetPassword(args['phone']);
+                        } else {
+                          _submitData(args['phone']);
+                        }
+                      },
                     ),
                   ),
                   Container(child: Footer()),

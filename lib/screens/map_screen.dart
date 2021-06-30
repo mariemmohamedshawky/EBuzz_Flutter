@@ -479,8 +479,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                                 onTap: () {
                                   _goToPlace(autocompletePlaces[index].placeId);
                                 },
-                                child:
-                                    Text(autocompletePlaces[index].description),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                      autocompletePlaces[index].description),
+                                ),
                               );
                             }),
                       ),

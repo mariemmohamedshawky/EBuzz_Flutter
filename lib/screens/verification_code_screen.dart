@@ -10,7 +10,8 @@ import '../components/warning_popup.dart';
 class VerificationCodeScreen extends StatefulWidget {
   static const String routeName = 'verification-code-screen';
   String phone;
-  VerificationCodeScreen({this.phone});
+  String type;
+  VerificationCodeScreen({this.phone, this.type});
   @override
   _VerificationCodeScreenState createState() => _VerificationCodeScreenState();
 }
@@ -23,7 +24,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      widget.phone = ModalRoute.of(context).settings.arguments as String;
+      var args =
+          ModalRoute.of(context).settings.arguments as Map<String, String>;
+      widget.phone = args['phone'];
+      widget.type = args['type'];
       _verifyPhone();
     }
     _isInit = false;
@@ -119,7 +123,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               NewPasswordScreen.routeName,
                               (Route<dynamic> route) => false,
-                              arguments: widget.phone);
+                              arguments: {
+                                'phone': widget.phone,
+                                'type': widget.type
+                              });
                         }
                       });
                     } catch (e) {

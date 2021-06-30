@@ -1,4 +1,5 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/verification_code_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ebuzz/widgets/widgets.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -120,7 +121,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       textStyle: const TextStyle(
                           fontSize: 10, fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        VerificationCodeScreen.routeName,
+                        arguments: {'phone': phone, 'type': 'forget'},
+                      );
+                    },
                     child: const Text('Forget Password ?  '),
                   ),
                   Container(child: Footer()),

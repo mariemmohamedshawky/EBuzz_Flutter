@@ -171,13 +171,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: Text(
-                                  '${myEmergencies[index].road} ,${myEmergencies[index].state} ',
-                                  style: TextStyle(fontSize: 6, color: primary),
-                                ),
-                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

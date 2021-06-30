@@ -265,6 +265,59 @@ class User with ChangeNotifier {
   }
   // ------------------------------------------------------------------
 
+  // --------------------------------- forgetpassword ---------------------------------
+  Future forgetPassword(
+      String phone, String password, String passwordConfirmation) async {
+    Uri apiLink = Uri.https(url, '/api/v1/user/forgetpassword');
+    errorMessage = '';
+    print(apiLink);
+    try {
+      final response = await http.post(
+        apiLink,
+        body: json.encode({
+          'phone': phone,
+          'password': password,
+          'password_confirmation': passwordConfirmation,
+        }),
+        headers: {'Content-Type': 'application/json'},
+      );
+      print(response.body);
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      //------------- start error handling -------------
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseData['errNum'] == "200") {
+          return true;
+        } else if (responseData['errNum'] == "401") {
+          if (responseData['msg'].containsKey('phone')) {
+            errorMessage += "${responseData['msg']['phone'][0]}\n";
+          }
+          if (responseData['msg'].containsKey('password')) {
+            errorMessage += "${responseData['msg']['password'][0]}\n";
+          }
+
+          return false;
+        } else if (responseData['errNum'] == "500") {
+          errorMessage += "${responseData['msg']}\n";
+          return false;
+        } else {
+          errorMessage = "SomeThing Went Wrong!\n";
+          return false;
+        }
+      } else {
+        errorMessage = "SomeThing Went Wrong!!\n";
+        return false;
+      }
+      //------------- end error handling -------------
+
+    } catch (error) {
+      print(error); // during development cycle
+      errorMessage = "SomeThing Went Wrong!!!\n";
+      return false;
+    }
+  }
+  // ------------------------------------------------------------------
+
   // --------------------------------- Get User Data ---------------------------------
   Future getUserDate() async {
     Uri apiLink = Uri.https(url, '/api/v1/user/profile');
