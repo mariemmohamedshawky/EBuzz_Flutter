@@ -1,6 +1,7 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 // ignore: must_be_immutable
 class CommonText extends StatelessWidget {
@@ -13,16 +14,16 @@ class CommonText extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
-class Commontitle extends StatelessWidget {
-  Commontitle({this.child});
-  Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: child,
-    );
-  }
+// ignore: non_constant_identifier_names
+Widget Commontitle(child) {
+  return Text(
+    "$child",
+    style: TextStyle(
+      color: black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+  );
 }
 
 // ignore: must_be_immutable
@@ -35,15 +36,19 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: primary,
+            textStyle: new TextStyle(color: Colors.white),
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(100),
+            ),
+            shadowColor: black,
+            elevation: 15.0,
+            padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
+          ),
           onPressed: onPressed,
           child: child,
-          color: primary,
-          textColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(100),
-          ),
-          padding: EdgeInsets.fromLTRB(90, 12, 90, 12),
         ),
       ],
     );
@@ -56,7 +61,10 @@ class Footer extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          child: Text("By Continuing you agree to accept our",
+          child: Text(
+              translator.translate(
+                'widget-cont',
+              ),
               style: TextStyle(
                 fontSize: 10,
                 color: HexColor("#B1A7A6"),
@@ -65,21 +73,27 @@ class Footer extends StatelessWidget {
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-              text: 'Terms &Condations',
+              text: translator.translate(
+                'widget-terms',
+              ),
               style: TextStyle(
                 fontSize: 12,
                 color: primary,
               ),
               children: [
                 TextSpan(
-                  text: ' and ',
+                  text: translator.translate(
+                    'post-message-black-2',
+                  ),
                   style: TextStyle(
                     fontSize: 12,
                     color: HexColor("#B1A7A6"),
                   ),
                 ),
                 TextSpan(
-                  text: 'Privecy policy',
+                  text: translator.translate(
+                    'widget-privacy',
+                  ),
                   style: TextStyle(
                     fontSize: 12,
                     color: primary,

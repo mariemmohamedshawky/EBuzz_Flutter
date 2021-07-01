@@ -6,6 +6,7 @@ import '../constants/constant.dart';
   Author Amr Rudy
 */
 
+// ignore: must_be_immutable
 class SlideCell extends StatelessWidget {
   String image, title, subtitle;
 
@@ -13,7 +14,6 @@ class SlideCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return SizedBox(
       /*height: MediaQuery.of(context).size.height * 0.4,*/
       child: ListView(
@@ -21,10 +21,7 @@ class SlideCell extends StatelessWidget {
           Center(
             child: Image.asset(
               image,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.25,
             ),
           ),
           SizedBox(

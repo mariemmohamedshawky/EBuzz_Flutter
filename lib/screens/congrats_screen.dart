@@ -1,8 +1,9 @@
 import 'package:ebuzz/constants/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:ebuzz/screens/home_screen.dart';
-import 'package:hexcolor/hexcolor.dart';
+
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 // ignore: camel_case_types
 class CongratsScreen extends StatefulWidget {
@@ -28,19 +29,16 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       CommonText(),
                       SizedBox(height: 40),
                       Commontitle(
-                          child: Text(
-                        'congrats!',
-                        style: TextStyle(
-                          color: HexColor("#0B090A"),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        translator.translate(
+                          'congrats-page-tittle',
                         ),
-                      )),
+                      ),
                       SizedBox(height: 30),
                       Text(
-                        "Your account already to build",
-                        style:
-                            TextStyle(color: HexColor("#B1A7A6"), fontSize: 10),
+                        translator.translate(
+                          'congrats-page-account-build',
+                        ),
+                        style: TextStyle(color: grey, fontSize: 10),
                       ),
                       Icon(
                         Icons.check_circle,
@@ -50,14 +48,15 @@ class _CongratsScreenState extends State<CongratsScreen> {
                       SizedBox(height: 110),
                       Container(
                         child: CommonButton(
-                          child: Text('Home page '),
+                          child: Text(
+                            translator.translate(
+                              'congrats-page-home',
+                            ),
+                          ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  //هنا هيودي علي صفحة congrats
-                                  builder: (context) => HomeScreen()),
-                            );
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                BottomappbarScreen.routeName,
+                                (Route<dynamic> route) => false);
                           },
                         ),
                       ),

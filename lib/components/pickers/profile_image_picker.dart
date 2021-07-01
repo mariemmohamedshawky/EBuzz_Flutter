@@ -1,7 +1,9 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ProfileImagePicker extends StatefulWidget {
   final void Function(File pickedImage) imagePickFn;
@@ -44,25 +46,40 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
                 Row(children: <Widget>[
                   Text(
                     'pick image',
-                    style: theme.textTheme.headline5,
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                 ]),
-                SizedBox(
-                  height: mediaQuery.size.height * 0.05,
+                Divider(
+                  color: grey,
+                  height: 20,
+                  thickness: 2,
+                  indent: 1,
+                  endIndent: 1,
                 ),
-                FlatButton(
-                  textColor: theme.primaryColor,
+                TextButton(
+                  style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     'use Camera',
-                    style: theme.textTheme.bodyText1,
+                    // style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.camera),
                 ),
-                FlatButton(
-                  textColor: theme.primaryColor,
+                TextButton(
+                  style: TextButton.styleFrom(primary: theme.primaryColor),
                   child: Text(
                     "use Gallary",
-                    style: theme.textTheme.bodyText1,
+                    // style: theme.textTheme.bodyText1,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primary,
+                        fontWeight: FontWeight.bold),
                   ),
                   onPressed: () => getImages(context, ImageSource.gallery),
                 ),
@@ -74,17 +91,20 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Column(
       children: [
         CircleAvatar(
           radius: 40,
           backgroundColor: Colors.grey,
-          backgroundImage: _image != null ? FileImage(_image) : null,
+          backgroundImage: _image != null
+              ? FileImage(_image)
+              : NetworkImage(user.userData.photo),
         ),
-        FlatButton.icon(
+        TextButton.icon(
           icon: Icon(Icons.image),
           label: Text('Add Image'),
-          textColor: primary,
+          style: TextButton.styleFrom(primary: primary),
           onPressed: () {
             _openImagePicker(
                 context, Theme.of(context), MediaQuery.of(context));

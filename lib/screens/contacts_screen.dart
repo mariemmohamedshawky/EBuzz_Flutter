@@ -1,9 +1,13 @@
-import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/selected_contacts.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../components/warning_popup.dart';
+import '../constants/constant.dart';
+import '../providers/contact.dart' as contactProvider;
 
 class ContactsScreen extends StatefulWidget {
   @override
@@ -12,10 +16,14 @@ class ContactsScreen extends StatefulWidget {
 
 class _ContactsScreenState extends State<ContactsScreen> {
   Iterable<Contact> _contacts;
+  List<int> selectedContacts = [];
+  List<Map<String, String>> mapContacts = [];
+  var _isLoading = false;
 
   @override
   void initState() {
     getContacts();
+    getAddedContacts();
     super.initState();
   }
 
@@ -28,14 +36,89 @@ class _ContactsScreenState extends State<ContactsScreen> {
     });
   }
 
+  Future<void> getAddedContacts() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await Provider.of<contactProvider.Contact>(context, listen: false)
+          .viewContacts();
+    } catch (error) {
+      print(error);
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
+      return;
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _submitData(contacts) async {
+    if (contacts.length < 1) {
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'contact-page-select',
+          ),
+          () {});
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var success =
+          await Provider.of<contactProvider.Contact>(context, listen: false)
+              .addContacts(contacts);
+      if (success) {
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            translator.translate("contact-page-succcess"),
+            () => Navigator.of(context).pushNamedAndRemoveUntil(
+                SelectedContactsScreen.routeName,
+                (Route<dynamic> route) => false));
+      } else {
+        WarningPopup.showWarningDialog(
+            context,
+            false,
+            Provider.of<contactProvider.Contact>(context, listen: false)
+                .errorMessage,
+            () {});
+      }
+    } catch (error) {
+      print(error);
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final myAddedContacts = Provider.of<contactProvider.Contact>(context).items;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: HexColor("#B1A7A6"),
+            color: grey,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -44,105 +127,120 @@ class _ContactsScreenState extends State<ContactsScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'Contacts',
+          translator.translate(
+            'contact-page-all-contacts',
+          ),
           style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+              color: black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              'Cancel',
-              style: TextStyle(
-                color: HexColor("#B1A7A6"),
-                fontSize: 10,
-              ),
+          SizedBox(
+            width: 81,
+            child: IconButton(
+              icon: Icon(Icons.assignment_turned_in_outlined),
+              color: primary,
+              onPressed: () {
+                print(mapContacts);
+                _submitData(mapContacts);
+              },
             ),
           ),
         ],
       ),
-      body: _contacts != null
+      body: _contacts != null && _isLoading == false
           //Build a list view of all contacts, displaying their avatar and
           // display name
           ? ListView.builder(
               itemCount: _contacts?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 Contact contact = _contacts?.elementAt(index);
-                return ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
-                  leading: (contact.avatar != null && contact.avatar.isNotEmpty)
-                      ? CircleAvatar(
-                          backgroundColor: white,
-                          backgroundImage: MemoryImage(contact.avatar),
-                        )
-                      : CircleAvatar(
-                          child: Text(
-                            contact.initials(),
-                            style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.bold,
+                var tempC = myAddedContacts.where((element) =>
+                    element.phone ==
+                    (contact.phones.isEmpty ? '' : contact.phones.first.value));
+                return tempC.isNotEmpty
+                    ? SizedBox(
+                        width: 0,
+                      )
+                    : contact.phones.isEmpty
+                        ? SizedBox(width: 0)
+                        : ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 18),
+                            leading: (contact.avatar != null &&
+                                    contact.avatar.isNotEmpty)
+                                ? CircleAvatar(
+                                    backgroundColor: white,
+                                    backgroundImage:
+                                        MemoryImage(contact.avatar),
+                                  )
+                                : CircleAvatar(
+                                    child: Text(
+                                      contact.initials(),
+                                      style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    backgroundColor: primary,
+                                  ),
+                            trailing: Checkbox(
+                                activeColor: selectedContacts.contains(index)
+                                    ? primary
+                                    : Colors.white,
+                                value: selectedContacts.contains(index),
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    if (selectedContacts.contains(index)) {
+                                      selectedContacts.remove(index);
+                                      mapContacts.removeWhere((element) =>
+                                          element['phone'] ==
+                                          contact.phones.first.value
+                                              .toString());
+                                      print(mapContacts);
+                                    } else {
+                                      selectedContacts.add(index);
+                                      Map tempContact = Map<String, String>();
+                                      tempContact['phone'] = contact
+                                              .phones.first.value
+                                              .toString() ??
+                                          '';
+                                      tempContact['first_name'] =
+                                          contact.givenName ?? '';
+                                      tempContact['last_name'] =
+                                          contact.familyName != null
+                                              ? contact.familyName
+                                              : '.';
+                                      mapContacts.add(tempContact);
+                                      print(contact.familyName);
+                                      print(mapContacts);
+                                    }
+                                  });
+                                }),
+                            title: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(contact.displayName ?? '',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(
+                                    contact.phones.isEmpty
+                                        ? ''
+                                        : contact.phones.first.value,
+                                    style: TextStyle(
+                                      color: black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          //  backgroundColor: Theme.of(context).accentColor,
-                          backgroundColor: primary,
-                        ),
-                  title: Text(contact.displayName ?? '',
-                      style: TextStyle(
-                        color: black,
-                        fontWeight: FontWeight.bold,
-                      )),
-                );
+                          );
               },
             )
           : Center(child: const CircularProgressIndicator()),
     );
-  }
-}
-
-class SeeContactsButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: () async {
-        final PermissionStatus permissionStatus = await _getPermission();
-        if (permissionStatus == PermissionStatus.granted) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ContactsScreen()));
-        } else {
-          //If permissions have been denied show standard cupertino alert dialog
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => CupertinoAlertDialog(
-                    title: Text('Permissions error'),
-                    content: Text('Please enable contacts access '
-                        'permission in system settings'),
-                    actions: <Widget>[
-                      CupertinoDialogAction(
-                        child: Text('OK'),
-                        onPressed: () => Navigator.of(context).pop(),
-                      )
-                    ],
-                  ));
-        }
-      },
-      child: Container(child: Text('Get Contacts')),
-    );
-  }
-
-  //Check contacts permission
-  Future<PermissionStatus> _getPermission() async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.denied) {
-      final Map<Permission, PermissionStatus> permissionStatus =
-          await [Permission.contacts].request();
-      return permissionStatus[Permission.contacts] ??
-          PermissionStatus.undetermined;
-    } else {
-      return permission;
-    }
   }
 }

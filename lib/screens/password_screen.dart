@@ -1,10 +1,10 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/verification_code_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
-
-import './home_screen.dart';
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import '../providers/user.dart';
 import '../components/warning_popup.dart';
 
@@ -22,7 +22,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Future<void> _submitData(phone) async {
     if (_passwordController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password cant be empty', () {});
+          context,
+          false,
+          translator.translate(
+            'password-page-error-message',
+          ),
+          () {});
       return;
     }
     setState(() {
@@ -32,96 +37,119 @@ class _PasswordScreenState extends State<PasswordScreen> {
       var success = await Provider.of<User>(context, listen: false)
           .login(phone, _passwordController.text);
       if (success) {
-        Navigator.of(context).pushNamed(HomeScreen.routeName);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            BottomappbarScreen.routeName, (Route<dynamic> route) => false);
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
+        setState(() {
+          _isLoading = false;
+        });
       }
     } catch (error) {
+      print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final phone = ModalRoute.of(context).settings.arguments as String;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          child: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      Center(
-                        child: Column(
-                          children: <Widget>[
-                            CommonText(),
-                            SizedBox(height: 60),
-                            Commontitle(
-                                child: Text(
-                              'Enter Passward',
-                              style: TextStyle(
-                                color: HexColor("#0B090A"),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                            Text(phone),
-                            SizedBox(height: 40),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible = !passwordVisible;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible,
-                              ),
-                            ),
-                            SizedBox(height: 50),
-                            Container(
-                              child: CommonButton(
-                                child: Text('Login    '),
-                                onPressed: () => _submitData(phone),
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Container(child: Footer()),
-                          ],
+    return Scaffold(
+      body: Container(
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: CommonText(),
+                      ),
+                      Commontitle(
+                        translator.translate(
+                          'Title',
                         ),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(phone)
                     ],
                   ),
-                ),
-        ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          hintText: translator.translate(
+                            'password-page-hint',
+                          ),
+                          hintStyle: TextStyle(fontSize: 10),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: primary,
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          )),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: passwordVisible,
+                    ),
+                  ),
+                  CommonButton(
+                    child: Text(
+                      translator.translate(
+                        'password-page-login',
+                      ),
+                    ),
+                    onPressed: () => _submitData(phone),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      primary: primary,
+                      textStyle: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        VerificationCodeScreen.routeName,
+                        arguments: {'phone': phone, 'type': 'forget'},
+                      );
+                    },
+                    child: Text(translator.translate(
+                      'password-page-forget',
+                    )),
+                  ),
+                  Container(child: Footer()),
+                ],
+              ),
       ),
     );
   }

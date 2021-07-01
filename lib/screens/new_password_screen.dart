@@ -1,7 +1,8 @@
 import 'package:ebuzz/constants/constant.dart';
+import 'package:ebuzz/screens/password_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ebuzz/widgets/widgets.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
 
 import './moredata_screen.dart';
@@ -21,7 +22,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final _passwordConfirmationController = TextEditingController();
   var _isLoading = false;
 
-  Future<void> _submitData(phone) async {
+  Future<void> _forgetPassword(phone) async {
     if (_passwordController.text.isEmpty ||
         _passwordConfirmationController.text.isEmpty) {
       WarningPopup.showWarningDialog(
@@ -39,132 +40,219 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       _isLoading = true;
     });
     try {
+      var success = await Provider.of<User>(context, listen: false)
+          .forgetPassword(phone, _passwordController.text,
+              _passwordConfirmationController.text);
+      if (success) {
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            'Success Changed Password',
+            () => Navigator.of(context)
+                .pushNamed(PasswordScreen.routeName, arguments: phone));
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        WarningPopup.showWarningDialog(context, false,
+            Provider.of<User>(context, listen: false).errorMessage, () {});
+      }
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      print(error);
+      WarningPopup.showWarningDialog(
+          context, false, 'SomeThing Went Wrong', () {});
+      return;
+    }
+  }
+
+  Future<void> _submitData(phone) async {
+    if (_passwordController.text.isEmpty ||
+        _passwordConfirmationController.text.isEmpty) {
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'new-password-empty-field',
+          ),
+          () {});
+      return;
+    }
+
+    if (_passwordController.text != _passwordConfirmationController.text) {
+      WarningPopup.showWarningDialog(
+          context,
+          false,
+          translator.translate(
+            'new-password-identical-field',
+          ),
+          () {});
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+    try {
       var success = await Provider.of<User>(context, listen: false).register(
           phone,
           _passwordController.text,
           _passwordConfirmationController.text);
       if (success) {
-        WarningPopup.showWarningDialog(context, true, 'success created account',
-            () => Navigator.of(context).pushNamed(MoreDataScreen.routeName));
+        WarningPopup.showWarningDialog(
+            context,
+            true,
+            translator.translate(
+              'new-password-success-created',
+            ),
+            () => Navigator.of(context).pushNamedAndRemoveUntil(
+                MoreDataScreen.routeName, (Route<dynamic> route) => false));
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final phone = ModalRoute.of(context).settings.arguments as String;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          child: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 50),
-                      Center(
-                        child: Column(
-                          children: <Widget>[
-                            CommonText(),
-                            SizedBox(height: 60),
-                            Commontitle(
-                                child: Text(
-                              'Enter Passward',
-                              style: TextStyle(
-                                color: HexColor("#0B090A"),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
-                            Text(phone),
-                            SizedBox(height: 40),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordController,
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible = !passwordVisible;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible,
-                              ),
-                            ),
-                            SizedBox(height: 50),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: TextField(
-                                controller: _passwordConfirmationController,
-                                onSubmitted: (_) => _submitData(phone),
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: primary),
-                                    ),
-                                    hintText: "Confirm Password",
-                                    hintStyle: TextStyle(fontSize: 10),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(passwordVisible2
-                                          ? Icons.visibility_off
-                                          : Icons.visibility),
-                                      color: primary,
-                                      onPressed: () {
-                                        setState(() {
-                                          passwordVisible2 = !passwordVisible2;
-                                        });
-                                      },
-                                    )),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: passwordVisible2,
-                              ),
-                            ),
-                            SizedBox(height: 180),
-                            Container(
-                              child: CommonButton(
-                                child: Text('Login    '),
-                                onPressed: () => _submitData(phone),
-                              ),
-                            ),
-                            SizedBox(height: 25),
-                            Container(child: Footer()),
-                          ],
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
+    return Scaffold(
+      body: Container(
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: CommonText(),
+                      ),
+                      Commontitle(
+                        translator.translate(
+                          'new-password-tittle',
                         ),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(args['phone']),
                     ],
                   ),
-                ),
-        ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          hintText: translator.translate(
+                            'password-page-hint',
+                          ),
+                          hintStyle: TextStyle(fontSize: 10),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: primary,
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          )),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: passwordVisible,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: TextField(
+                      controller: _passwordConfirmationController,
+                      onSubmitted: (_) {
+                        if (args['type'] == 'forget') {
+                          _forgetPassword(args['phone']);
+                        } else {
+                          _submitData(args['phone']);
+                        }
+                      },
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: primary),
+                          ),
+                          hintText: translator.translate(
+                            'new-password-confirm-hint',
+                          ),
+                          hintStyle: TextStyle(fontSize: 10),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible2
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            color: primary,
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible2 = !passwordVisible2;
+                              });
+                            },
+                          )),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: passwordVisible2,
+                    ),
+                  ),
+                  Container(
+                    child: CommonButton(
+                      child: Text(
+                        args['type'] == 'forget'
+                          ? translator.translate(
+                              'password-page-change-password',
+                            )
+                          : translator.translate(
+                              'password-page-login',
+                            ),
+                        ),
+                      onPressed: () {
+                        if (args['type'] == 'forget') {
+                          _forgetPassword(args['phone']);
+                        } else {
+                          _submitData(args['phone']);
+                        }
+                      },
+                    ),
+                  ),
+                  Container(child: Footer()),
+                ],
+              ),
       ),
     );
   }

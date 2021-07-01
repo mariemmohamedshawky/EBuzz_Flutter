@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localize_and_translate/localize_and_translate.dart';
 
 class WarningPopup {
   static showWarningDialog(
@@ -33,7 +34,13 @@ class WarningPopup {
                   ),
                 ),
                 Text(
-                  sussess ? "Success" : "Error",
+                  sussess
+                      ? translator.translate(
+                          'component-warning-success',
+                        )
+                      : translator.translate(
+                          'component-warning-error',
+                        ),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,
@@ -65,11 +72,13 @@ class WarningPopup {
                   margin: EdgeInsets.only(
                     top: mediaQuery.size.height * 0.01,
                   ),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
                     ),
-                    color: Colors.white,
                     onPressed: () {
                       if (sussess) {
                         Navigator.of(context).pop();
@@ -78,7 +87,11 @@ class WarningPopup {
                       }
                     },
                     child: Text(
-                      sussess ? 'Continue' : 'Try Again',
+                      sussess
+                          ? translator.translate(
+                              'component-warning-cont',
+                            )
+                          : translator.translate('component-warning-try-again'),
                       style: const TextStyle(color: Colors.black),
                     ),
                   ),
