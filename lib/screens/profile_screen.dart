@@ -1,5 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:io';
+import 'package:ebuzz/components/change_language.dart';
 import 'package:ebuzz/components/pickers/profile_image_picker.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
@@ -128,13 +129,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           actions: [
-            TextButton(
-              onPressed: () => _saveForm(),
-              child: Icon(
-                Icons.check_circle_outline,
-                color: primary,
-                size: 30,
-              ),
+            Row(
+              children: [
+                Text(
+                  user.locale == 'ar' ? 'عربي' : 'English',
+                  style: TextStyle(
+                    color: black,
+                    fontSize: 17,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.language_rounded),
+                  color: grey,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(ChangeLanguage.routeName);
+                  },
+                ),
+              ],
             ),
           ],
         ),

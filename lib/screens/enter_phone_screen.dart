@@ -37,6 +37,9 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
     try {
       var success = await Provider.of<User>(context, listen: false)
           .checkPhoneExist(_phoneController.text);
+      setState(() {
+        _isLoading = false;
+      });
       if (success) {
         var exisit = Provider.of<User>(context, listen: false).isExisit;
         Navigator.of(context).pushNamed(
@@ -48,6 +51,9 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
             Provider.of<User>(context, listen: false).errorMessage, () {});
       }
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
       print(error);
       WarningPopup.showWarningDialog(
           context,
@@ -130,7 +136,7 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
                     ],
                   ),
                   Container(
-                    // margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(

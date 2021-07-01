@@ -28,7 +28,6 @@ class _CallScreenState extends State<CallScreen> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  String _feedback;
 
   @override
   void dispose() {
@@ -300,7 +299,7 @@ class _CallScreenState extends State<CallScreen> {
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(32.0))),
-        contentPadding: EdgeInsets.all(5.0), 
+        contentPadding: EdgeInsets.all(5.0),
         title: Text(translator.translate(
           'call-page-tittle',
         )),
@@ -315,49 +314,42 @@ class _CallScreenState extends State<CallScreen> {
                 style: TextStyle(color: Colors.grey, fontSize: 14),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Flexible(
                     fit: FlexFit.loose,
-                    child: RadioListTile(
-                      activeColor: primary,
-                      title: Text(
+                    child: TextButton.icon(
+                      onPressed: () async {
+                        stopEmergency('yes');
+                      },
+                      icon: Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                      ),
+                      label: Text(
                         translator.translate(
                           'call-page-yes',
                         ),
-                        style: const TextStyle(
-                          fontSize: 5,
-                          color: Color(0xff1c305b),
-                        ),
+                        style: TextStyle(color: black),
                       ),
-                      value: 'yes',
-                      groupValue: _feedback,
-                      onChanged: (value) {
-                        setState(() {
-                          _feedback = value;
-                        });
-                      },
                     ),
                   ),
                   Flexible(
                     fit: FlexFit.loose,
-                    child: RadioListTile(
-                      activeColor: primary,
-                      title: Text(
+                    child: TextButton.icon(
+                      onPressed: () async {
+                        stopEmergency('no');
+                      },
+                      icon: Icon(
+                        Icons.not_interested_outlined,
+                        color: Colors.red,
+                      ),
+                      label: Text(
                         translator.translate(
                           'call-page-no',
                         ),
-                        style: const TextStyle(
-                          fontSize: 5,
-                          color: Color(0xff1c305b),
-                        ),
+                        style: TextStyle(color: black),
                       ),
-                      value: 'no',
-                      groupValue: _feedback,
-                      onChanged: (value) {
-                        setState(() {
-                          _feedback = value;
-                        });
-                      },
                     ),
                   ),
                 ],
@@ -365,37 +357,27 @@ class _CallScreenState extends State<CallScreen> {
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            child: Text(
-              translator.translate(
-                'call-page-done',
-              ),
-            ),
-            onPressed: () async {
-              try {
-                final success =
-                    await Provider.of<Emergency>(context, listen: false)
-                        .stopEmergency(widget.channelName, _feedback);
-                if (success) {
-                  print('success end live');
-                } else {
-                  print('something went wrong in end live');
-                }
-              } catch (error) {
-                print(error);
-                print('something went wrong in end live!!!!!!');
-                return;
-              }
-              Navigator.pop(context);
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  BottomappbarScreen.routeName,
-                  (Route<dynamic> route) => false);
-            },
-          )
-        ],
       ),
     );
+  }
+
+  Future stopEmergency(String feedback) async {
+    try {
+      final success = await Provider.of<Emergency>(context, listen: false)
+          .stopEmergency(widget.channelName, feedback);
+      if (success) {
+        print('success end live');
+      } else {
+        print('something went wrong in end live');
+      }
+    } catch (error) {
+      print(error);
+      print('something went wrong in end live!!!!!!');
+      return;
+    }
+    Navigator.pop(context);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        BottomappbarScreen.routeName, (Route<dynamic> route) => false);
   }
 
   void _onToggleMute() {
@@ -415,7 +397,7 @@ class _CallScreenState extends State<CallScreen> {
       appBar: AppBar(
         backgroundColor: primary,
         title: Text(
-          'Agora Flutter QuickStart',
+          'Ebuzz',
           style: TextStyle(fontSize: 15),
         ),
       ),

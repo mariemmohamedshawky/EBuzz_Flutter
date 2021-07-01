@@ -143,9 +143,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         arguments: {'phone': phone, 'type': 'forget'},
                       );
                     },
-                    child:  Text(translator.translate(
-                        'password-page-forget',
-                      )),
+                    child: Text(translator.translate(
+                      'password-page-forget',
+                    )),
                   ),
                   Container(child: Footer()),
                 ],

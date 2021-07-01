@@ -1,3 +1,4 @@
+import 'package:ebuzz/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,9 @@ class ChangeLanguage extends StatelessWidget {
                   );
 
                   user.setLocal('ar').then((v) {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        SplashScreen.routeName,
+                        (Route<dynamic> route) => false);
                   });
                 },
               ),
@@ -72,7 +75,9 @@ class ChangeLanguage extends StatelessWidget {
                   );
 
                   user.setLocal('en').then((v) {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        SplashScreen.routeName,
+                        (Route<dynamic> route) => false);
                   });
                 },
               ),

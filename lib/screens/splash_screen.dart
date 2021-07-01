@@ -1,3 +1,7 @@
+import 'package:ebuzz/providers/user.dart';
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
+import 'package:provider/provider.dart';
+
 import '../screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import '../constants/constant.dart';
@@ -19,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   initState() {
+    final user = Provider.of<User>(context, listen: false);
     controller = AnimationController(
         duration: Duration(milliseconds: 3000), vsync: this);
     opacity = Tween<double>(begin: 1.0, end: 0.0).animate(controller)
@@ -26,8 +31,13 @@ class _SplashScreenState extends State<SplashScreen>
         setState(() {});
       });
     controller.forward().then((_) {
-      Navigator.pushReplacement(context,
-          new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      if (user.isAuth) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            BottomappbarScreen.routeName, (Route<dynamic> route) => false);
+      } else {
+        Navigator.pushReplacement(context,
+            new MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      }
     });
 
     super.initState();

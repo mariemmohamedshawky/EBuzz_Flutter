@@ -64,6 +64,7 @@ class Notification with ChangeNotifier {
                   city: element['emergency']['city'],
                   state: element['emergency']['state'],
                   road: element['emergency']['road'],
+                  status: element['emergency']['status'],
                   notificationCount:
                       '${element['emergency']['notification_count']}',
                   massageCount: '${element['emergency']['massage_count']}',

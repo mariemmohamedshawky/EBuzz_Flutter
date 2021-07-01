@@ -395,40 +395,36 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 2),
-                                    child: Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 13),
-                                      height: mediaQuery.size.height * 0.03,
-                                      child: DropdownButtonFormField<CityModel>(
-                                        menuMaxHeight: 150,
-                                        decoration: InputDecoration.collapsed(
-                                            hintText: ''),
-                                        hint: Text(
-                                          translator.translate(
-                                            'post-city-hint',
-                                          ),
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 0, vertical: 13),
+                                    height: mediaQuery.size.height * 0.03,
+                                    child: DropdownButtonFormField<CityModel>(
+                                      menuMaxHeight: 150,
+                                      decoration: InputDecoration.collapsed(
+                                          hintText: ''),
+                                      hint: Text(
+                                        translator.translate(
+                                          'post-city-hint',
                                         ),
-                                        value: widget.selectedCity != null
-                                            ? cities.firstWhere((c) =>
-                                                c.id == widget.selectedCity.id)
-                                            : widget.selectedCity,
-                                        items: cities.map(
-                                          (value) {
-                                            return DropdownMenuItem<CityModel>(
-                                              value: value,
-                                              child: Text(value.name),
-                                            );
-                                          },
-                                        ).toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            widget.selectedCity = value;
-                                          });
-                                        },
                                       ),
+                                      value: widget.selectedCity != null
+                                          ? cities.firstWhere((c) =>
+                                              c.id == widget.selectedCity.id)
+                                          : widget.selectedCity,
+                                      items: cities.map(
+                                        (value) {
+                                          return DropdownMenuItem<CityModel>(
+                                            value: value,
+                                            child: Text(value.name),
+                                          );
+                                        },
+                                      ).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          widget.selectedCity = value;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ),

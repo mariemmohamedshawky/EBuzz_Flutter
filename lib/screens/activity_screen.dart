@@ -29,7 +29,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   int totalPages;
   List<EmergencyModel> myEmergencies = [];
   List<EmergencyModel> myData = [];
-  static int page = 1;
+  static int page;
   ScrollController _scrollController = new ScrollController();
 
   @override
@@ -39,7 +39,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         if (_loadMore) {
-          getEmergencies(page);
+          getEmergencies(page, false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text('End Of Activiation'),
+            duration: const Duration(seconds: 1),
+            backgroundColor: primary,
+          ));
         }
       }
     });
@@ -48,7 +54,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      getEmergencies(1);
+      page = 1;
+      getEmergencies(1, false);
     }
     setState(() {
       _isInit = false;
@@ -62,7 +69,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
     super.dispose();
   }
 
-  Future<void> getEmergencies(int index) async {
+  Future<void> getEmergencies(int index, bool refresh) async {
     setState(() {
       _isLoading = true;
     });
@@ -71,7 +78,14 @@ class _ActivityScreenState extends State<ActivityScreen> {
       totalPages = await Provider.of<Emergency>(context, listen: false)
           .viewActivities(index);
       myData = Provider.of<Emergency>(context, listen: false).activityItems;
-      myEmergencies.addAll(myData);
+      if (index == 1) {
+        myEmergencies = [];
+        page = 1;
+        _loadMore = true;
+        myEmergencies.insertAll(0, myData);
+      } else {
+        myEmergencies.addAll(myData);
+      }
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
@@ -102,119 +116,130 @@ class _ActivityScreenState extends State<ActivityScreen> {
         children: [
           SizedBox(height: 10),
           Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: myEmergencies.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == myEmergencies.length) {
-                  return _buildProgressIndicator();
-                } else {
-                  String mapsnap = MapSnapshot.generateLocationPreviewImage(
-                      latitude: myEmergencies[index].latitude,
-                      longitude: myEmergencies[index].longitude);
-                  return Padding(
-                    padding: const EdgeInsets.all(11.0),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(MapScreen.routeName, arguments: {
-                          'latitude': myEmergencies[index].latitude,
-                          'longitude': myEmergencies[index].longitude,
-                        });
-                      },
-                      child: Container(
-                        //   height: 180,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 2), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20.0),
-                          image: DecorationImage(
-                            image: NetworkImage(mapsnap),
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.topCenter,
-                          ),
-                        ),
-                        child: Card(
-                          color: Colors.black.withOpacity(0),
-                          shadowColor: black,
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          //  elevation: 6,
-
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  print('profile');
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CircleAvatar(
-                                        minRadius: 25,
-                                        maxRadius: 25,
-                                        backgroundImage: NetworkImage(
-                                          '${myEmergencies[index].photo}',
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      '${myEmergencies[index].userName}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 35,
-                                    child: Card(
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.live_tv_rounded,
-                                          color: primary,
-                                          size: 25,
-                                        ),
-                                        onPressed: () =>
-                                            onJoin(myEmergencies[index].id),
-                                      ),
-                                      color: Colors.black.withOpacity(0),
-                                      shadowColor: black,
-                                      elevation: 0.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(4.0),
+            child: RefreshIndicator(
+              onRefresh: () => getEmergencies(1, true),
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: myEmergencies.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == myEmergencies.length) {
+                    return _buildProgressIndicator();
+                  } else {
+                    String mapsnap = MapSnapshot.generateLocationPreviewImage(
+                        latitude: myEmergencies[index].latitude,
+                        longitude: myEmergencies[index].longitude);
+                    return Padding(
+                      padding: const EdgeInsets.all(11.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(MapScreen.routeName, arguments: {
+                            'latitude': myEmergencies[index].latitude,
+                            'longitude': myEmergencies[index].longitude,
+                          });
+                        },
+                        child: Container(
+                          //   height: 180,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
                               ),
                             ],
+                            borderRadius: BorderRadius.circular(20.0),
+                            image: DecorationImage(
+                              image: NetworkImage(mapsnap),
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
+                          child: Card(
+                            color: Colors.black.withOpacity(0),
+                            shadowColor: black,
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            //  elevation: 6,
+
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    print('profile');
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: CircleAvatar(
+                                          minRadius: 25,
+                                          maxRadius: 25,
+                                          backgroundImage: NetworkImage(
+                                            '${myEmergencies[index].photo}',
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        '${myEmergencies[index].userName}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 40,
+                                      height: 35,
+                                      child: Card(
+                                        child: myEmergencies[index].status == 0
+                                            ? Text(
+                                                'Live end',
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w900),
+                                              )
+                                            : IconButton(
+                                                icon: Icon(
+                                                  Icons.live_tv_rounded,
+                                                  color: primary,
+                                                  size: 25,
+                                                ),
+                                                onPressed: () => onJoin(
+                                                    myEmergencies[index].id),
+                                              ),
+                                        color: Colors.black.withOpacity(0),
+                                        shadowColor: black,
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              },
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ],

@@ -1,5 +1,5 @@
 class EmergencyModel {
-  int id;
+  int id, status;
   String userName,
       phone,
       photo,
@@ -26,6 +26,7 @@ class EmergencyModel {
     this.road,
     this.latitude,
     this.longitude,
+    this.status,
     this.notificationCount,
     this.massageCount,
   });
