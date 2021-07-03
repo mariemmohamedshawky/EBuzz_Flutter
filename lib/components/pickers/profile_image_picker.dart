@@ -99,7 +99,8 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
           backgroundColor: Colors.grey,
           backgroundImage: _image != null
               ? FileImage(_image)
-              : NetworkImage(user.userData.photo),
+              : NetworkImage(user.userData.photo ??
+                  "https:\/\/emergency-buzz.com\/public\/user.png"),
         ),
         TextButton.icon(
           icon: Icon(Icons.image),

@@ -42,9 +42,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
           getEmergencies(page, false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('End Of Activiation'),
+            content: const Text(
+              'End Of Activation',
+              style: TextStyle(color: black),
+            ),
             duration: const Duration(seconds: 1),
-            backgroundColor: primary,
+            backgroundColor: secondary,
           ));
         }
       }
@@ -197,21 +200,24 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
-                                      width: 40,
-                                      height: 35,
+                                      width: 50,
+                                      height: 60,
                                       child: Card(
                                         child: myEmergencies[index].status == 0
-                                            ? Text(
-                                                'Live end',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.w900),
-                                              )
-                                            : IconButton(
-                                                icon: Icon(
-                                                  Icons.live_tv_rounded,
+                                            ? FloatingActionButton(
+                                                onPressed: () {},
+                                                child: Icon(
+                                                  Icons.videocam_off_outlined,
                                                   color: primary,
+                                                  size: 25,
+                                                ),
+                                                backgroundColor: white,
+                                              )
+                                            : FloatingActionButton(
+                                                backgroundColor: primary,
+                                                child: Icon(
+                                                  Icons.videocam_outlined,
+                                                  color: white,
                                                   size: 25,
                                                 ),
                                                 onPressed: () => onJoin(

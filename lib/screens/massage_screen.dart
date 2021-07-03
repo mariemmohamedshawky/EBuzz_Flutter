@@ -107,7 +107,7 @@ class _MassageScreenState extends State<MassageScreen> {
                     children: [
                       SizedBox(height: 50),
                       Container(
-                        child: Text(translator.translate(' massege-header'),
+                        child: Text(translator.translate('massege-header'),
                             style: TextStyle(
                               fontSize: 12,
                               color: grey,
