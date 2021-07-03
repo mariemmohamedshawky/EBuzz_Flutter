@@ -136,6 +136,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
+    print(args['type']);
     return Scaffold(
       body: Container(
         child: _isLoading
@@ -234,13 +235,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     child: CommonButton(
                       child: Text(
                         args['type'] == 'forget'
-                          ? translator.translate(
-                              'password-page-change-password',
-                            )
-                          : translator.translate(
-                              'password-page-login',
-                            ),
-                        ),
+                            ? translator.translate(
+                                'password-page-change-password',
+                              )
+                            : translator.translate(
+                                'password-page-login',
+                              ),
+                      ),
                       onPressed: () {
                         if (args['type'] == 'forget') {
                           _forgetPassword(args['phone']);

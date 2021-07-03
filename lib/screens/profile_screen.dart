@@ -5,6 +5,7 @@ import 'package:ebuzz/components/pickers/profile_image_picker.dart';
 import 'package:ebuzz/components/warning_popup.dart';
 import 'package:ebuzz/constants/constant.dart';
 import 'package:ebuzz/providers/user.dart';
+import 'package:ebuzz/screens/bottomappbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:provider/provider.dart';
@@ -88,8 +89,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             true,
             translator.translate(
               'profile-page-update-success',
-            ),
-            () {});
+            ), () {
+          Navigator.of(context).pushNamed(BottomappbarScreen.routeName);
+        });
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});

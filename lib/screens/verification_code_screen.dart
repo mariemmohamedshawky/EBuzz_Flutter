@@ -43,10 +43,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              Navigator.of(context).pushNamed(
-                NewPasswordScreen.routeName,
-                arguments: widget.phone,
-              );
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  NewPasswordScreen.routeName, (Route<dynamic> route) => false,
+                  arguments: {'phone': widget.phone, 'type': widget.type});
             }
           });
         },

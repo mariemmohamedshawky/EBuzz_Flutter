@@ -407,6 +407,10 @@ class _UpdatepostScreenState extends State<UpdatepostScreen> {
                                         translator.translate(
                                           'post-city-hint',
                                         ),
+                                        style: TextStyle(
+                                          color: Color(0xFF8C0202),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       value: widget.selectedCity != null
                                           ? cities.firstWhere((c) =>

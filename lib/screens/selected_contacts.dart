@@ -1,3 +1,4 @@
+import 'package:ebuzz/components/drower.dart';
 import 'package:ebuzz/screens/contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -97,16 +98,10 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: grey,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
+        iconTheme: IconThemeData(color: grey),
         centerTitle: true,
         title: Text(
           translator.translate(
@@ -137,6 +132,12 @@ class _SelectedContactsScreenState extends State<SelectedContactsScreen> {
             },
           ),
         ],
+      ),
+      drawer: Container(
+        width: 250,
+        child: Drawer(
+          child: Container(child: MyDrawer()),
+        ),
       ),
       body: Container(
         child: _isLoading

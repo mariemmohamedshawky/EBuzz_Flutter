@@ -386,6 +386,10 @@ class _AddpostScreenState extends State<AddpostScreen> {
                                         translator.translate(
                                           'post-city-hint',
                                         ),
+                                        style: TextStyle(
+                                          color: Color(0xFF8C0202),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       value: selectedCity != null
                                           ? cities.firstWhere(

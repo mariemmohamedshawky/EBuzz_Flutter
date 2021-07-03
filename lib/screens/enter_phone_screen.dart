@@ -44,7 +44,9 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
         var exisit = Provider.of<User>(context, listen: false).isExisit;
         Navigator.of(context).pushNamed(
           exisit ? PasswordScreen.routeName : VerificationCodeScreen.routeName,
-          arguments: _phoneController.text,
+          arguments: exisit
+              ? _phoneController.text
+              : {'phone': _phoneController.text, 'type': 'register'},
         );
       } else {
         WarningPopup.showWarningDialog(context, false,

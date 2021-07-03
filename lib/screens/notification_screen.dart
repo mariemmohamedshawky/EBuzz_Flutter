@@ -27,7 +27,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   int totalPages;
   List<NotificationModel> myNotifications = [];
   List<NotificationModel> myData = [];
-  static int page = 1;
+  static int page;
   ScrollController _scrollController = new ScrollController();
   final _reasonController = new TextEditingController();
   int emergencyReportedId;
@@ -40,6 +40,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
           _scrollController.position.maxScrollExtent) {
         if (_loadMore) {
           getNotifications(page);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text(
+              'End Of Notification',
+              style: TextStyle(color: black),
+            ),
+            duration: const Duration(seconds: 1),
+            backgroundColor: secondary,
+          ));
         }
       }
     });
@@ -48,6 +57,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      page = 1;
       getNotifications(1);
     }
     setState(() {
@@ -74,7 +84,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
       myData =
           Provider.of<notificationProvider.Notification>(context, listen: false)
               .items;
-      myNotifications.addAll(myData);
+
+      if (index == 1) {
+        myNotifications = [];
+        page = 1;
+        _loadMore = true;
+        myNotifications.insertAll(0, myData);
+      } else {
+        myNotifications.addAll(myData);
+      }
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
@@ -165,159 +183,163 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: Container(child: MyDrawer()),
         ),
       ),
-      body: ListView.builder(
-        controller: _scrollController,
-        itemCount: myNotifications.length,
-        padding: EdgeInsets.symmetric(vertical: 18.0),
-        itemBuilder: (BuildContext context, int index) {
-          var emergency = myNotifications[index].emergency;
-          if (index == myNotifications.length) {
-            return _buildProgressIndicator();
-          } else {
-            return InkWell(
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(MapScreen.routeName, arguments: {
-                  'latitude': emergency.latitude,
-                  'longitude': emergency.longitude,
-                });
-              },
-              child: Card(
-                child: Column(
-                  // mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(emergency.photo),
-                        backgroundColor: primary,
-                      ),
-                      title: RichText(
-                        text: TextSpan(
-                            text: '${emergency.userName} ',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, color: primary),
-                            children: [
-                              TextSpan(
-                                  text: translator.translate(
-                                    'notification-user-danger',
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                    color: black,
-                                  )),
-                              TextSpan(
-                                  text: ' ${emergency.road}    ',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                    color: black,
-                                  )),
-                              TextSpan(
-                                  text: translator.translate(
-                                    'notification-in',
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                    color: black,
-                                  )),
-                              TextSpan(
-                                  text: '${emergency.city}',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                    color: black,
-                                  )),
-                              TextSpan(
-                                  text: translator.translate(
-                                    'notification-help',
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.normal,
-                                    color: black,
-                                  )),
-                            ]),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton.icon(
-                            label: Text(
-                              translator.translate(
-                                'notification-page-report-label',
-                              ),
-                              style: TextStyle(color: black, fontSize: 10),
-                            ),
-                            icon: Icon(
-                              Icons.report_gmailerrorred_outlined,
-                              color: primary,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                emergencyReportedId = emergency.id;
-                              });
-                              showDialog(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                  title: Text(
-                                    translator.translate(
-                                      'notification-page-report-user',
+      body: RefreshIndicator(
+        onRefresh: () => getNotifications(1),
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: myNotifications.length,
+          padding: EdgeInsets.symmetric(vertical: 18.0),
+          itemBuilder: (BuildContext context, int index) {
+            var emergency = myNotifications[index].emergency;
+            if (index == myNotifications.length) {
+              return _buildProgressIndicator();
+            } else {
+              return InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(MapScreen.routeName, arguments: {
+                    'latitude': emergency.latitude,
+                    'longitude': emergency.longitude,
+                  });
+                },
+                child: Card(
+                  child: Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(emergency.photo),
+                          backgroundColor: primary,
+                        ),
+                        title: RichText(
+                          text: TextSpan(
+                              text: '${emergency.userName} ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, color: primary),
+                              children: [
+                                TextSpan(
+                                    text: translator.translate(
+                                      'notification-user-danger',
                                     ),
-                                  ),
-                                  content: Container(
-                                    height: 100,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          translator.translate(
-                                            'notification-page-report-reason',
-                                          ),
-                                          style: TextStyle(
-                                              color: Colors.grey, fontSize: 14),
-                                        ),
-                                        TextField(
-                                          controller: _reasonController,
-                                        ),
-                                      ],
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.normal,
+                                      color: black,
+                                    )),
+                                TextSpan(
+                                    text: ' ${emergency.road}  ',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.normal,
+                                      color: black,
+                                    )),
+                                TextSpan(
+                                    text: translator.translate(
+                                      'notification-in',
                                     ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      child: Text(
-                                        translator.translate(
-                                          'notification-page-report-label',
-                                        ),
-                                      ),
-                                      onPressed: () async {
-                                        _submitReport(ctx);
-                                      },
-                                    )
-                                  ],
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.normal,
+                                      color: black,
+                                    )),
+                                TextSpan(
+                                    text: '${emergency.city}',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.normal,
+                                      color: black,
+                                    )),
+                                TextSpan(
+                                    text: translator.translate(
+                                      'notification-help',
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.normal,
+                                      color: black,
+                                    )),
+                              ]),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton.icon(
+                              label: Text(
+                                translator.translate(
+                                  'notification-page-report-label',
                                 ),
-                              );
-                            },
-                          ),
-                          Text(
-                            '${emergency.date}',
-                            style: TextStyle(
-                              fontSize: 8,
-                              fontWeight: FontWeight.bold,
+                                style: TextStyle(color: black, fontSize: 10),
+                              ),
+                              icon: Icon(
+                                Icons.report_gmailerrorred_outlined,
+                                color: primary,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  emergencyReportedId = emergency.id;
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text(
+                                      translator.translate(
+                                        'notification-page-report-user',
+                                      ),
+                                    ),
+                                    content: Container(
+                                      height: 100,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            translator.translate(
+                                              'notification-page-report-reason',
+                                            ),
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 14),
+                                          ),
+                                          TextField(
+                                            controller: _reasonController,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: Text(
+                                          translator.translate(
+                                            'notification-page-report-label',
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          _submitReport(ctx);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          ),
-                        ],
+                            Text(
+                              '${emergency.date}',
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
     );
   }

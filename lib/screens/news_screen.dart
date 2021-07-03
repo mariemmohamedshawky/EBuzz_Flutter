@@ -33,9 +33,12 @@ class _NewsScreenState extends State<NewsScreen> {
           getPosts(page, false);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text('End Of Posts'),
+            content: const Text(
+              'End Of Posts',
+              style: TextStyle(color: black),
+            ),
             duration: const Duration(seconds: 1),
-            backgroundColor: primary,
+            backgroundColor: secondary,
           ));
         }
       }
