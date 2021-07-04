@@ -57,6 +57,7 @@ class User with ChangeNotifier {
         body: json.encode(
           {
             'phone': phone,
+            'language': locale,
           },
         ),
         headers: {'Content-Type': 'application/json'},
@@ -281,6 +282,7 @@ class User with ChangeNotifier {
           'phone': phone,
           'password': password,
           'password_confirmation': passwordConfirmation,
+          'language': locale,
         }),
         headers: {'Content-Type': 'application/json'},
       );

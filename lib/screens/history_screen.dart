@@ -215,7 +215,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                       RichText(
                                           text: TextSpan(
                                               text:
-                                                  '${myEmergencies[index].massageCount}',
+                                                  '${myEmergencies[index].notificationCount}',
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   color: Colors.black),

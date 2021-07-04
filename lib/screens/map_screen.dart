@@ -216,7 +216,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(seconds: 60), (Timer t) {
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) {
       _getCurrentUserLocation();
       _getUsersLocation();
     });

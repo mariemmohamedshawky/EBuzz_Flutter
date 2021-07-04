@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     timer = Timer.periodic(
-        Duration(seconds: 120), (Timer t) => _getCurrentUserLocation());
+        Duration(seconds: 10), (Timer t) => _getCurrentUserLocation());
     _updateFcm();
     FirebaseMessaging.instance
         .getInitialMessage()
