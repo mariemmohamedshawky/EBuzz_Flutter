@@ -313,6 +313,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                           translator.translate(
                                             'notification-page-report-label',
                                           ),
+                                          style: TextStyle(color: primary),
                                         ),
                                         onPressed: () async {
                                           _submitReport(ctx);
