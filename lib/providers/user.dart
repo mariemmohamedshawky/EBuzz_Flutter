@@ -57,6 +57,7 @@ class User with ChangeNotifier {
         body: json.encode(
           {
             'phone': phone,
+            'language': locale,
           },
         ),
         headers: {'Content-Type': 'application/json'},
@@ -190,16 +191,19 @@ class User with ChangeNotifier {
     Uri apiLink = Uri.https(url, '/api/v1/user/$type');
     errorMessage = '';
     Map<String, dynamic> authData;
+    print(locale);
     if (type == 'register') {
       authData = {
         'phone': phone,
         'password': password,
         'password_confirmation': passwordConfirmation,
+        'language': locale,
       };
     } else {
       authData = {
         'phone': phone,
         'password': password,
+        'language': locale,
       };
     }
     print(apiLink);
@@ -278,6 +282,7 @@ class User with ChangeNotifier {
           'phone': phone,
           'password': password,
           'password_confirmation': passwordConfirmation,
+          'language': locale,
         }),
         headers: {'Content-Type': 'application/json'},
       );

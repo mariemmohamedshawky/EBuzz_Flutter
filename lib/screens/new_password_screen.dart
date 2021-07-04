@@ -26,13 +26,23 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     if (_passwordController.text.isEmpty ||
         _passwordConfirmationController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password Fileds cant be empty', () {});
+          context,
+          false,
+          translator.translate(
+            'new-password-empty-field',
+          ),
+          () {});
       return;
     }
 
     if (_passwordController.text != _passwordConfirmationController.text) {
       WarningPopup.showWarningDialog(
-          context, false, 'Password Fileds must be identical', () {});
+          context,
+          false,
+          translator.translate(
+            'new-password-identical-field',
+          ),
+          () {});
       return;
     }
 
@@ -47,7 +57,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         WarningPopup.showWarningDialog(
             context,
             true,
-            'Success Changed Password',
+            translator.translate(
+              'new-password-success-created',
+            ),
             () => Navigator.of(context)
                 .pushNamed(PasswordScreen.routeName, arguments: phone));
       } else {
@@ -63,7 +75,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       });
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong', () {});
+          context,
+          false,
+          translator.translate(
+            'wrong-message',
+          ),
+          () {});
       return;
     }
   }
