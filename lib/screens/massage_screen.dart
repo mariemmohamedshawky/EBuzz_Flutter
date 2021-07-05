@@ -34,7 +34,7 @@ class _MassageScreenState extends State<MassageScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context, false, translator.translate('wrong-message'), () {});
       return;
     }
 
@@ -46,7 +46,7 @@ class _MassageScreenState extends State<MassageScreen> {
   Future<void> _submitData() async {
     if (_messageController.text.isEmpty) {
       WarningPopup.showWarningDialog(
-          context, false, 'Phone Number Required', () {});
+          context, false, translator.translate('message-required'), () {});
       return;
     }
     setState(() {
@@ -57,7 +57,7 @@ class _MassageScreenState extends State<MassageScreen> {
           .changeMassage(_messageController.text);
       if (success) {
         WarningPopup.showWarningDialog(
-            context, true, 'Massage Updated Successfully', () => {});
+            context, true, translator.translate('message-updated'), () => {});
       } else {
         WarningPopup.showWarningDialog(context, false,
             Provider.of<User>(context, listen: false).errorMessage, () {});
@@ -65,7 +65,7 @@ class _MassageScreenState extends State<MassageScreen> {
     } catch (error) {
       print(error);
       WarningPopup.showWarningDialog(
-          context, false, 'SomeThing Went Wrong..', () {});
+          context, false, translator.translate('wrong-message'), () {});
       return;
     }
     setState(() {
