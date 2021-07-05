@@ -124,5 +124,7 @@
     "component-drawer-posts": "My Posts",
     "component-drawer-message": "Message",
     "component-drawer-history": "History",
-    "component-drawer-logout": "Logout"
+    "component-drawer-logout": "Logout",
+    "message-updated": "Massage Updated Successfully",
+    "message-required": "Message is Required"
 }

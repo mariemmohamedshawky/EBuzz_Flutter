@@ -124,5 +124,7 @@
     "component-drawer-posts": "منشوراتي",
     "component-drawer-message": "الرساله",
     "component-drawer-history": "السجل",
-    "component-drawer-logout": "تسجيل الخروج"
+    "component-drawer-logout": "تسجيل الخروج",
+    "message-updated": "تم تحديث الرساله الخاصه بك",
+    "message-required": "يجب اضافة رساله"
 }
